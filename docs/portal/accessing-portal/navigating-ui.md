@@ -6,7 +6,7 @@ When you first log in to the ECP portal, the Dashboard appears with menus and su
 
 The default menu lists the ECP activities you can perform.
 
-![null](</docs/resources/images/accessing-portal/side-menu.png>)
+<p align=center><img src="/docs/resources/images/accessing-portal/side-menu.png" alt="navigation menu" width="300"></p>
 
 ## Dashboard
 
@@ -36,5 +36,4 @@ The [Global Presence page](</docs/portal/global-presence/Global Presence.htm>) s
 
 Clicking the blue circle at the top of the page displays the user information. It also provides a **Logout** link for exiting the ECP Portal.
 
-![null](</docs/resources/images/accessing-portal/user-info.png>)
-
+<p align=center><img src="/docs/resources/images/accessing-portal/user-info.png" alt="user information" width="400"></p>
