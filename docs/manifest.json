@@ -2,7 +2,7 @@
     "metadata": {
       "id": "ecp",
       "title": "ECP",
-      "description": "The Edge Computing Platform (ECP) Customer Portal is a web-based user interface for the CDNetworks ECP platform.",
+      "description": "Edge Computing Platform (ECP) enables customers to meet growing business demands by effortlessly deploying and scaling up container-based applications. ECP places high-performance compute, storage and network resources as close as possible to end users.",
       "links": [
         {
           "title": "Quick Start",
@@ -12,13 +12,13 @@
         },
         {
           "title": "Portal Reference",
-          "caption": "CDN360 Portal reference",
+          "caption": "ECP Portal reference",
           "icon": "book",
           "path": "docs/portal/accessing-portal/logging-in"
         },
         {
           "title": "API Reference",
-          "caption": "CDN360 API reference",
+          "caption": "ECP API reference",
           "icon": "gear",
           "path": "apidocs"
         }
