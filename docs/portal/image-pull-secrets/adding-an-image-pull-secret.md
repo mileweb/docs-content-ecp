@@ -1,18 +1,10 @@
-<!--?xml version="1.0" encoding="utf-8"?-->
-
-<link href="../Resources/TableStyles/Rows.css" rel="stylesheet" madcap:stylesheettype="table">
-
 # Adding an ImagePullSecret
 
 1. In the left pane, click **ImagePullSecret**.
 2. At the top right of the ImagePullSecrets page, click the **\+ Add New ImagePullSecret** button. 
 3. Complete the fields in the Add ImagePullSecret form. Required fields are denoted by an asterisk (\*).
 
-<!-- -->
-
-![null](</docs/resources/images/image-pull-secrets/Add ImagePullSecret.png>)
-
-<span style="color: #708090; font-size: 9pt;">(click to enlarge)</span>
+![null](</docs/resources/images/image-pull-secrets/image-pull-secrets-add.png>)
 
 | **Fields**                                                                                                         | **Description**                                                                                                    |
 | ------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------ |
@@ -23,7 +15,4 @@
 | Password                                                                                                           | Enter the password of your registry account. For security, each typed password character is masked with a dot (●). |
 | Description                                                                                                        | Enter a description for this ImagePullSecret.                                                                      |
 
-1. Click the **Submit** button.
-
-<!-- -->
-
+4. Click the **Submit** button.

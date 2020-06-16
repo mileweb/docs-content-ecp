@@ -1,7 +1,3 @@
-<!--?xml version="1.0" encoding="utf-8"?-->
-
-<link href="" rel="stylesheet" type="text/css">
-
 # Navigating the ECP User Interface
 
 After you sign up for an ECP account, you will have access to the ECP documentation and online help.
@@ -10,7 +6,7 @@ When you first log in to the ECP portal, the Dashboard appears with menus and su
 
 The default menu lists the ECP activities you can perform.
 
-![null](</docs/resources/images/accessing-portal/Screen 1.png>)
+![null](</docs/resources/images/accessing-portal/side-menu.png>)
 
 ## Dashboard
 
@@ -40,5 +36,5 @@ The [Global Presence page](</docs/portal/global-presence/Global Presence.htm>) s
 
 Clicking the blue circle at the top of the page displays the user information. It also provides a **Logout** link for exiting the ECP Portal.
 
-![null](</docs/resources/images/accessing-portal/Info (blue circle).png>)
+![null](</docs/resources/images/accessing-portal/user-info.png>)
 

@@ -1,5 +1,3 @@
-<!--?xml version="1.0" encoding="utf-8"?-->
-
 # Forgot Your Password
 
 If you forgot your password:
@@ -7,13 +5,9 @@ If you forgot your password:
 1. Click the **Forgot password** link at the bottom of the login page.
 2. In the Password Reset page, enter your username and click the **I'm not a robot** check box to complete the reCAPTCHA requirement.
 
-<!-- -->
+![null](</docs/resources/images/accessing-portal/password-reset.png>)
 
-![null](</docs/resources/images/accessing-portal/forgotpsword.png>)
-
-1. Click the **Submit** button.
-
-<!-- -->
+3. Click the **Submit** button.
 
 The ECP will send you an email message with a verification code to enter to reset your password.
 

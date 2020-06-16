@@ -1,7 +1,3 @@
-<!--?xml version="1.0" encoding="utf-8"?-->
-
-<link href="../Resources/TableStyles/Rows.css" rel="stylesheet" madcap:stylesheettype="table">
-
 # Reports
 
 The ECP allows you to generate reports covering bandwidth, traffic, CPU, memory, storage, and pods and public IP addresses. The metrics related to CPU, memory, and storage are reported according to your resource requests rather than real-time consumption.
@@ -16,24 +12,15 @@ Reports are generated from the Reports page. To display this page, click **Repor
 
 The following figure shows the key elements on the page.
 
-![null](</docs/resources/images/reports/Report Page.png>)
+![null](</docs/resources/images/reports/reports-w-numbers.png>)
 
-|  |
-|  |
-|  |
-|  |
-
-<!--?xml version="1.0" encoding="utf-8"?-->
-
-<link href="../Resources/TableStyles/Rows.css" rel="stylesheet" madcap:stylesheettype="table">
+*TO MARC: NEED TO PUT THE TABLE HERE. IT WASN'T CONVERTED PROPERLY*
 
 # Understanding Report Types
 
 The ECP supports the following type of reports. You select a report type from the **Report Type** drop-down list on the Reports page.
 
-![null](</docs/resources/images/reports/Report Type Drop-down List.png>)
-
-<span style="color: #708090; font-size: 9pt;">(click to enlarge)</span>
+![null](</docs/resources/images/reports/reports-dropdown.png>)
 
 | **Report**                                                                                                                                         | **Description**                                                                                                                                    |
 | -------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -44,20 +31,12 @@ The ECP supports the following type of reports. You select a report type from th
 | Storage                                                                                                                                            | Shows the peak local storage usage and peak persist storage usage (in bytes), and how the values change over time.                                 |
 | Pods & Public IPs                                                                                                                                  | Shows the peak pod usage and peak IP usage, and how the values change over time.                                                                   |
 
-<!--?xml version="1.0" encoding="utf-8"?-->
-
-<link href="../Resources/TableStyles/Rows.css" rel="stylesheet" madcap:stylesheettype="table">
-
 # Generating Reports
 
 1. In the left pane, click **Reports**. 
 2. Complete the fields in the Reports form. Required fields are denoted by an asterisk (\*).
 
-<!-- -->
-
-![null](</docs/resources/images/reports/Report Page.png>)
-
-<span style="color: #708090; font-size: 9pt;">(click to enlarge)</span>
+![null](</docs/resources/images/reports/reports-wo-numbers.png>)
 
 | **Fields**                                                                                                                                                                            | **Description**                                                                                                                                                                       |
 | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -66,20 +45,12 @@ The ECP supports the following type of reports. You select a report type from th
 | Report Interval                                                                                                                                                                       | Select the granularity of the returned data. Choices are:                                                                                                                             |
 | Service Zone                                                                                                                                                                          | Select one or more [service zone](<Zones.htm>) options.                                                                                                                               |
 | Report Range                                                                                                                                                                          | If you are a reseller with child accounts, select the accounts that this report will cover. Choices are:                                                                              |
-|                                                                                                                                                                                       |                                                                                                                                                                                       |
 
 1. Click the **Generate Report** button to generate the report.
 2. With a generated report (similar to the one below) displayed at the bottom of the form, you can:
-
-<!-- -->
 
 - Mouse over data points in the report to view detailed information.
 - Use the icons at the right side of the report to view regions, zoom, and reset magnification.
 - Use the **Download** button at the top-right of the report to download the report in JPEG, PNG, and PDF formats.
 
-<!-- -->
-
-![null](</docs/resources/images/reports/Generated Report.png>)
-
-<span style="color: #708090; font-size: 9pt;">(click to enlarge)</span>
-
+![null](</docs/resources/images/reports/reports-generated-report.png>)
