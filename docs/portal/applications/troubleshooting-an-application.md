@@ -1,5 +1,3 @@
-<!--?xml version="1.0" encoding="utf-8"?-->
-
 # Troubleshooting an Application
 
 In addition to helping manage the life cycle of your containerized application, the Portal provides tools for troubleshooting your application.
@@ -10,35 +8,22 @@ Go to the detail page of a specific application instance and check [Kubernetes e
 
 **Note:** The events are not persistent and are removed 3 hours after the last occurrence.
 
-![null](</docs/resources/images/applications/Troubleshooting - Events.png>)
-
-<span style="color: #708090; font-size: 9pt;">(click to enlarge)</span>
+![null](</docs/resources/images/applications/applications-instance-details-events.png>)
 
 ## Log Viewer
 
-Go to the detail page of a specific application instance, click the top right **Logs** button, and obtain a live stream of logs from your container. The output is the same as what you would see if you issue the <span style="font-family: 'Courier New';">docker logs</span>
+Go to the detail page of a specific application instance, click the top right **Logs** button, and obtain a live stream of logs from your container. The output is the same as what you would see if you issue the `docker logs` command in your own Docker environment.
 
- command in your own Docker environment.
-
-![null](</docs/resources/images/applications/Troubleshooting - Log Viewer.png>)
-
-<span style="color: #708090; font-size: 9pt;">(click to enlarge)</span>
+![null](</docs/resources/images/applications/applications-app-logs.png>)
 
 ## Cloud Shell
 
-Go to the detail page of a specific application instance, click the top-right **Shell** button, and obtain a shell to your container to execute commands inside the container. The effect is the same as issuing the <span style="font-family: 'Courier New';">docker exec</span>
+Go to the detail page of a specific application instance, click the top-right **Shell** button, and obtain a shell to your container to execute commands inside the container. The effect is the same as issuing the `docker exec` command in your own Docker environment.
 
- command in your own Docker environment.
-
-![null](</docs/resources/images/applications/Troubleshooting - Clous Shell.png>)
-
-<span style="color: #708090; font-size: 9pt;">(click to enlarge)</span>
+![null](</docs/resources/images/applications/applications-app-shell.png>)
 
 ## Metrics
 
 Go to the detail page of a specific application instance, click the top right **Metrics** button, and obtain metrics for the application instance, such as CPU and memory usage, traffic volume, and so on.
 
-![null](</docs/resources/images/applications/Troubleshooting - Metrics.png>)
-
-<span style="color: #708090; font-size: 9pt;">(click to enlarge)</span>
-
+![null](</docs/resources/images/applications/applications-app-metrics.png>)
