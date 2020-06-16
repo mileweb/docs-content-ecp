@@ -15,7 +15,7 @@ Resource quota charts at the top of the Dashboard show “quota consumed” and 
 
 ![null](</docs/resources/images/dashboard/dashboard-resource-quota.png>)
 
-Charts at the bottom of the Dashboard show usage metrics. Buttons above the usage metrics charts allow you to filter the metrics by the last 24 hours (the default view), last 7 days, or last month. A legend below the usage metrics charts shows the names of the data entry points in the chart. Clicking a data entry point name in the legend removes that data entry point from the chart. Clicking it again redisplays the data entry point. Clicking **View Full Report** below a usage metrics chart displays that chart on the [Reports page](</docs/portal/reports/Generating Reports.htm>), where you can define report parameters, and then view the results on the selected chart.
+Charts at the bottom of the Dashboard show usage metrics. Buttons above the usage metrics charts allow you to filter the metrics by the last 24 hours (the default view), last 7 days, or last month. A legend below the usage metrics charts shows the names of the data entry points in the chart. Clicking a data entry point name in the legend removes that data entry point from the chart. Clicking it again redisplays the data entry point. Clicking **View Full Report** below a usage metrics chart displays that chart on the [Reports page](</docs/portal/reports.md>), where you can define report parameters, and then view the results on the selected chart.
 
 ![null](</docs/resources/images/dashboard/dashboard-metrics-cpu.png>)
 

@@ -27,9 +27,11 @@
 **Note:** You can add containers, environment variables, and volume mounts by clicking their **\+ Add** links in the **Container** section.
 
 1. At the top right of the wizard, click **\> Next**. 
-2. Select whether to expose your application using a [Layer 4 load balancer](<#Exposedlayer4>) or the[ public network](<#PublicNetwork>), and then complete the remaining fields based on your selection.
+2. Select whether to expose your application using a [Layer 4 load balancer](<#exposing-via-a-load-balancer>) or the[ public network](<#exposing-via-the-public-network>), and then complete the remaining fields based on your selection.
 
 ![null](</docs/resources/images/applications/applications-add-wizard-expose.png>)
+
+### Exposing via a Load Balancer
 
 | **Fields for Exposing Application via a Load Balancer**                                                                                                    | **Description**                                                                                                                                            |
 | ---------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -39,19 +41,25 @@
 
 **Note:** You can add or remove listeners by clicking the **\+ Add Listener** link or the **Remove** button.
 
+### Exposing via the Public Network
+
 | Fields for **Exposing Application via the Public Network**                                                 | **Description**                                                                                            |
 | ---------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------- |
 | Network interfaces                                                                                         | Drag the controls to the right to expose the application via a public IPv4 network, IPv6 network, or both. |
 
 1. At the top right of the wizard, click **\> Next**. 
-2. Select whether to distribute your application to ECP edge PoPs by [region](<#DistributebyRegion>) or [PoP](<#DistributebyPoPFields>), and then complete the remaining fields based on your selection.
+2. Select whether to distribute your application to ECP edge PoPs by [region](<#distribute-per-region>) or [PoP](<#distribute-per-pop>), and then complete the remaining fields based on your selection.
 
 ![null](</docs/resources/images/applications/applications-add-wizard-distribute.png>)
+
+### Distribute per region
 
 | **Distribute per Region Fields**                                                                                                                                       | **Description**                                                                                                                                                        |
 | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Region                                                                                                                                                                 | Select an ECP region where the application is to be distributed. The ECP scheduler will distribute your pod replicas across PoPs in the selected region automatically. |
 | Replicas per region                                                                                                                                                    | Select the total number of pod replicas you want distribute within the selected ECP region.                                                                            |
+
+### Distribute per PoP
 
 | **Distribute per PoP Fields**                                               | **Description**                                                             |
 | --------------------------------------------------------------------------- | --------------------------------------------------------------------------- |
@@ -65,7 +73,7 @@
 
 3. When you are satisfied with your selections, click **Submit & Deploy**.
 
-**Note:** The application deployment process may take up to a few minutes, depending on the size of container images to be pulled, the target locations, and the number of expected instances. Once the application is deployed, **Deployed** appears as its status on the Applications page. To check the status and other details, use the applications list view and detail view. After the application is deployed, you can retrieve instances in [list view](<Retrieving Instances of an Application in List View.htm>) or [map view](<Retrieving Instances of an Application in Map View.htm>). If you encounter a problem, [troubleshoot the application](<Troubleshooting an Application.htm>).
+**Note:** The application deployment process may take up to a few minutes, depending on the size of container images to be pulled, the target locations, and the number of expected instances. Once the application is deployed, **Deployed** appears as its status on the Applications page. To check the status and other details, use the applications list view and detail view. After the application is deployed, you can retrieve instances in [list view](</docs/portal/applications/retrieving-instances-of-an-application.md#retrieving-instances-of-an-application-in-list-view>) or [map view](</docs/portal/applications/retrieving-instances-of-an-application.md#retrieving-instances-of-an-application-in-map-view>). If you encounter a problem, [troubleshoot the application](</docs/portal/applications/troubleshooting-an-application.md>).
 
 ## Configuring Applications
 
@@ -112,7 +120,7 @@ The Kubernetes workload controller controls the state of an application instance
 
 ### Layer 4 Load Balancer
 
-To expose your application, we recommend you use a Layer 4 load balancer as a frontend for your pods, unless there are special requirements to expose the pods directly. Unlike native Kubernetes, which defines a Service object for service discovery and load balancing of an application, the ECP offers a self-defined `LoadBalancer4` object to help you expose your application and load balance traffic. For more information, click [here](<file:///G:/Manuals/CD Networks/Job 2 - Edge Computing Product (ECP) Project/CDNECP OnlineHelp/Content/Applications/Using Advanced ECP Features in Your Applications.htm#Using>).
+To expose your application, we recommend you use a Layer 4 load balancer as a frontend for your pods, unless there are special requirements to expose the pods directly. Unlike native Kubernetes, which defines a Service object for service discovery and load balancing of an application, the ECP offers a self-defined `LoadBalancer4` object to help you expose your application and load balance traffic. For more information, click [here](<#using-layer-4-load-balancing>).
 
 ### Sample Demo Configuration
 
@@ -196,12 +204,12 @@ Observe the following guidelines:
 - The target type must be either `Location` or `RegionPreference`. Mixed usage of the two types is not allowed. Because some ECP locations / regions might not be enabled for you, contact CDNetworks' sales engineers if you want to enable certain locations or regions, or if you have trouble deploying your application to ECP locations/regions.
 - Not all Kubernetes workload Controllers are supported. We recommend you use a [StatefulSet](<https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/>) Controller to run applications that require persistent storage. Otherwise, use a [ReplicaSet](<https://kubernetes.io/docs/concepts/workloads/controllers/replicaset/>) Controller.
 - When configuring a workload Controller, leave the `spec.replicas` field empty because the equivalent is configured in the target object.
-- If you need persistent volumes for your application, you can use two storage classes: `local-ssd` and `persist-ssd`. For more information, see [Using Storage Resources](<Using Advanced ECP Features in Your Applications.htm#UsingStorageResources>).
+- If you need persistent volumes for your application, you can use two storage classes: `local-ssd` and `persist-ssd`. For more information, see [Using Storage Resources](<#using-storage-resources>).
 - Running containers in privileged mode is not allowed.
 
-## Uploading a YAML/JSON File
+## Uploading a YAML or JSON File
 
-1. [Configure an application](<Configuring applications.htm>) outside of the Portal.
+1. [Configure an application](<#configuring-applications>) outside of the Portal.
 2. In the left pane of the Portal, click **Applications**.
 3. At the top right of the Applications page, click the **\+ Add New Application** button. 
 
@@ -216,7 +224,7 @@ Observe the following guidelines:
 
 3. Click **Submit & Deploy**.<br>
 
-**Note:** The application deployment process may take up to a few minutes, depending on the size of container images to be pulled, the target locations, and the number of expected instances. Once the application is deployed, **Deployed** appears as its status on the Applications page. To check the status and other details, use the applications list view and detail view. After the application is deployed, you can retrieve instances in [list view](<Retrieving Instances of an Application in List View.htm>) or [map view](<Retrieving Instances of an Application in Map View.htm>). If you encounter a problem, [troubleshoot the application](<Troubleshooting an Application.htm>).
+**Note:** The application deployment process may take up to a few minutes, depending on the size of container images to be pulled, the target locations, and the number of expected instances. Once the application is deployed, **Deployed** appears as its status on the Applications page. To check the status and other details, use the applications list view and detail view. After the application is deployed, you can retrieve instances in [list view](</docs/portal/applications/retrieving-instances-of-an-application.md#retrieving-instances-of-an-application-in-list-view>) or [map view](</docs/portal/applications/retrieving-instances-of-an-application.md#retrieving-instances-of-an-application-in-map-view>). If you encounter a problem, [troubleshoot the application](</docs/portal/applications/troubleshooting-an-application.md>).
 
 ![null](</docs/resources/images/applications/applications-add-upload-spec.png>)
 

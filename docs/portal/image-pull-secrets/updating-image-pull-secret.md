@@ -1,6 +1,6 @@
 # Updating an ImagePullSecret
 
-The following procedure describes how to update an ImagePullSecret from the ImagePullSecrets page. You can also update ImagePullSecrets from the form used to [view ImagePullSecret information](<Viewing ImagePullSecret Information.htm>).
+The following procedure describes how to update an ImagePullSecret from the ImagePullSecrets page. You can also update ImagePullSecrets from the form used to [view ImagePullSecret information](</docs/portal/image-pull-secrets/viewing-image-pull-secret-information.md>).
 
 1. In the left pane, click **ImagePullSecrets**.
 2. Find the ImagePullSecret you want to update, then click its **Actions** menu and select **Update**. An Update ImagePullSecret form similar to the following appears.
