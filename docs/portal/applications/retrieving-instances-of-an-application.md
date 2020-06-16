@@ -11,7 +11,7 @@
 
 1. In the left pane, click **Applications**.
 2. On the Applications page, click a link below the **Instances** column. 
-3. At the top right of the Instances page, click the ![null](</docs/resources/images/applications/applications-globe-icon.png>) icon.
+3. At the top right of the Instances page, click the <span><img src="/docs/resources/images/applications/applications-globe-icon.png" alt="globe" width="30"></span> icon.
 
 ![null](</docs/resources/images/applications/applications-instances.png>)
 
