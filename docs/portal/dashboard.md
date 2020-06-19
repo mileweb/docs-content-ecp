@@ -30,7 +30,7 @@ Charts at the bottom of the Dashboard show usage metrics. Buttons above the usag
 ![null](</docs/resources/images/dashboard/dashboard-metrics-pods-and-ips.png>)
 
 
-Hovering your mouse over the data points in a resource quota or usage metrics chart displays detailed information. For example:
+Hovering your cursor over the data points in a resource quota or usage metrics chart displays detailed information. For example:
 
 ![null](</docs/resources/images/dashboard/dashboard-resource-quota-hovered.png>)
 
@@ -38,5 +38,5 @@ Hovering your mouse over the data points in a resource quota or usage metrics ch
 
 The metrics related to CPU, memory, and storage are reported according to your resource requests for your applications. These metrics do not refer to real-time resource consumption by the processes running in your applications. For instance, if you request 1 vCPU core for your application when only 0.5 core is being used, the CPU metric value shown on the Dashboard will be the 1 vCPU core.
 
-If you find on the Portal or through an API call that a high resource consumption is causing resource requests to be rejected, contact CDNetworks' sales engineers to adjust the quotas for you. You will not incur higher costs by setting higher quotas. Billing is based on resources requested and allocated for your applications.
+If you find on the portal or through an API call that high resource consumption is causing resource requests to be rejected, contact CDNetworks' sales engineers to adjust the quotas for you. You will not incur higher costs by setting higher quotas. Billing is based on resources requested and allocated for your applications.
 
