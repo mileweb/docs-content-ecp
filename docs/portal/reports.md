@@ -6,7 +6,7 @@ You can query reports for up to one year (366 days, which includes Leap Day). Th
 
 If you are a reseller with child accounts, you can select the accounts that a report will cover (the parent account only, the child account only, or both the parent and child accounts).
 
-## Reports page
+## Reports Page
 
 Reports are generated from the Reports page. To display this page, click **Reports** in the left pane.
 
@@ -14,7 +14,11 @@ The following figure shows the key elements on the page.
 
 ![null](</docs/resources/images/reports/reports-w-numbers.png>)
 
-*TO MARC: NEED TO PUT THE TABLE HERE. IT WASN'T CONVERTED PROPERLY*
+| **Element Number**                                                                                                                                         | **Description**                                                                                                                                    |
+| -------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 1                                                                                                                                          | Specify the report type, date range, report interval, and service zone. Resellers with child accounts can also select a report range. |
+| 2                                                                                                                                            | The **Generate Report** button allows you to generate the report defined by the report parameters.                  |
+
 
 # Understanding Report Types
 
