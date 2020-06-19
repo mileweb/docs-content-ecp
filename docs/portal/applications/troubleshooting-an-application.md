@@ -1,6 +1,6 @@
 # Troubleshooting an Application
 
-In addition to helping manage the life cycle of your containerized application, the Portal provides tools for troubleshooting your application.
+In addition to helping manage the life cycle of your containerized application, the portal provides tools for troubleshooting your application.
 
 ## Events
 
@@ -12,7 +12,7 @@ Go to the detail page of a specific application instance and check [Kubernetes e
 
 ## Log Viewer
 
-Go to the detail page of a specific application instance, click the top right **Logs** button, and obtain a live stream of logs from your container. The output is the same as what you would see if you issue the `docker logs` command in your own Docker environment.
+Go to the detail page of a specific application instance, click the top-right **Logs** button, and obtain a live stream of logs from your container. The output is the same as what you would see if you issue the `docker logs` command in your own Docker environment.
 
 ![null](</docs/resources/images/applications/applications-app-logs.png>)
 
@@ -24,6 +24,6 @@ Go to the detail page of a specific application instance, click the top-right **
 
 ## Metrics
 
-Go to the detail page of a specific application instance, click the top right **Metrics** button, and obtain metrics for the application instance, such as CPU and memory usage, traffic volume, and so on.
+Go to the detail page of a specific application instance, click the top- right **Metrics** button, and obtain metrics for the application instance, such as CPU and memory usage, traffic volume, and so on.
 
 ![null](</docs/resources/images/applications/applications-app-metrics.png>)

@@ -1,6 +1,6 @@
 # Welcome to the Edge Computing Platform Customer Portal
 
-The Edge Computing Platform (ECP) Customer Portal is a web-based user interface for the CDNetworks ECP platform. You can use the Portal to deploy your containerized applications to ECP locations, troubleshoot your applications, and direct and manage global traffic towards the applications. You can also use the Portal to retrieve detailed reports about the usage of compute, network, and storage resources provisioned by the ECP.
+The Edge Computing Platform (ECP) Customer Portal is a web-based user interface for the CDNetworks ECP platform. You can use the portal to deploy your containerized applications to ECP locations, troubleshoot your applications, and direct and manage global traffic towards the applications. You can also use the portal to retrieve detailed reports about the usage of compute, network, and storage resources provisioned by the ECP.
 
 **Note**: The ECP is a multi-cluster container orchestration platform built on [Docker](<https://www.docker.com/>) and [Kubernetes](<https://kubernetes.io/>). If you are not familiar with these systems, it is strongly recommended that you read the official [Docker](<https://docs.docker.com/>) and [Kubernetes](<https://kubernetes.io/docs/home/>) documentation before continuing with the ECP.
 
