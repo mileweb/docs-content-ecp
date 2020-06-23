@@ -10,11 +10,11 @@ The following procedure describes how to view information about applications.
 ![null](</docs/resources/images/applications/applications-details-basic-info-w-numbers.png>)
 
 | **Element Number**       | **Description**                               |
-| -------------------------|-----------------------------------------------| --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 1                                                                                                                                                                                   | Click this button to return to the Applications page.                                                                                                                                                                                                         |
-| 2                                                                                                                                                                                                                                                      | Click this button to update the application.                                                                                                                                                                                   |
-| 3                                                                                                                                                                                                                                                         | Click this button to delete the application.                                                              |
-| 4                                                                                                                                                                                                                                                 | Click this button to display the Specifications dialog box, where the file can be viewed in YAML or JSON format, copied, and downloaded.                                                        |
+| -------------------------|-----------------------------------------------| 
+| 1                        | Click this button to return to the Applications page.                                                                      |
+| 2                        | Click this button to update the application.                                                               |
+| 3                        | Click this button to delete the application.                                                               |
+| 4                        | Click this button to display the Specifications dialog box, where the file can be viewed in YAML or JSON format, copied, and downloaded.                                                                |
 
 
 ## Viewing YAML Files

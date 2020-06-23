@@ -34,6 +34,6 @@ The [Global Presence page](</docs/portal/global-presence.md>) shows the worldwid
 
 ## User Info
 
-Clicking the blue circle at the top of the page displays the user information. It also provides a **Logout** link for exiting the ECP Portal.
+Clicking the blue circle at the top of the page displays the user information. It also provides a **Logout** link for exiting the ECP portal.
 
 <p align=center><img src="/docs/resources/images/accessing-portal/user-info.png" alt="user information" width="400"></p>
