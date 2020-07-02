@@ -8,10 +8,10 @@ You can create a CNAME for an application only when the application is exposed b
 
 ![null](</docs/resources/images/cnames/cnames-add-cname.png>)
 
-| **Fields**                                                                                                                                                                                         | **Description**                                                                                                                                                                                    |
-| -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| CNAME                                                                                                                                                                                              | Either enter a CNAME prefix manually in the text field or click Auto Generate to have the ECP generate a CNAME for you. If you enter a CNAME prefix, your typed entry must be a valid domain name. |
-| Application                                                                                                                                                                                        | Select an application you want to associate with this CNAME.                                                                                                                                       |
-| Description                                                                                                                                                                                        | Enter a description for this CNAME.                                                                                                                                                                |
+| **Field**              | **Description**                                 |
+| -----------------------|-------------------------------------------------| 
+| CNAME                  | Either enter a CNAME prefix manually in the text field or click Auto Generate to have the ECP generate a CNAME for you. If you enter a CNAME prefix, your typed entry must be a valid domain name.    |
+| Application            | Select an application you want to associate with this CNAME.                                                                |
+| Description            | Enter a description for this CNAME.                                                                     |
 
 4. Click the **Submit** button.

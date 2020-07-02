@@ -4,11 +4,11 @@
 
 ![null](</docs/resources/images/accessing-portal/portal-login.png>)
 
-1. Enter your username in the top field and your password in the bottom field. For security, each typed password character is masked with a dot (●). To unmask the password, click the ![null](</docs/resources/images/accessing-portal/eye-icon.png>) icon.
+2. Enter your username in the top field and your password in the bottom field. For security, each typed password character is masked with a dot (●). To unmask the password, click the ![null](</docs/resources/images/accessing-portal/eye-icon.png>) icon.
 
 **Note**: If you forgot your password, click [here](</docs/portal/accessing-portal/forgot-password.md>).
 
-1. Click the **Sign In** button.
+3. Click the **Sign In** button.
 
 ### Where to Go from Here
 
