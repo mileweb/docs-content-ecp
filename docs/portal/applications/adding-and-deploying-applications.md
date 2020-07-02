@@ -1,6 +1,6 @@
 # Adding and Deploying Applications Using a Wizard
 
-1. In the left pane of the Portal, click **Applications**.
+1. In the left pane of the portal, click **Applications**.
 2. At the top right of the Applications page, click the **\+ Add New Application** button.
 
 ![null](</docs/resources/images/applications/applications.png>)
@@ -18,16 +18,16 @@
 | Application Name                                                                                                                                                                                                                                               | Enter a name that helps you identify this application.                                                                                                                                                                                                         |
 | Namespace                                                                                                                                                                                                                                                      | Specify a Kubernetes namespace created in the ECP clusters for your account.                                                                                                                                                                                   |
 | Labels                                                                                                                                                                                                                                                         | Read-only field that shows the default label used to identify pods. The ECP uses "app" as the key and the application name you entered as the value.                                                                                                           |
-| Pod Controller                                                                                                                                                                                                                                                 | Select a Kubernetes workload controller to control your pods. Choices are:                                                                                                                                                                                     |
+| Pod Controller                                                                                                                                                                                                                                                 | Select a Kubernetes workload controller to control your pods. Choices are:<br><ul><li><strong>StatefulSet</strong> = select this option if your application requires persistent storage. </li><li><strong>ReplicaSet</strong>.</li>                                                                                                                                                                                      |
 | Image Pull Secret                                                                                                                                                                                                                                              | If your application will run private image(s), specify an ImagePullSecret that will be used to authenticate with your registry. If the specified ImagePullSecret is not correct or missing, the image pulling and application deployment operations will fail. |
-| Restart Policy                                                                                                                                                                                                                                                 | Select the Restart policy for all containers within a pod. Choices are:                                                                                                                                                                                        |
+| Restart Policy                                                                                                                                                                                                                                                 | Select the Restart policy for all containers within a pod. Choices are:<br><ul><li><strong>Always</strong> (*default*) </li><li><strong>Never</strong>.</li><li><strong>OnFailure</strong></strong>.</li>             |
 | Volumes                                                                                                                                                                                                                                                        | If Pod Controller is set to StatefulSet, add one or more volumes by defining their name, storage class, and capacity.                                                                                                                                          |
 | Container                                                                                                                                                                                                                                                      | Specify the container name, docker image and tag, CPU and memory resources, environment variables, and volume mounts for the first container (**Container0**). Use Advanced Settings to define:                                                                |
 
 **Note:** You can add containers, environment variables, and volume mounts by clicking their **\+ Add** links in the **Container** section.
 
-1. At the top right of the wizard, click **\> Next**. 
-2. Select whether to expose your application using a [Layer 4 load balancer](<#exposing-via-a-load-balancer>) or the[ public network](<#exposing-via-the-public-network>), and then complete the remaining fields based on your selection.
+5. At the top right of the wizard, click **\> Next**. 
+6. Select whether to expose your application using a [Layer 4 load balancer](<#exposing-via-a-load-balancer>) or the[ public network](<#exposing-via-the-public-network>), and then complete the remaining fields based on your selection.
 
 ![null](</docs/resources/images/applications/applications-add-wizard-expose.png>)
 
@@ -37,7 +37,7 @@
 | ---------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Name of load balancer                                                                                                                                      | Read-only field that shows the name of the load balancer.                                                                                                  |
 | Backend Selector                                                                                                                                           | Read-only field that shows the pods located behind the layer 4 load balancer based on labels. These are the pods you specified in the first wizard screen. |
-| Listeners                                                                                                                                                  | Complete the following fields:                                                                                                                             |
+| Listeners                                                                                                                                                  | Complete the following fields:<br><ul><li><strong>Name</strong> = enter the name of the listener. </li><li><strong>Listener Port</strong> = enter the number of the ports on which the layer 4 load balancer must listen.</li> </li><li><strong>Backend Port</strong> = read-only field that shows the number of the backend pod port that receives traffic forwarded by the layer 4 load balancer. This is the same value entered for the Listener Port.</li></li><li><strong>Protocol</strong> = select either TCP or UDP.</li> </li><li><strong>Scheduler</strong> = select the load-balancing algorithm used to make load-balancing decisions. Choices are Round Robin (*default*) or Least Connection.</li> </li><li><strong>Health Check</strong> = select whether periodic health checks should be performed on backend pods. The load balancer will remove a pod that fails the health check.</li>            |
 
 **Note:** You can add or remove listeners by clicking the **\+ Add Listener** link or the **Remove** button.
 
@@ -47,8 +47,8 @@
 | ---------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------- |
 | Network interfaces                                                                                         | Drag the controls to the right to expose the application via a public IPv4 network, IPv6 network, or both. |
 
-1. At the top right of the wizard, click **\> Next**. 
-2. Select whether to distribute your application to ECP edge PoPs by [region](<#distribute-per-region>) or [PoP](<#distribute-per-pop>), and then complete the remaining fields based on your selection.
+7. At the top right of the wizard, click **\> Next**. 
+8. Select whether to distribute your application to ECP edge PoPs by [region](<#distribute-per-region>) or [PoP](<#distribute-per-pop>), and then complete the remaining fields based on your selection.
 
 ![null](</docs/resources/images/applications/applications-add-wizard-distribute.png>)
 
@@ -68,10 +68,10 @@
 
 **Note:** You can add or remove targets by clicking the **\+ Add Target** link or the garbage can icon.
 
-1. At the top right of the wizard, click **\> Next**. 
-2. Review your selections from the previous steps. If you need to change them, click **Previous** to return to the appropriate step, make your changes, and then click **Next** until you return to the Review step.
+9. At the top right of the wizard, click **\> Next**. 
+10. Review your selections from the previous steps. If you need to change them, click **Previous** to return to the appropriate step, make your changes, and then click **Next** until you return to the Review step.
 
-3. When you are satisfied with your selections, click **Submit & Deploy**.
+11. When you are satisfied with your selections, click **Submit & Deploy**.
 
 **Note:** The application deployment process may take up to a few minutes, depending on the size of container images to be pulled, the target locations, and the number of expected instances. Once the application is deployed, **Deployed** appears as its status on the Applications page. To check the status and other details, use the applications list view and detail view. After the application is deployed, you can retrieve instances in [list view](</docs/portal/applications/retrieving-instances-of-an-application.md#retrieving-instances-of-an-application-in-list-view>) or [map view](</docs/portal/applications/retrieving-instances-of-an-application.md#retrieving-instances-of-an-application-in-map-view>). If you encounter a problem, [troubleshoot the application](</docs/portal/applications/troubleshooting-an-application.md>).
 
@@ -201,7 +201,7 @@ Observe the following guidelines:
 - The ECP accepts application configurations in JSON or YAML format. Like Kubernetes, YAML is the preferred format.
 - Wrap the elements of an ECP application into a single JSON or YAML file before submitting to the ECP. PATCHing an existing application allows partial configuration updates for a specific element of the application.
 - An “application name” parameter is required when an application configuration is to be deployed. The value of this parameter is used to fill the `metadata.name` fields of the target, workload controller, and `LoadBalancer4` objects. If you specify these `metadata.name` fields in the application configuration, make sure the values are consistent with the “application name” parameter.
-- The target type must be either `Location` or `RegionPreference`. Mixed usage of the two types is not allowed. Because some ECP locations / regions might not be enabled for you, contact CDNetworks' sales engineers if you want to enable certain locations or regions, or if you have trouble deploying your application to ECP locations/regions.
+- The target type must be either `Location` or `RegionPreference`. Mixed usage of the two types is not allowed. Because some ECP locations/regions might not be enabled for you, contact CDNetworks' sales engineers if you want to enable certain locations or regions, or if you have trouble deploying your application to ECP locations/regions.
 - Not all Kubernetes workload Controllers are supported. We recommend you use a [StatefulSet](<https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/>) Controller to run applications that require persistent storage. Otherwise, use a [ReplicaSet](<https://kubernetes.io/docs/concepts/workloads/controllers/replicaset/>) Controller.
 - When configuring a workload Controller, leave the `spec.replicas` field empty because the equivalent is configured in the target object.
 - If you need persistent volumes for your application, you can use two storage classes: `local-ssd` and `persist-ssd`. For more information, see [Using Storage Resources](<#using-storage-resources>).
@@ -209,20 +209,20 @@ Observe the following guidelines:
 
 ## Uploading a YAML or JSON File
 
-1. [Configure an application](<#configuring-applications>) outside of the Portal.
-2. In the left pane of the Portal, click **Applications**.
+1. [Configure an application](<#configuring-applications>) outside of the portal.
+2. In the left pane of the portal, click **Applications**.
 3. At the top right of the Applications page, click the **\+ Add New Application** button. 
 
 ![null](</docs/resources/images/applications/applications.png>)
 
-4. When prompted, click **Use your YAML/JSON**.
+4. When prompted, click **Use a YAML/JSON file**.
 
 ![null](</docs/resources/images/applications/applications-add.png>)
 
-1. In the **Application Name** field, enter a name that helps you identify this application.
-2. In the **Application Specification** field, upload the local YAML or JSON file, enter a URL that points to the file, or drag and drop the file into the designated location on the form.
+5. In the **Application Name** field, enter a name that helps you identify this application.
+6. In the **Application Specification** field, upload the local YAML or JSON file, enter a URL that points to the file, or drag and drop the file into the designated location on the form.
 
-3. Click **Submit & Deploy**.<br>
+7. Click **Submit & Deploy**.<br>
 
 **Note:** The application deployment process may take up to a few minutes, depending on the size of container images to be pulled, the target locations, and the number of expected instances. Once the application is deployed, **Deployed** appears as its status on the Applications page. To check the status and other details, use the applications list view and detail view. After the application is deployed, you can retrieve instances in [list view](</docs/portal/applications/retrieving-instances-of-an-application.md#retrieving-instances-of-an-application-in-list-view>) or [map view](</docs/portal/applications/retrieving-instances-of-an-application.md#retrieving-instances-of-an-application-in-map-view>). If you encounter a problem, [troubleshoot the application](</docs/portal/applications/troubleshooting-an-application.md>).
 

@@ -7,4 +7,9 @@ The following procedure describes how to view information about ImagePullSecrets
 
 ![null](</docs/resources/images/image-pull-secrets/image-pull-secrets-details-w-numbers.png>)
 
-*TO MARC: NEED TO PUT THE TABLE HERE. IT WASN'T CONVERTED PROPERLY*
+| **Element Number**                                                                                                                                                                            | **Description**                                                                                                                                                                       |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 1                                                                                                                                                                           | The Basic Information area shows basic information about the ImagePullSecret.                                                                                                   |
+| 2                                                                                                                                                                            | Click this button to return to the ImagePullSecrets page. |
+| 3                                                                                                                                                                       | Click this button to update the ImagePullSecret.                                                                                                                             |
+| 4                                                                                                                                                                          | Click this button to delete the ImagePullSecret.    |
