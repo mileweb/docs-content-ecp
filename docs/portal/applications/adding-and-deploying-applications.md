@@ -57,7 +57,7 @@
 | **Distribute per Region Fields**                                                                                                                                       | **Description**                                                                                                                                                        |
 | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Region                                                                                                                                                                 | Select an ECP region where the application is to be distributed. The ECP scheduler will distribute your pod replicas across PoPs in the selected region automatically. |
-| Replicas per region                                                                                                                                                    | Select the total number of pod replicas you want distribute within the selected ECP region.                                                                            |
+| Replicas per region                                                                                                                                                    | Select the total number of pod replicas you want to distribute within the selected ECP region.                                                                            |
 
 ### Distribute per PoP
 
