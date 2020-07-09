@@ -3,6 +3,7 @@
       "id": "ecp",
       "title": "ECP",
       "description": "Edge Computing Platform (ECP) enables customers to meet growing business demands by effortlessly deploying and scaling up container-based applications. ECP places high-performance compute, storage and network resources as close as possible to end users.",
+      "showOnMainPage": true,
       "links": [
         {
           "title": "Quick Start",
