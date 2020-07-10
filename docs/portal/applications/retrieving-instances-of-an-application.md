@@ -28,7 +28,7 @@ A map view similar to the following shows the location of the instances and thei
 ![null](</docs/resources/images/applications/applications-instances-map-view.png>)
 
 4. By default, the map shows all PoPs and all phases. Using the **PoP** and **Phase** drop-down lists above the map, you can view a particular PoP and phase. The two right buttons next to the drop-down lists reset the filters and refresh the instances shown.
-5. Clicking an Instance displays a popup similar to the following figure with detailed information. Clicking the link next to **Instance** displays detailed information about that instance, wuth buttons for viewing metrics, viewing and downloading logs, and running commands inside containers. For an example, see the figure under [Viewing Instance Information](<#viewing-instance-information>) below.
+5. Clicking an Instance displays a popup similar to the following figure with detailed information. Clicking the link next to **Instance** displays detailed information about that instance, with buttons for viewing metrics, viewing and downloading logs, and running commands inside containers. For an example, see the figure under [Viewing Instance Information](<#viewing-instance-information>) below.
 
 ![null](</docs/resources/images/applications/applications-instances-map-view-detail.png>)
 
