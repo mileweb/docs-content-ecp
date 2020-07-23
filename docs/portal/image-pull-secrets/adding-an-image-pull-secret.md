@@ -1,6 +1,6 @@
 # Adding an ImagePullSecret
 
-1. In the left pane, click **ImagePullSecret**.
+1. In the left pane, click **ImagePullSecrets**.
 2. At the top right of the ImagePullSecrets page, click the **\+ Add New ImagePullSecret** button. 
 3. Complete the fields in the Add ImagePullSecret form. Required fields are denoted by an asterisk (\*).
 
