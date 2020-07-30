@@ -479,7 +479,8 @@
           {
             "name": "On-Behalf-Of",
             "in": "header",
-            "description": "If you are a reseller, you can use this header to specify the ID of a child customer and make API call on their behalf.",
+            "description": "If you are a reseller, you can use this header to specify the ID of a child customer and 
+            s on their behalf.",
             "required": false,
             "schema": {
               "type": "string"
@@ -646,7 +647,7 @@
           {
             "name": "On-Behalf-Of",
             "in": "header",
-            "description": "If you are a reseller, you can use this header to specify the ID of a child customer and make API call on their behalf.",
+            "description": "If you are a reseller, you can use this header to specify the ID of a child customer and make API calls on their behalf.",
             "required": false,
             "schema": {
               "type": "string"
@@ -1111,7 +1112,7 @@
           {
             "name": "On-Behalf-Of",
             "in": "header",
-            "description": "If you are a reseller, you can use this header to specify the ID of a child customer and make API call on their behalf.",
+            "description": "If you are a reseller, you can use this header to specify the ID of a child customer and make API calls on their behalf.",
             "required": false,
             "schema": {
               "type": "string"
@@ -1505,7 +1506,7 @@
           {
             "name": "On-Behalf-Of",
             "in": "header",
-            "description": "If you are a reseller, you can use this header to specify the ID of a child customer and make API call on their behalf.",
+            "description": "If you are a reseller, you can use this header to specify the ID of a child customer and make API calls on their behalf.",
             "required": false,
             "schema": {
               "type": "string"
@@ -2001,7 +2002,7 @@
           {
             "name": "On-Behalf-Of",
             "in": "header",
-            "description": "If you are a reseller, you can use this header to specify the ID of a child customer and make API call on their behalf.",
+            "description": "If you are a reseller, you can use this header to specify the ID of a child customer and make API calls on their behalf.",
             "required": false,
             "schema": {
               "type": "string"
@@ -2363,7 +2364,7 @@
           {
             "name": "On-Behalf-Of",
             "in": "header",
-            "description": "If you are a reseller, you can use this header to specify the ID of a child customer and make API call on their behalf.",
+            "description": "If you are a reseller, you can use this header to specify the ID of a child customer and make API calls on their behalf.",
             "required": false,
             "schema": {
               "type": "string"
@@ -2820,7 +2821,7 @@
           {
             "name": "On-Behalf-Of",
             "in": "header",
-            "description": "If you are a reseller, you can use this header to specify the ID of a child customer and make API call on their behalf.",
+            "description": "If you are a reseller, you can use this header to specify the ID of a child customer and make API calls on their behalf.",
             "required": false,
             "schema": {
               "type": "string"
@@ -2959,7 +2960,7 @@
           {
             "name": "On-Behalf-Of",
             "in": "header",
-            "description": "If you are a reseller, you can use this header to specify the ID of a child customer and make API call on their behalf.",
+            "description": "If you are a reseller, you can use this header to specify the ID of a child customer and make API calls on their behalf.",
             "required": false,
             "schema": {
               "type": "string"
@@ -3277,7 +3278,7 @@
           {
             "name": "On-Behalf-Of",
             "in": "header",
-            "description": "If you are a reseller, you can use this header to specify the ID of a child customer and make API call on their behalf.",
+            "description": "If you are a reseller, you can use this header to specify the ID of a child customer and make API calls on their behalf.",
             "required": false,
             "schema": {
               "type": "string"
@@ -4075,7 +4076,7 @@
           {
             "name": "On-Behalf-Of",
             "in": "header",
-            "description": "If you are a reseller, you can use this header to specify the ID of a child customer and make API call on their behalf.",
+            "description": "If you are a reseller, you can use this header to specify the ID of a child customer and make API calls on their behalf.",
             "required": false,
             "schema": {
               "type": "string"
@@ -4564,7 +4565,7 @@
         "tags": [
           "Applications"
         ],
-        "description": "This interface enables you to create an ECP application and have the application deployed to ECP edge locations. A typical ECP application consists of 3 objects.\n\n1. A kubernetes StatefulSet or ReplicaSet object to specify how your application shall be deployed, e.g. what containers images you want to run, how the containers shall be started, and how many resources the containers would require. In general, using ReplicaSet as pod controller is recommended and shall meet your basic requirements. However, if your application requires persistent storage, please use StatefulSet.\n2. An ECP custom \"LoadBalancer4\" object to expose your application. If such object is specified, ECP will create a layer 4 load balancer in each location where your application is distributed to expose and load balance the pods created for your application in that location. Alternatively, you can annotate your pods in the StatefulSet or ReplicaSet object to enable public IPv4/IPv6 network interfaces for the pods and thus directly expose the pods.\n3. An object that specifies how the application shall be distributed. You can specify an ECP custom \"RegionPreference\" object if you would like to have your application evenly and automatically distributed in certain geographic <a href=\"#operation/get-regions\">regions</a>. If you would like to have your application precisely placed, you can specify an ECP custom \"Location\" object to pick the target <a href=\"#operation/get-pops\">locations</a>.\n\n**Please pass specifications of all objects comprising an ECP application as an array in the request body. The array shall be in YAML or JSON format.**",
+        "description": "This interface enables you to create an ECP application and have the application deployed to ECP edge locations. A typical ECP application consists of 3 objects.\n\n1. A kubernetes StatefulSet or ReplicaSet object to specify how your application shall be deployed, e.g. what containers images you want to run, how the containers shall be started, and how many resources the containers would require. In general, using ReplicaSet as pod controller is recommended and shall meet your basic requirements. However, if your application requires persistent storage, please use StatefulSet.\n2. An ECP custom \"LoadBalancer4\" object to expose your application. If such object is specified, ECP will create a layer 4 load balancer in each location where your application is distributed to expose and load balance the pods created for your application in that location. Alternatively, you can annotate your pods in the StatefulSet or ReplicaSet object to enable public IPv4/IPv6 network interfaces for the pods and thus directly expose the pods.\n3. An object that specifies how the application shall be distributed. You can specify an ECP custom \"RegionPreference\" object if you would like to have your application evenly and automatically distributed in certain geographic <a href=\"#operation/get-regions\">regions</a>. If you would like to have your application precisely placed, you can specify an ECP custom \"Location\" object to pick the target <a href=\"#operation/get-pops\">locations</a>.\n\n**Please pass specifications of all objects comprising an ECP application as an array in the request body. The array must be in YAML or JSON format.**",
         "parameters": [
           {
             "schema": {
@@ -5617,7 +5618,7 @@
           {
             "name": "On-Behalf-Of",
             "in": "header",
-            "description": "If you are a reseller, you can use this header to specify the ID of a child customer and make API call on their behalf.",
+            "description": "If you are a reseller, you can use this header to specify the ID of a child customer and make API calls on their behalf.",
             "required": false,
             "schema": {
               "type": "string"
@@ -8452,7 +8453,7 @@
           {
             "name": "On-Behalf-Of",
             "in": "header",
-            "description": "If you are a reseller, you can use this header to specify the ID of a child customer and make API call on their behalf.",
+            "description": "If you are a reseller, you can use this header to specify the ID of a child customer and make API calls on their behalf.",
             "required": false,
             "schema": {
               "type": "string"
@@ -8767,7 +8768,7 @@
           {
             "name": "On-Behalf-Of",
             "in": "header",
-            "description": "If you are a reseller, you can use this header to specify the ID of a child customer and make API call on their behalf.",
+            "description": "If you are a reseller, you can use this header to specify the ID of a child customer and make API calls on their behalf.",
             "required": false,
             "schema": {
               "type": "string"
@@ -9074,7 +9075,7 @@
           {
             "name": "On-Behalf-Of",
             "in": "header",
-            "description": "If you are a reseller, you can use this header to specify the ID of a child customer and make API call on their behalf.",
+            "description": "If you are a reseller, you can use this header to specify the ID of a child customer and make API calls on their behalf.",
             "required": false,
             "schema": {
               "type": "string"
@@ -9512,7 +9513,7 @@
           {
             "name": "On-Behalf-Of",
             "in": "header",
-            "description": "If you are a reseller, you can use this header to specify the ID of a child customer and make API call on their behalf.",
+            "description": "If you are a reseller, you can use this header to specify the ID of a child customer and make API calls on their behalf.",
             "required": false,
             "schema": {
               "type": "string"
@@ -9835,7 +9836,7 @@
           {
             "name": "On-Behalf-Of",
             "in": "header",
-            "description": "If you are a reseller, you can use this header to specify the ID of a child customer and make API call on their behalf.",
+            "description": "If you are a reseller, you can use this header to specify the ID of a child customer and make API calls on their behalf.",
             "required": false,
             "schema": {
               "type": "string"
@@ -13631,7 +13632,7 @@
       "On-Behalf-Of": {
         "name": "On-Behalf-Of",
         "in": "header",
-        "description": "If you are a reseller, you can use this header to specify the ID of a child customer and make API call on their behalf.",
+        "description": "If you are a reseller, you can use this header to specify the ID of a child customer and make API calls on their behalf.",
         "required": false,
         "schema": {
           "type": "string"
