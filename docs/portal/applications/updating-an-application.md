@@ -53,7 +53,7 @@ If you select **Set container image** from the Quick Update drop-down list, a Se
 ##Upgrading Resources
 If you select **Upgrade resources** from the Quick Update drop-down list, an Upgrade Container Spec dialog box similar to the following appears. 
 
-![null](</docs/resources/images/applications/Upgrade-Container-Spec-Dialog-Box.png>)
+![null](</docs/resources/images/applications/new_Upgrade-Container-Spec-Dialog-Box.png>)
 
 **Note:** This operation might cause your existing pods to be deleted and recreated.
 

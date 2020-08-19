@@ -11,7 +11,6 @@ Resource quota charts at the top of the Dashboard show “quota consumed” and 
 - Number of applications
 - Number of pods
 - Capacity of local-SSD storage
-- Capacity of persist-SSD storage
 
 ![null](</docs/resources/images/dashboard/dashboard-resource-quota.png>)
 
