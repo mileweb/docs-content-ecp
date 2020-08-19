@@ -6,7 +6,7 @@ When a pod gets created with the native Kubernetes, the pod is assigned a privat
 
 ## Request Public IPv4 Address
 
-To obtain a public IPv4 address for your pod, add an annotation to the pod spec, as marked in blue in the following YAML file example.
+To obtain a public IPv4 address for your pod, add an annotation to the pod spec. For example:
 
 ```yaml
 apiVersion: apps/v1
@@ -39,7 +39,7 @@ spec:
 
 ## Request Public IPv6 Address
 
-To obtain a public IPv6 address for your pod, add an annotation to the pod spec, as marked in blue in the following YAML file example.
+To obtain a public IPv6 address for your pod, add an annotation to the pod spec. For example:
 
 ```yaml
 apiVersion: apps/v1
@@ -176,17 +176,14 @@ spec:
 
 ## Using Storage Resources
 
-The ECP platform defines two storage classes for different use cases of persistent storage:
+The ECP platform defines the following storage class for different use cases of persistent storage:
 
 - `local-ssd` is for local SSD storage. Data persists through container restarts and in-node recreations, but is lost when the pod is rescheduled to other nodes.
-
-- `persist-ssd` is for persistent SSD block storage. `persist-ssd` is similar to Amazon Web Services EBS. Data persists through container restarts and recreations, even when the pod is rescheduled to other nodes.
 
 Observe the following guidelines:
 
 - If persistent volumes are required, use `StatefulSet` Controller for your application.
 - The requested capacity of a single `persistentVolumeClaim` (PVC) must be between 500MB and 100GB.
-- You cannot use `local-ssd` and `persist-ssd` volumes in the same application.
 - The life cycle of an ECP persistent volume is not independent of the owner application life cycle. Deleting an application or an application instance deletes the corresponding persistent volume(s) as well. This behavior is different from the native Kubernetes `StatefulSet` Controller, where persistent volumes are not deleted when a `StatefulSet` is deleted.
 
 
@@ -237,48 +234,5 @@ spec:
 
 
 
-## Using `persist-ssd`
 
-Specify a `persistentVolumeClaim` (PVC) in `volumeClaimTemplates` of a `StatefulSet`, set the `storageClass` to `persist-ssd` and mount the PVC to your container.
-
-```yaml
-apiVersion: apps/v1
-kind: StatefulSet
-metadata:
-  name: demoapp
-  namespace: demo
-spec:
-  selector:
-    matchLabels:
-      app: demoapp
-  template:
-    metadata:
-      labels:
-        app: demoapp
-    spec:
-      containers:
-      - image: nginx
-        name: demoapp
-        resources:
-          limits:
-            cpu: "200m"
-            memory: 256Mi
-          requests:
-            cpu: "200m"
-            memory: 256Mi
-        volumeMounts:
-        - mountPath: /tmp
-          name: data
-  volumeClaimTemplates:
-  - metadata:
-      annotations:
-        volume.beta.kubernetes.io/storage-class: persist-ssd
-      name: data
-    spec:
-      accessModes:
-      - ReadWriteOnce
-      resources:
-        requests:
-          storage: 1G
-```
 

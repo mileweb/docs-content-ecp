@@ -1,6 +1,6 @@
 # Configuring Applications
 
-The first step in deploying your application to ECP clusters is to use the ECP-defined “Application” object. An ECP “Application” typically consists of a target, a Kubernetes workload controller, and a Layer 4 load balancer.
+You can create an ECP application either by [following a wizard](</docs/portal/applications/adding-and-deploying-applications-using-a-wizard.md>) or by [providing a file](</docs/portal/applications/adding-and-deploying-applications-using-an-existing-configuration-file.md>)  that contains specifications (link). <br>If you choose to create the application from a file, the first step is to prepare the file if it does not exist. Your file should contain specifications of the following elements that make up an ECP application:<ul><li>A target</ul></li><ul><li>A Kubernetes workload controller</ul></li><ul><li>A Layer 4 load balancer</ul></li>
 
 ### Target
 
@@ -43,7 +43,7 @@ The Kubernetes workload controller controls the state of an application instance
 
 ## Layer 4 Load Balancer
 
-To expose your application, we recommend you use a Layer 4 load balancer as a frontend for your pods, unless there are special requirements to expose the pods directly. Unlike native Kubernetes, which defines a Service object for service discovery and load balancing of an application, the ECP offers a self-defined `LoadBalancer4` object to help you expose your application and load balance traffic. For more information, click [here](<#using-layer-4-load-balancing>).
+To expose your application, we recommend you use a Layer 4 load balancer as a frontend for your pods, unless there are special requirements to expose the pods directly. Unlike native Kubernetes, which defines a Service object for service discovery and load balancing of an application, the ECP offers a self-defined `LoadBalancer4` object to help you expose your application and load balance traffic. For more information, click [here](</docs/portal/applications/using-advanced-ecp-features.md#using-layer-4-load-balancing>).
 
 ## Sample Demo Configuration
 
@@ -125,7 +125,7 @@ Observe the following guidelines:
 - Wrap the elements of an ECP application into a single JSON or YAML file before submitting to the ECP. PATCHing an existing application allows partial configuration updates for a specific element of the application.
 - An “application name” parameter is required when an application configuration is to be deployed. The value of this parameter is used to fill the `metadata.name` fields of the target, workload controller, and `LoadBalancer4` objects. If you specify these `metadata.name` fields in the application configuration, make sure the values are consistent with the “application name” parameter.
 - The target type must be either `Location` or `RegionPreference`. Mixed usage of the two types is not allowed. Because some ECP locations/regions might not be enabled for you, contact CDNetworks' sales engineers if you want to enable certain locations or regions, or if you have trouble deploying your application to ECP locations/regions.
-- Not all Kubernetes workload Controllers are supported. We recommend you use a [StatefulSet](<https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/>) Controller to run applications that require persistent storage. Otherwise, use a [ReplicaSet](<https://kubernetes.io/docs/concepts/workloads/controllers/replicaset/>) Controller.
+- Not all Kubernetes workload Controllers are supported. We recommend you use a [StatefulSet](<https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/>) Controller to run applications that require persistent storage. Otherwise, use a [Deployment](<https://kubernetes.io/docs/concepts/workloads/controllers/deployment/>).
 - When configuring a workload Controller, leave the `spec.replicas` field empty because the equivalent is configured in the target object.
-- If you need persistent volumes for your application, you can use two storage classes: `local-ssd` and `persist-ssd`. For more information, see [Using Storage Resources](<#using-storage-resources>).
+- If you need persistent volumes for your application, you can use the storage class `local-ssd`. For more information, see [Using Storage Resources](</docs/portal/applications/using-advanced-ecp-features.md#using-stortage-resources>).
 - Running containers in privileged mode is not allowed.

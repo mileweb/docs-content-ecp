@@ -1,8 +1,8 @@
 # Adding and Deploying Applications Using an Existing Configuration File
 
-1. [Configure an application](<#configuring-applications>) outside of the portal.
-2. In the left pane of the portal, click **Applications**.
-3. At the top right of the Applications page, click the **\+ Add New Application** button. 
+1. [Configure an application](</docs/portal/applications/configuring-applications.md>) outside of the portal.
+3. In the left pane of the portal, click **Applications**.
+4. At the top right of the Applications page, click the **\+ Add New Application** button. 
 
 ![null](</docs/resources/images/applications/applications.png>)
 

@@ -1,10 +1,11 @@
-# Quick Updating an Application
+# Updating an Application
 
-The following procedure describes how to update applications from the Applications page. You can also update applications from the form used to [view application information](</docs/portal/applications/viewing-application-information.md>).
+The following procedure describes how to update applications from the Applications page. You can also update applications from the [application information page](</docs/portal/applications/viewing-application-information.md>).
 
 1. In the left pane, click **Applications**.
 2. Click the name of the application you want to update.
-3. At the top right of the form, click the **Update** button, and then select one of the following quick update options:<ul><li> **Redistribute** allows you to add, edit, and delete distribution targets.</ul></li><ul><li>**Set container image** allows you to update your pods to a newer application version.br></ul></li><ul><li>**Upgrade resources** allows you to upgrade the spec of your container instance to maintain performance and/or save costs.</ul></li>
+3. To edit the YAML file directly, click the **Edit YAML** button at the top right of the form.
+4. To update the application, click the **Update** button and select one of the following options and refer to the appropriate section below:<ul><li> **Redistribute** allows you to add, edit, and delete distribution targets.</ul></li><ul><li>**Set container image** allows you to update your pods to a newer application version.<br></ul></li><ul><li>**Upgrade resources** allows you to upgrade the spec of your container instance to maintain performance and/or save costs.</ul></li>
 
 ![null](</docs/resources/images/applications/applications-update.png>)
 
@@ -46,7 +47,7 @@ If you select **Set container image** from the Quick Update drop-down list, a Se
 1. To change the Docker image name, replace the name in the **Image** field. Typically, this name consists of docker image registry, image, and tag.
 <br><ul>- If you omit the registry, the system defaults to docker hub.</ul><ul>- If you omit the tag, the system defaults to "latest".</ul><ul>- If your entry is not valid, the image pulling and application deployment fails.</ul></br>
 2. To change the image pull secret, drag the <strong>Change Image Pull Secret</strong> control to the right. Then click in the field displaying the current secret and select an image pull secret.
-3. To add an image pull secret, drag the <strong>Change Image Pull Secret</strong> control to the right. Click in the field displaying the current secret and select <strong>+Add Image Pull Secret</strong>. Complete the fields in the Add ImagePullSecret dialog box, and then click <strong>Submit</strong>. <br>
+3. To add an image pull secret, drag the <strong>Change Image Pull Secret</strong> control to the right. Click in the field displaying the current secret and select <strong>+Add Image Pull Secret</strong>. Complete the fields in the Add ImagePullSecret dialog box, and then click <strong>Submit</strong>. 
 4. When you finish, click **Update**.
    
 ##Upgrading Resources
