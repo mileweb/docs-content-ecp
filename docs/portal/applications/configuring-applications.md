@@ -1,6 +1,6 @@
 # Configuring Applications
 
-You can create an ECP application either by [following a wizard](</docs/portal/applications/adding-and-deploying-applications-using-a-wizard.md>) or by [providing a file](</docs/portal/applications/adding-and-deploying-applications-using-an-existing-configuration-file.md>)  that contains specifications (link). <br>If you choose to create the application from a file, the first step is to prepare the file if it does not exist. Your file should contain specifications of the following elements that make up an ECP application:<ul><li>A target</ul></li><ul><li>A Kubernetes workload controller</ul></li><ul><li>A Layer 4 load balancer</ul></li>
+You can create an ECP application either by [following a wizard](</docs/portal/applications/adding-and-deploying-applications-using-a-wizard.md>) or by [providing a file](</docs/portal/applications/adding-and-deploying-applications-using-an-existing-configuration-file.md>) that contains specifications. <br>If you choose to create the application from a file, the first step is to prepare the file if it does not exist. Your file should contain specifications of the following elements that make up an ECP application:<ul><li>A target</ul></li><ul><li>A Kubernetes workload controller</ul></li><ul><li>A Layer 4 load balancer</ul></li>
 
 ### Target
 
@@ -127,5 +127,5 @@ Observe the following guidelines:
 - The target type must be either `Location` or `RegionPreference`. Mixed usage of the two types is not allowed. Because some ECP locations/regions might not be enabled for you, contact CDNetworks' sales engineers if you want to enable certain locations or regions, or if you have trouble deploying your application to ECP locations/regions.
 - Not all Kubernetes workload Controllers are supported. We recommend you use a [StatefulSet](<https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/>) Controller to run applications that require persistent storage. Otherwise, use a [Deployment](<https://kubernetes.io/docs/concepts/workloads/controllers/deployment/>).
 - When configuring a workload Controller, leave the `spec.replicas` field empty because the equivalent is configured in the target object.
-- If you need persistent volumes for your application, you can use the storage class `local-ssd`. For more information, see [Using Storage Resources](</docs/portal/applications/using-advanced-ecp-features.md#using-stortage-resources>).
+- If you need persistent volumes for your application, you can use the storage class `local-ssd`. For more information, see [Using Storage Resources](</docs/portal/applications/using-advanced-ecp-features.md#using-storage-resources>).
 - Running containers in privileged mode is not allowed.
