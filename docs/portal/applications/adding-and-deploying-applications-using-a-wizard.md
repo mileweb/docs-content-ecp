@@ -26,7 +26,7 @@
 **Note:** You can add containers, environment variables, and volume mounts by clicking their **\+ Add** links in the **Container** section.
 
 5. At the top right of the wizard, click **\> Next**. 
-6. Select whether to expose your application using a [Layer 4 load balancer](<#exposing-via-a-load-balancer>) or the [public network interfaces of a pod replica](<#exposing-via-the-public-network>), and then complete the remaining fields based on your selection.
+6. Select whether to expose your application using a [Layer 4 load balancer](<#exposing-via-a-load-balancer>) or the [public network interfaces of a pod replica](<#exposing-via-the-public-network-interfaces-of-a-pod-replica>), and then complete the remaining fields based on your selection.
 
 ![null](</docs/resources/images/applications/applications-add-wizard-expose.png>)
 
@@ -42,7 +42,7 @@
 
 ### Exposing via the Public Network Interfaces of a Pod Replica
 
-| Fields for **Exposing Application via the Public Network**                                                 | **Description**                                                                                            |
+| Fields for Exposing Application via the Public Network Interfaces of a Pod Replica                                                 | **Description**                                                                                            |
 | ---------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------- |
 | Network interfaces                                                                                         | Drag the controls to the right to expose the application via a public IPv4 network, IPv6 network, or both. |
 
