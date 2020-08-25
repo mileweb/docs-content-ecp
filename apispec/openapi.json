@@ -11420,4 +11420,2256 @@
                           "description": "Name of a \"RegionPreference\" resource. Must be the same as the query param \"appName\"."
                         },
                         "namespace": {
+<<<<<<< HEAD
                           "type": "string",
+=======
+                          "type": "string",
+                          "description": "The kubernetes namespace created for your ECP account"
+                        }
+                      }
+                    },
+                    "spec": {
+                      "type": "object",
+                      "required": [
+                        "regions"
+                      ],
+                      "properties": {
+                        "regions": {
+                          "type": "array",
+                          "description": "Array of target ECP regions to distribute your application",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "name": {
+                                "type": "string",
+                                "description": "Code of an ECP region, e.g. \"NA-WEST\" which stands for west of North America."
+                              },
+                              "replicas": {
+                                "type": "integer",
+                                "description": "The total number of pod instances that you would like to maintain for your application within an ECP region",
+                                "minimum": 1
+                              }
+                            },
+                            "required": [
+                              "name",
+                              "replicas"
+                            ]
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "required": [
+                    "apiVersion",
+                    "Kind",
+                    "metadata",
+                    "spec"
+                  ]
+                },
+                {
+                  "title": "Location",
+                  "type": "object",
+                  "description": "Location",
+                  "x-examples": {
+                    "example-1": {
+                      "apiVersion": "v1",
+                      "kind": "Location",
+                      "metadata": {
+                        "name": "myapp",
+                        "namespace": "demo"
+                      },
+                      "spec": {
+                        "locations": [
+                          {
+                            "name": "sjc",
+                            "replicas": 2
+                          },
+                          {
+                            "name": "ams",
+                            "replicas": 1
+                          }
+                        ]
+                      }
+                    }
+                  },
+                  "properties": {
+                    "apiVersion": {
+                      "type": "string",
+                      "enum": [
+                        "v1"
+                      ]
+                    },
+                    "Kind": {
+                      "type": "string",
+                      "enum": [
+                        "Location"
+                      ],
+                      "description": "Use \"Location\", an ECP custom resource, to pick ECP PoPs where you would like to run your application. "
+                    },
+                    "metadata": {
+                      "type": "object",
+                      "required": [
+                        "namespace"
+                      ],
+                      "properties": {
+                        "name": {
+                          "type": "string",
+                          "description": "Name of a \"Location\" resource. Must be the same as the query param \"appName\"."
+                        },
+                        "namespace": {
+                          "type": "string",
+                          "description": "The kubernetes namespace created for your ECP account"
+                        }
+                      }
+                    },
+                    "spec": {
+                      "type": "object",
+                      "required": [
+                        "locations"
+                      ],
+                      "properties": {
+                        "locations": {
+                          "type": "array",
+                          "description": "Array of target ECP PoPs to run your application",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "name": {
+                                "type": "string",
+                                "description": "Code of an ECP PoP, e.g. \"sjc\" which stands for the PoP at San Jose, US."
+                              },
+                              "replicas": {
+                                "type": "integer",
+                                "description": "Number of pod instances that you would like to maintain for your application at an ECP PoP",
+                                "minimum": 1
+                              }
+                            },
+                            "required": [
+                              "name",
+                              "replicas"
+                            ]
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "required": [
+                    "apiVersion",
+                    "Kind",
+                    "metadata",
+                    "spec"
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "application.spec.replicaset": {
+        "title": "ReplicaSet",
+        "type": "object",
+        "x-examples": {
+          "example-1": {}
+        },
+        "description": "ReplicaSet",
+        "properties": {
+          "apiVersion": {
+            "type": "string",
+            "enum": [
+              "apps/v1"
+            ]
+          },
+          "Kind": {
+            "type": "string",
+            "description": "Use \"ReplicaSet\" as pod controller if your application does not require persistent storage",
+            "enum": [
+              "ReplicaSet"
+            ]
+          },
+          "metadata": {
+            "type": "object",
+            "required": [
+              "namespace"
+            ],
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "Name of a \"StatefulSet\" resource. Must be the same as the query param \"appName\"."
+              },
+              "namespace": {
+                "type": "string",
+                "description": "The kubernetes namespace created for your ECP account"
+              }
+            }
+          },
+          "spec": {
+            "type": "object",
+            "description": "This document only focuses on some typical configs of  a ReplicaSet object. For more about how to specify a ReplicaSet, please refer to the official kubernetes API reference https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.16/#replicaset-v1-apps",
+            "required": [
+              "selector",
+              "template"
+            ],
+            "properties": {
+              "selector": {
+                "type": "object",
+                "description": "A label query over pods. Must match the pod template's labels.",
+                "required": [
+                  "matchLabels"
+                ],
+                "properties": {
+                  "matchLabels": {
+                    "type": "object",
+                    "description": "A map of {key,value} pairs"
+                  }
+                }
+              },
+              "template": {
+                "type": "object",
+                "description": "Template of the pods that will be created by the ReplicaSet",
+                "required": [
+                  "metadata",
+                  "spec"
+                ],
+                "properties": {
+                  "metadata": {
+                    "type": "object",
+                    "required": [
+                      "labels"
+                    ],
+                    "properties": {
+                      "labels": {
+                        "type": "object",
+                        "description": "Map of string keys and values that can be used to organize and categorize pods. Must match selector of the ReplicaSet"
+                      },
+                      "annotations": {
+                        "type": "object",
+                        "description": "An unstructured key value map stored with a pod",
+                        "properties": {
+                          "quantil.com/enableExternalIP": {
+                            "type": "boolean",
+                            "default": false,
+                            "description": "Set this annotation to true if you would like to have a public IPv4 address for the pod. Alternatively, you can create an ECP custom \"LoadBalancer4\" object for your ECP application to expose the pod. "
+                          },
+                          "quantil.com/enableIpv6ExternalIP": {
+                            "type": "boolean",
+                            "default": false,
+                            "description": "Set this annotation to true if you would like to have a public IPv6 address for the pod. Alternatively, you can create an ECP custom \"LoadBalancer4\" object for your ECP application to expose the pod. "
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "spec": {
+                    "type": "object",
+                    "description": "Specification of desired behavior of the pod",
+                    "required": [
+                      "containers"
+                    ],
+                    "properties": {
+                      "containers": {
+                        "type": "array",
+                        "description": "List of containers belonging to the pod. Containers cannot currently be added or removed. There must be at least one container in a Pod. Cannot be updated.",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "image": {
+                              "type": "string",
+                              "description": "Docker image name"
+                            },
+                            "name": {
+                              "type": "string",
+                              "description": "Name of the container specified as a DNS_LABEL"
+                            },
+                            "resources": {
+                              "type": "object",
+                              "description": "Compute Resources required by this container. Cannot be updated.",
+                              "required": [
+                                "limits"
+                              ],
+                              "properties": {
+                                "limits": {
+                                  "type": "object",
+                                  "description": "The maximum amount of compute resources required",
+                                  "required": [
+                                    "cpu",
+                                    "memory"
+                                  ],
+                                  "properties": {
+                                    "cpu": {
+                                      "type": "string",
+                                      "description": "The amount of CPU required. Minimum 0.05 core. The sum of limits.cpu required by all containers in the pod must not exceed 24 cores."
+                                    },
+                                    "memory": {
+                                      "type": "string",
+                                      "description": "The amount of memory required. Minimum 50 MB. The sum of limits.memory required by all containers in the pod must not exceed 128 GB."
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          },
+                          "required": [
+                            "image",
+                            "name",
+                            "resources"
+                          ]
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "required": [
+          "apiVersion",
+          "Kind",
+          "metadata",
+          "spec"
+        ]
+      },
+      "application.spec.target": {
+        "title": "App Distribution",
+        "oneOf": [
+          {
+            "title": "RegionPreference",
+            "type": "object",
+            "x-examples": {
+              "example-1": {
+                "apiVersion": "v1",
+                "kind": "RegionPreference",
+                "metadata": {
+                  "name": "myapp",
+                  "namespace": "demo"
+                },
+                "spec": {
+                  "regions": [
+                    {
+                      "name": "NA-WEST",
+                      "replicas": 6
+                    },
+                    {
+                      "name": "EU",
+                      "replicas": 4
+                    }
+                  ]
+                }
+              }
+            },
+            "description": "Region",
+            "properties": {
+              "apiVersion": {
+                "type": "string",
+                "enum": [
+                  "v1"
+                ]
+              },
+              "Kind": {
+                "type": "string",
+                "description": "Use \"RegionPreference\", an ECP custom resource, to specify ECP regions where you would like to have your application distributed. ",
+                "enum": [
+                  "RegionPreference"
+                ]
+              },
+              "metadata": {
+                "type": "object",
+                "required": [
+                  "namespace"
+                ],
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "description": "Name of a \"RegionPreference\" resource. Must be the same as the query param \"appName\"."
+                  },
+                  "namespace": {
+                    "type": "string",
+                    "description": "The kubernetes namespace created for your ECP account"
+                  }
+                }
+              },
+              "spec": {
+                "type": "object",
+                "required": [
+                  "regions"
+                ],
+                "properties": {
+                  "regions": {
+                    "type": "array",
+                    "description": "Array of target ECP regions to distribute your application",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "name": {
+                          "type": "string",
+                          "description": "Code of an ECP region, e.g. \"NA-WEST\" which stands for west of North America."
+                        },
+                        "replicas": {
+                          "type": "integer",
+                          "description": "The total number of pod instances that you would like to maintain for your application within an ECP region",
+                          "minimum": 1
+                        }
+                      },
+                      "required": [
+                        "name",
+                        "replicas"
+                      ]
+                    }
+                  }
+                }
+              }
+            },
+            "required": [
+              "apiVersion",
+              "Kind",
+              "metadata",
+              "spec"
+            ]
+          },
+          {
+            "title": "Location",
+            "type": "object",
+            "description": "Location",
+            "x-examples": {
+              "example-1": {
+                "apiVersion": "v1",
+                "kind": "Location",
+                "metadata": {
+                  "name": "myapp",
+                  "namespace": "demo"
+                },
+                "spec": {
+                  "locations": [
+                    {
+                      "name": "sjc",
+                      "replicas": 2
+                    },
+                    {
+                      "name": "ams",
+                      "replicas": 1
+                    }
+                  ]
+                }
+              }
+            },
+            "properties": {
+              "apiVersion": {
+                "type": "string",
+                "enum": [
+                  "v1"
+                ]
+              },
+              "Kind": {
+                "type": "string",
+                "enum": [
+                  "Location"
+                ],
+                "description": "Use \"Location\", an ECP custom resource, to pick ECP PoPs where you would like to run your application. "
+              },
+              "metadata": {
+                "type": "object",
+                "required": [
+                  "namespace"
+                ],
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "description": "Name of a \"Location\" resource. Must be the same as the query param \"appName\"."
+                  },
+                  "namespace": {
+                    "type": "string",
+                    "description": "The kubernetes namespace created for your ECP account"
+                  }
+                }
+              },
+              "spec": {
+                "type": "object",
+                "required": [
+                  "locations"
+                ],
+                "properties": {
+                  "locations": {
+                    "type": "array",
+                    "description": "Array of target ECP PoPs to run your application",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "name": {
+                          "type": "string",
+                          "description": "Code of an ECP PoP, e.g. \"sjc\" which stands for the PoP at San Jose, US."
+                        },
+                        "replicas": {
+                          "type": "integer",
+                          "description": "Number of pod instances that you would like to maintain for your application at an ECP PoP",
+                          "minimum": 1
+                        }
+                      },
+                      "required": [
+                        "name",
+                        "replicas"
+                      ]
+                    }
+                  }
+                }
+              }
+            },
+            "required": [
+              "apiVersion",
+              "Kind",
+              "metadata",
+              "spec"
+            ]
+          }
+        ]
+      },
+      "application.spec.workload": {
+        "title": "App Configuration",
+        "oneOf": [
+          {
+            "title": "ReplicaSet",
+            "type": "object",
+            "x-examples": {
+              "example-1": {}
+            },
+            "description": "ReplicaSet",
+            "properties": {
+              "apiVersion": {
+                "type": "string",
+                "enum": [
+                  "apps/v1"
+                ]
+              },
+              "Kind": {
+                "type": "string",
+                "description": "Use \"ReplicaSet\" as pod controller if your application does not require persistent storage",
+                "enum": [
+                  "ReplicaSet"
+                ]
+              },
+              "metadata": {
+                "type": "object",
+                "required": [
+                  "namespace"
+                ],
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "description": "Name of a \"StatefulSet\" resource. Must be the same as the query param \"appName\"."
+                  },
+                  "namespace": {
+                    "type": "string",
+                    "description": "The kubernetes namespace created for your ECP account"
+                  }
+                }
+              },
+              "spec": {
+                "type": "object",
+                "description": "This document only focuses on some typical configs of  a ReplicaSet object. For more about how to specify a ReplicaSet, please refer to the official kubernetes API reference https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.16/#replicaset-v1-apps",
+                "required": [
+                  "selector",
+                  "template"
+                ],
+                "properties": {
+                  "selector": {
+                    "type": "object",
+                    "description": "A label query over pods. Must match the pod template's labels.",
+                    "required": [
+                      "matchLabels"
+                    ],
+                    "properties": {
+                      "matchLabels": {
+                        "type": "object",
+                        "description": "A map of {key,value} pairs"
+                      }
+                    }
+                  },
+                  "template": {
+                    "type": "object",
+                    "description": "Template of the pods that will be created by the ReplicaSet",
+                    "required": [
+                      "metadata",
+                      "spec"
+                    ],
+                    "properties": {
+                      "metadata": {
+                        "type": "object",
+                        "required": [
+                          "labels"
+                        ],
+                        "properties": {
+                          "labels": {
+                            "type": "object",
+                            "description": "Map of string keys and values that can be used to organize and categorize pods. Must match selector of the ReplicaSet"
+                          },
+                          "annotations": {
+                            "type": "object",
+                            "description": "An unstructured key value map stored with a pod",
+                            "properties": {
+                              "quantil.com/enableExternalIP": {
+                                "type": "boolean",
+                                "default": false,
+                                "description": "Set this annotation to true if you would like to have a public IPv4 address for the pod. Alternatively, you can create an ECP custom \"LoadBalancer4\" object for your ECP application to expose the pod. "
+                              },
+                              "quantil.com/enableIpv6ExternalIP": {
+                                "type": "boolean",
+                                "default": false,
+                                "description": "Set this annotation to true if you would like to have a public IPv6 address for the pod. Alternatively, you can create an ECP custom \"LoadBalancer4\" object for your ECP application to expose the pod. "
+                              }
+                            }
+                          }
+                        }
+                      },
+                      "spec": {
+                        "type": "object",
+                        "description": "Specification of desired behavior of the pod",
+                        "required": [
+                          "containers"
+                        ],
+                        "properties": {
+                          "containers": {
+                            "type": "array",
+                            "description": "List of containers belonging to the pod. Containers cannot currently be added or removed. There must be at least one container in a Pod. Cannot be updated.",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "image": {
+                                  "type": "string",
+                                  "description": "Docker image name"
+                                },
+                                "name": {
+                                  "type": "string",
+                                  "description": "Name of the container specified as a DNS_LABEL"
+                                },
+                                "resources": {
+                                  "type": "object",
+                                  "description": "Compute Resources required by this container. Cannot be updated.",
+                                  "required": [
+                                    "limits"
+                                  ],
+                                  "properties": {
+                                    "limits": {
+                                      "type": "object",
+                                      "description": "The maximum amount of compute resources required",
+                                      "required": [
+                                        "cpu",
+                                        "memory"
+                                      ],
+                                      "properties": {
+                                        "cpu": {
+                                          "type": "string",
+                                          "description": "The amount of CPU required. Minimum 0.05 core. The sum of limits.cpu required by all containers in the pod must not exceed 24 cores."
+                                        },
+                                        "memory": {
+                                          "type": "string",
+                                          "description": "The amount of memory required. Minimum 50 MB. The sum of limits.memory required by all containers in the pod must not exceed 128 GB."
+                                        }
+                                      }
+                                    }
+                                  }
+                                }
+                              },
+                              "required": [
+                                "image",
+                                "name",
+                                "resources"
+                              ]
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "required": [
+              "apiVersion",
+              "Kind",
+              "metadata",
+              "spec"
+            ]
+          },
+          {
+            "title": "StatefulSet",
+            "type": "object",
+            "description": "StatefulSet",
+            "x-examples": {
+              "example-1": {}
+            },
+            "properties": {
+              "apiVersion": {
+                "type": "string",
+                "enum": [
+                  "apps/v1"
+                ]
+              },
+              "Kind": {
+                "type": "string",
+                "description": "Use \"StatefulSet\" as pod controller if your application needs to use persistent volumes",
+                "enum": [
+                  "StatefulSet"
+                ]
+              },
+              "metadata": {
+                "type": "object",
+                "required": [
+                  "namespace"
+                ],
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "description": "Name of a \"StatefulSet\" resource. Must be the same as the query param \"appName\"."
+                  },
+                  "namespace": {
+                    "type": "string",
+                    "description": "The kubernetes namespace created for your ECP account"
+                  }
+                }
+              },
+              "spec": {
+                "type": "object",
+                "description": "This document only focuses on some typical configs of  a StatefulSet object. For more about how to specify a StatefulSet, please refer to the official kubernetes API reference https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.16/#statefulset-v1-apps",
+                "required": [
+                  "selector",
+                  "template"
+                ],
+                "properties": {
+                  "selector": {
+                    "type": "object",
+                    "description": "A label query over pods. Must match the pod template's labels.",
+                    "required": [
+                      "matchLabels"
+                    ],
+                    "properties": {
+                      "matchLabels": {
+                        "type": "object",
+                        "description": "A map of {key,value} pairs"
+                      }
+                    }
+                  },
+                  "template": {
+                    "type": "object",
+                    "description": "Template of the pods that will be created by the StatefulSet",
+                    "required": [
+                      "metadata",
+                      "spec"
+                    ],
+                    "properties": {
+                      "metadata": {
+                        "type": "object",
+                        "required": [
+                          "labels"
+                        ],
+                        "properties": {
+                          "labels": {
+                            "type": "object",
+                            "description": "Map of string keys and values that can be used to organize and categorize pods. Must match selector of the StatefulSet"
+                          },
+                          "annotations": {
+                            "type": "object",
+                            "description": "An unstructured key value map stored with a pod",
+                            "properties": {
+                              "quantil.com/enableExternalIP": {
+                                "type": "boolean",
+                                "default": false,
+                                "description": "Set this annotation to true if you would like to have a public IPv4 address for the pod. Alternatively, you can create an ECP custom \"LoadBalancer4\" object for your ECP application to expose the pod. "
+                              },
+                              "quantil.com/enableIpv6ExternalIP": {
+                                "type": "boolean",
+                                "default": false,
+                                "description": "Set this annotation to true if you would like to have a public IPv6 address for the pod. Alternatively, you can create an ECP custom \"LoadBalancer4\" object for your ECP application to expose the pod. "
+                              }
+                            }
+                          }
+                        }
+                      },
+                      "spec": {
+                        "type": "object",
+                        "required": [
+                          "containers"
+                        ],
+                        "description": "Specification of desired behavior of the pod",
+                        "properties": {
+                          "containers": {
+                            "type": "array",
+                            "description": "List of containers belonging to the pod. Containers cannot currently be added or removed. There must be at least one container in a Pod. Cannot be updated.",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "image": {
+                                  "type": "string",
+                                  "description": "Docker image name"
+                                },
+                                "name": {
+                                  "type": "string",
+                                  "description": "Name of the container specified as a DNS_LABEL"
+                                },
+                                "resources": {
+                                  "type": "object",
+                                  "required": [
+                                    "limits"
+                                  ],
+                                  "description": "Compute Resources required by this container. Cannot be updated.",
+                                  "properties": {
+                                    "limits": {
+                                      "type": "object",
+                                      "required": [
+                                        "cpu",
+                                        "memory"
+                                      ],
+                                      "description": "The maximum amount of compute resources required",
+                                      "properties": {
+                                        "cpu": {
+                                          "type": "string",
+                                          "description": "The amount of CPU required. Minimum 0.05 core. The sum of limits.cpu required by all containers in the pod must not exceed 24 cores."
+                                        },
+                                        "memory": {
+                                          "type": "string",
+                                          "description": "The amount of memory required. Minimum 50 MB. The sum of limits.memory required by all containers in the pod must not exceed 128 GB."
+                                        }
+                                      }
+                                    }
+                                  }
+                                },
+                                "volumeMounts": {
+                                  "type": "array",
+                                  "description": "Pod volumes to mount into the container's filesystem. Cannot be updated.",
+                                  "items": {
+                                    "type": "object",
+                                    "properties": {
+                                      "name": {
+                                        "type": "string",
+                                        "description": "This must match the Name of a Volume"
+                                      },
+                                      "mountPath": {
+                                        "type": "string",
+                                        "description": "Path within the container at which the volume should be mounted. Must not contain ':'."
+                                      }
+                                    }
+                                  }
+                                }
+                              },
+                              "required": [
+                                "image",
+                                "name",
+                                "resources"
+                              ]
+                            }
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "volumeClaimTemplates": {
+                    "type": "array",
+                    "description": "A list of persistent volume claims that pods are allowed to reference. Every claim in this list must have at least one matching (by name) volumeMount in one container in the pod template.",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "metadata": {
+                          "type": "object",
+                          "properties": {
+                            "name": {
+                              "type": "string",
+                              "description": "Name of a volume claim"
+                            },
+                            "annotations": {
+                              "type": "object",
+                              "properties": {
+                                "volume.beta.kubernetes.io/storage-class": {
+                                  "type": "string",
+                                  "enum": [
+                                    "local-ssd",
+                                    "persist-ssd"
+                                  ],
+                                  "description": "Specifiy the storageClass of a volume claim. Options include \"local-ssd\" and \"persist-ssd\". \"local-ssd\" means local persistent SSD storage, in which case data will be lost when a pod is rescheduled to another node. \"persist-ssd\" means remote persistent SSD storage, in which case data will be persisted even when the pod is rescheduled."
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "spec": {
+                          "type": "object",
+                          "properties": {
+                            "accessModes": {
+                              "type": "array",
+                              "description": "The desired access modes the volume claim should have. Should be \"ReadWriteOnce\".",
+                              "items": {
+                                "type": "string"
+                              }
+                            },
+                            "resources": {
+                              "type": "object",
+                              "description": "The resources the volume claim should have",
+                              "properties": {
+                                "requests": {
+                                  "type": "object",
+                                  "description": "The minimum amount of resources required",
+                                  "properties": {
+                                    "storage": {
+                                      "type": "string",
+                                      "description": "The storage capacity required. Must be not less than 500MB and not higher than 100GB."
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "required": [
+              "apiVersion",
+              "Kind",
+              "metadata",
+              "spec"
+            ]
+          }
+        ]
+      },
+      "report.data": {
+        "title": "",
+        "properties": {
+          "data": {
+            "type": "array",
+            "description": "array of time serialized metric values",
+            "items": {
+              "type": "object",
+              "properties": {
+                "timestamp": {
+                  "type": "string",
+                  "description": "timestamp"
+                },
+                "value": {
+                  "type": "number",
+                  "description": "metric value"
+                }
+              }
+            }
+          }
+        },
+        "type": "object"
+      },
+      "report.pod.diskusage": {
+        "title": "Storage report",
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "array",
+            "description": "Array of time serialized metric values. This schema is used when the queried metric is 'diskUsage'",
+            "items": {
+              "type": "object",
+              "properties": {
+                "timestamp": {
+                  "type": "string",
+                  "description": "timestamp"
+                },
+                "volumes": {
+                  "type": "array",
+                  "description": "metric value",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "volume": {
+                        "type": "string",
+                        "description": "Could be a container rootFS or a PVC volume attached to a pod"
+                      },
+                      "value": {
+                        "type": "number",
+                        "description": "Disk usage rate, e.g. \"0.2\" means 20% of disk capacity is used."
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "description": "If the metric is \"diskUsage\", the response will be in this format."
+      },
+      "report.pod.metrics": {
+        "title": "CPU/memory/traffic report",
+        "properties": {
+          "data": {
+            "type": "array",
+            "description": "Array of time serialized metric values. This schema is used when the queried metric is a metric other than 'diskUsage'",
+            "items": {
+              "type": "object",
+              "properties": {
+                "timestamp": {
+                  "type": "string",
+                  "description": "timestamp"
+                },
+                "value": {
+                  "type": "number",
+                  "description": "metric value"
+                }
+              }
+            }
+          }
+        },
+        "type": "object"
+      },
+      "report.servicezone.data": {
+        "title": "",
+        "type": "object",
+        "properties": {
+          "series": {
+            "type": "array",
+            "description": "usage reports grouped per service zones",
+            "items": {
+              "type": "object",
+              "properties": {
+                "serviceZone": {
+                  "type": "string",
+                  "enum": [
+                    "business",
+                    "standard",
+                    "premium"
+                  ]
+                },
+                "data": {
+                  "type": "array",
+                  "description": "array of time serialized metric values",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "timestamp": {
+                        "type": "string",
+                        "description": "timestamp"
+                      },
+                      "value": {
+                        "type": "number",
+                        "description": "metric value"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "error.report.InvalidMetric": {
+        "title": "InvalidMetric",
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "string",
+            "description": "InvalidMetric"
+          },
+          "message": {
+            "type": "string",
+            "description": "The metric given is invalid."
+          }
+        }
+      },
+      "error.report.InvalidDateFormat": {
+        "title": "InvalidDateFormat",
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "string",
+            "description": "InvalidDateFormat"
+          },
+          "message": {
+            "type": "string",
+            "description": "Invalid parameter {startTime / endTime}. {startTime/endTime} is not a valid RFC3339 timestamp. The timestamp should be in \"yyyy-MM-dd'T'HH:mm:ss'Z'\" format."
+          }
+        }
+      },
+      "error.report.InvalidRange": {
+        "title": "InvalidRange",
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "string",
+            "description": "InvalidRange"
+          },
+          "message": {
+            "type": "string",
+            "description": "One of: \"The max time span of {interval} report must be no more than {xxx days}.\" \"The parameter 'startTime' cannot be a time in the future.\" \"The parameter 'endTime' should be after 'startTime'.\""
+          }
+        }
+      },
+      "error.report.InvalidInterval": {
+        "title": "InvalidInterval",
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "string",
+            "description": "InvalidInterval"
+          },
+          "message": {
+            "type": "string",
+            "description": "The interval requested is invalid."
+          }
+        }
+      },
+      "error.report.PoPNotExist": {
+        "title": "PoPNotExist",
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "string",
+            "description": "PoPNotExist"
+          },
+          "message": {
+            "type": "string",
+            "description": "The PoP given is invalid or does not exist."
+          }
+        }
+      },
+      "error.report.ServiceZoneNotExist": {
+        "title": "ServiceZoneNotExist",
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "string",
+            "description": "ServiceZoneNotExist"
+          },
+          "message": {
+            "type": "string",
+            "description": "The serviceZone given is invalid or does not exist."
+          }
+        }
+      },
+      "error.report.ApplicationNotExist": {
+        "title": "ApplicationNotExist",
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "string",
+            "description": "ApplicationNotExist"
+          },
+          "message": {
+            "type": "string",
+            "description": "The application ID given does not exist."
+          }
+        }
+      },
+      "error.report.InstanceNotFound": {
+        "title": "InstanceNotFound",
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "string",
+            "description": "InstanceNotFound"
+          },
+          "message": {
+            "type": "string",
+            "description": "The instance specified does not exist, or is not an instance of the given application."
+          }
+        }
+      },
+      "error.report.InvalidQuota": {
+        "title": "InvalidQuota",
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "string",
+            "description": "InvalidQuota"
+          },
+          "message": {
+            "type": "string",
+            "description": "The quota name given is invalid."
+          }
+        }
+      },
+      "error.report.InvalidReportRange": {
+        "title": "InvalidReportRange",
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "string",
+            "description": "InvalidReportRange"
+          },
+          "message": {
+            "type": "string",
+            "description": "A valid report range shall be “self-only”, “children-only”, or “self+children”."
+          }
+        }
+      },
+      "error.InvalidListOffset": {
+        "title": "InvalidListOffset",
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "string",
+            "description": "InvalidListOffset"
+          },
+          "message": {
+            "type": "string",
+            "description": "The value of offset must be a valid non-negative integer."
+          }
+        }
+      },
+      "error.InvalidListLimit": {
+        "title": "InvalidListLimit",
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "string",
+            "description": "InvalidListLimit"
+          },
+          "message": {
+            "type": "string",
+            "description": "The value of limit must be a valid integer between 1 and 200, both inclusive."
+          }
+        }
+      },
+      "error.InvalidListLimit(allows-0)": {
+        "title": "InvalidListLimit",
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "string",
+            "description": "InvalidListLimit"
+          },
+          "message": {
+            "type": "string",
+            "description": "The value of limit must be a valid integer between 0 and 200, both inclusive. Set limit to 0 to retrieve a complete list."
+          }
+        }
+      },
+      "error.cname.CnamePrefixExists": {
+        "title": "CnamePrefixExists",
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "string",
+            "description": "CnamePrefixExists"
+          },
+          "message": {
+            "type": "string",
+            "description": "The prefix is already taken."
+          }
+        }
+      },
+      "error.cname.InvalidCnamePrefix": {
+        "title": "InvalidCnamePrefix",
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "string",
+            "description": "InvalidCnamePrefix"
+          },
+          "message": {
+            "type": "string",
+            "description": "Invalid prefix. A valid prefix must consist of lower-case alphanumeric characters and must be no more than 63 characters."
+          }
+        }
+      },
+      "error.cname.ApplicationNotFound": {
+        "title": "ApplicationNotFound",
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "string",
+            "description": "ApplicationNotFound"
+          },
+          "message": {
+            "type": "string",
+            "description": "The application ID given does not exist."
+          }
+        }
+      },
+      "error.cname.ApplicationIDEmpty": {
+        "title": "ApplicationIDEmpty",
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "string",
+            "description": "ApplicationIDEmpty"
+          },
+          "message": {
+            "type": "string",
+            "description": "The applicationID cannot be empty."
+          }
+        }
+      },
+      "error.cname.ApplicationHasCname": {
+        "title": "ApplicationHasCname",
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "string",
+            "description": "ApplicationHasCname"
+          },
+          "message": {
+            "type": "string",
+            "description": "A CNAME for the application already exists."
+          }
+        },
+        "x-examples": {}
+      },
+      "error.cname.CnameNotFound": {
+        "title": "CnameNotFound",
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "string",
+            "description": "CnameNotFound"
+          },
+          "message": {
+            "type": "string",
+            "description": "The CNAME ID given does not exist."
+          }
+        }
+      },
+      "error.secret.SecretNameExists": {
+        "title": "SecretNameExists",
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "string",
+            "description": "SecretNameExists"
+          },
+          "message": {
+            "type": "string",
+            "description": "The secret name is already taken."
+          }
+        }
+      },
+      "error.secret.InvalidSecretName": {
+        "title": "InvalidSecretName",
+        "type": "object",
+        "description": "",
+        "properties": {
+          "error": {
+            "type": "string",
+            "description": "InvalidSecretName"
+          },
+          "message": {
+            "type": "string",
+            "description": "Invalid secret name. A valid secret name must consist of lower-case alphanumeric characters, ‘-', or '.’, must start and end with a lower-case alphanumeric character, and must be no more than 63 characters."
+          }
+        }
+      },
+      "error.secret.NamespaceNotExist": {
+        "title": "NamespaceNotExist",
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "string",
+            "description": "NamespaceNotExist"
+          },
+          "message": {
+            "type": "string",
+            "description": "The namespace given does not exist."
+          }
+        }
+      },
+      "error.secret.NameEmpty": {
+        "title": "NameEmpty",
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "string",
+            "description": "NameEmpty"
+          },
+          "message": {
+            "type": "string",
+            "description": "The name field cannot be empty."
+          }
+        }
+      },
+      "error.secret.NamespaceEmpty": {
+        "title": "NamespaceEmpty",
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "string",
+            "description": "NamespaceEmpty"
+          },
+          "message": {
+            "type": "string",
+            "description": "The namespace field cannot be empty."
+          }
+        }
+      },
+      "error.secret.RegistryEmpty": {
+        "title": "RegistryEmpty",
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "string",
+            "description": "RegistryEmpty"
+          },
+          "message": {
+            "type": "string",
+            "description": "The registry field cannot be empty."
+          }
+        }
+      },
+      "error.secret.UsernameEmpty": {
+        "title": "UsernameEmpty",
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "string",
+            "description": "UsernameEmpty"
+          },
+          "message": {
+            "type": "string",
+            "description": "The username field cannot be empty."
+          }
+        }
+      },
+      "error.secret.PasswordEmpty": {
+        "title": "PasswordEmpty",
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "string",
+            "description": "PasswordEmpty"
+          },
+          "message": {
+            "type": "string",
+            "description": "The password field cannot be empty."
+          }
+        }
+      },
+      "error.secret.SecretNotFound": {
+        "title": "SecretNotFound",
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "string",
+            "description": "SecretNotFound"
+          },
+          "message": {
+            "type": "string",
+            "description": "The secret ID given does not exist."
+          }
+        }
+      },
+      "error.secret.SecretBeingUsed": {
+        "title": "SecretBeingUsed",
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "string",
+            "description": "SecretBeingUsed"
+          },
+          "message": {
+            "type": "string",
+            "description": "The secret is being used by applications and cannot be deleted."
+          }
+        }
+      },
+      "error.application.InvalidStatus": {
+        "title": "InvalidStatus",
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "string",
+            "description": "InvalidStatus"
+          },
+          "message": {
+            "type": "string",
+            "description": "The value of the “status” parameter is invalid. Should be “waiting”, “deploying”, “deployed”, or “failed.”"
+          }
+        }
+      },
+      "error.application.ApplicationNotFound": {
+        "title": "ApplicationNotFound",
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "string",
+            "description": "ApplicationNotFound"
+          },
+          "message": {
+            "type": "string",
+            "description": "The application ID given does not exist."
+          }
+        }
+      },
+      "error.application.InvalidPhase": {
+        "title": "InvalidPhase",
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "string",
+            "description": "InvalidPhase"
+          },
+          "message": {
+            "type": "string",
+            "description": "The phase given is invalid. The value should be one of “Pending”, “Running”, and “Failed”."
+          }
+        }
+      },
+      "error.application.PoPNotExist": {
+        "title": "PoPNotExist",
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "string",
+            "description": "PoPNotExist"
+          },
+          "message": {
+            "type": "string",
+            "description": "The PoP given is invalid or does not exist."
+          }
+        }
+      },
+      "error.application.InstanceNotFound": {
+        "title": "InstanceNotFound",
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "string",
+            "description": "InstanceNotFound"
+          },
+          "message": {
+            "type": "string",
+            "description": "The instance specified does not exist, or is not an instance of the given application."
+          }
+        }
+      },
+      "error.application.ApplicationBeingDeleted": {
+        "title": "ApplicationBeingDeleted",
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "string",
+            "description": "ApplicationBeingDeleted"
+          },
+          "message": {
+            "type": "string",
+            "description": "The application is being deleted and cannot be updated or deleted again."
+          }
+        }
+      },
+      "error.application.ApplicationHasCname": {
+        "title": "ApplicationHasCname",
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "string",
+            "description": "ApplicationHasCname"
+          },
+          "message": {
+            "type": "string",
+            "description": "A CNAME for the application exists. Please delete the CNAME first."
+          }
+        }
+      },
+      "error.application.AppNameExists": {
+        "title": "AppNameExists",
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "string",
+            "description": "AppNameExists"
+          },
+          "message": {
+            "type": "string",
+            "description": "The app name is already taken."
+          }
+        }
+      },
+      "error.application.InvalidAppName": {
+        "title": "InvalidAppName",
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "string",
+            "description": "InvalidAppName"
+          },
+          "message": {
+            "type": "string",
+            "description": "Invalid app name. A valid app name must consist of lower-case alphanumeric characters or ‘-', must start and end with a lower-case alphanumeric character, and must be no more than 48 characters."
+          }
+        }
+      },
+      "error.application.NamespaceNotSpecified": {
+        "title": "NamespaceNotSpecified",
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "string",
+            "description": "NamespaceNotSpecified"
+          },
+          "message": {
+            "type": "string",
+            "description": "The “metadata.namespace” field must be specified for each object of an application."
+          }
+        }
+      },
+      "error.application.AppNameInconsistent": {
+        "title": "AppNameInconsistent",
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "string",
+            "description": "AppNameInconsistent"
+          },
+          "message": {
+            "type": "string",
+            "description": "The \"appName\" parameter value is inconsistent with the YAML/JSON file in request body. The \"metadata.name\" field of each object to be deployed must use the same app name."
+          }
+        }
+      },
+      "error.application.QuotaExceeded": {
+        "title": "QuotaExceeded",
+        "type": "object",
+        "description": "",
+        "properties": {
+          "error": {
+            "type": "string",
+            "description": "QuotaExceeded"
+          },
+          "message": {
+            "type": "string",
+            "description": "The application could not be deployed because it requires {resource requests}. You have a quota of {resources available}."
+          }
+        }
+      },
+      "error.application.ConflictNetworkConfiguration": {
+        "title": "ConflictNetworkConfiguration",
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "string",
+            "description": "ConflictNetworkConfiguration"
+          },
+          "message": {
+            "type": "string",
+            "description": "Requesting public IPv4 addresses for pods is not allowed when a LoadBalancer4 object is already specified. Please remove the LoadBalancer4 object if your pods need to have publicly accessible IPv4 addresses."
+          }
+        }
+      },
+      "error.application.WorkloadObjectNotFound": {
+        "title": "WorkloadObjectNotFound",
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "string",
+            "description": "WorkloadObjectNotFound"
+          },
+          "message": {
+            "type": "string",
+            "description": "No workload object is found. Each application should define one and only workload object."
+          }
+        }
+      },
+      "error.application.MultipleResourceObjectsNotAllowed": {
+        "title": "MultipleResourceObjectsNotAllowed",
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "string",
+            "description": "MultipleResourceObjectsNotAllowed"
+          },
+          "message": {
+            "type": "string",
+            "description": "Defining multiple objects of the resource {kind} is not allowed."
+          }
+        }
+      },
+      "error.application.SyntaxError": {
+        "title": "SyntaxError",
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "string",
+            "description": "SyntaxError"
+          },
+          "message": {
+            "type": "string",
+            "description": "{error message}"
+          }
+        }
+      },
+      "error.application.IncorrectApiVersion": {
+        "title": "IncorrectApiVersion",
+        "type": "object",
+        "description": "",
+        "properties": {
+          "error": {
+            "type": "string",
+            "description": "IncorrectApiVersion"
+          },
+          "message": {
+            "type": "string",
+            "description": "No kind {kind} is registered for version {version}."
+          }
+        }
+      },
+      "error.application.InvalidResourceRequirement": {
+        "title": "InvalidResourceRequirement",
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "string",
+            "description": "InvalidResourceRequirement"
+          },
+          "message": {
+            "type": "string",
+            "description": "The resource requirement is invalid. {Reason}\n\nPossible reasons:\n1. The requests.cpu of a container should not be lower than 0.05 core. \n2. The sum of limits.cpu of a pod should not be higher than 24 cores. \n3. The requests.cpu should be less than or equal to limits.cpu. \n4. The CPU requirement (measured in cores) should be expressed in plain numbers or with “m” suffix. \n5. The requests.mem of a container should not be lower than 50MB.\n6. The sum of limits.mem of a pod should not be higher than 128GB. \n7. The requests.mem should be less than or equal to limits.mem.\n8. The memory requirement (measured in bytes) should be expressed in plain numbers or with these suffixes: E, P, T, G, M, K, Ei, Pi, Ti, Gi, Mi, Ki.\n9. The requests.storage of a PVC should be not lower than 500MB and not higher than 100GB.\n10. The storage requirement (measured in bytes) should be expressed in plain numbers or with these suffixes: E, P, T, G, M, K, Ei, Pi, Ti, Gi, Mi, Ki."
+          }
+        }
+      },
+      "error.application.MultipleControllerTypesNotAllowed": {
+        "title": "MultipleControllerTypesNotAllowed",
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "string",
+            "description": "MultipleControllerTypesNotAllowed"
+          },
+          "message": {
+            "type": "string",
+            "description": "Defining multiple controller types for an application is not allowed."
+          }
+        }
+      },
+      "error.application.TargetsNotSpecified": {
+        "title": "TargetsNotSpecified",
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "string",
+            "description": "TargetsNotSpecified"
+          },
+          "message": {
+            "type": "string",
+            "description": "No “Location” or “RegionPreference” object is found. Please specify."
+          }
+        }
+      },
+      "error.application.RepeatedTarget": {
+        "title": "RepeatedTarget",
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "string",
+            "description": "RepeatedTarget"
+          },
+          "message": {
+            "type": "string",
+            "description": "The target {location/region} is repeated in your specification. Please combine them into one target."
+          }
+        }
+      },
+      "error.application.ConflictTargets": {
+        "title": "ConflictTargets",
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "string",
+            "description": "ConflictTargets"
+          },
+          "message": {
+            "type": "string",
+            "description": "Specifying a “Location” object and a “RegionPreference” object together is not allowed."
+          }
+        }
+      },
+      "error.application.PoPNotAvailable": {
+        "title": "PoPNotAvailable",
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "string",
+            "description": "PoPNotAvailable"
+          },
+          "message": {
+            "type": "string",
+            "description": "The PoP {pop code} specified is offline and currently not available."
+          }
+        }
+      },
+      "error.application.PoPFullyLoaded": {
+        "title": "PoPFullyLoaded",
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "string",
+            "description": "PoPFullyLoaded"
+          },
+          "message": {
+            "type": "string",
+            "description": "The PoP {pop code} specified is fully loaded and cannot provision resources requested. Please choose a different location."
+          }
+        }
+      },
+      "error.application.RegionDoesNotExist": {
+        "title": "RegionDoesNotExist",
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "string",
+            "description": "RegionDoesNotExist"
+          },
+          "message": {
+            "type": "string",
+            "description": "The region {region} is invalid or does not exist."
+          }
+        }
+      },
+      "error.application.RegionNotAvailable": {
+        "title": "RegionNotAvailable",
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "string",
+            "description": "RegionNotAvailable"
+          },
+          "message": {
+            "type": "string",
+            "description": "There are currently no available PoPs under the region {region}."
+          }
+        }
+      },
+      "error.application.VolumeNotDefined": {
+        "title": "VolumeNotDefined",
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "string",
+            "description": "VolumeNotDefined"
+          },
+          "message": {
+            "type": "string",
+            "description": "The volume {volume name} in “volumeMounts” is not defined."
+          }
+        }
+      },
+      "error.application.VolumeNotMounted": {
+        "title": "VolumeNotMounted",
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "string",
+            "description": "VolumeNotMounted"
+          },
+          "message": {
+            "type": "string",
+            "description": "One of: \"The volume {volume name} defined is not mounted to any mount points.\" \"The volume {volume name} is not properly mounted. The field “volumeMounts[].mountPath” is required.\""
+          }
+        }
+      },
+      "error.application.ConflictVolumeName": {
+        "title": "ConflictVolumeName",
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "string",
+            "description": "ConflictVolumeName"
+          },
+          "message": {
+            "type": "string",
+            "description": "A volume name must be unique across volumes of all types."
+          }
+        }
+      },
+      "error.application.ConflictVolumeMountPath": {
+        "title": "ConflictVolumeMountPath",
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "string",
+            "description": "ConflictVolumeMountPath"
+          },
+          "message": {
+            "type": "string",
+            "description": "The mountPath in volumeMounts must be unique and without overlapping."
+          }
+        }
+      },
+      "error.application.PVCVolumeNotAllowed": {
+        "title": "PVCVolumeNotAllowed",
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "string",
+            "description": "PVCVolumeNotAllowed"
+          },
+          "message": {
+            "type": "string",
+            "description": "Using PVC volumes with a kubernetes Controller of type other than StatefulSet is not allowed."
+          }
+        }
+      },
+      "error.application.VolumeTypeNotAllowed": {
+        "title": "VolumeTypeNotAllowed",
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "string",
+            "description": "VolumeTypeNotAllowed"
+          },
+          "message": {
+            "type": "string",
+            "description": "Only “configMap” and “secret” volumes are allowed. If a PVC volume is desired, please use a StatefulSet Controller and define the volume in “spec.volumeClaimTemplates”."
+          }
+        }
+      },
+      "error.application.ConflictPVCStorageClass": {
+        "title": "ConflictPVCStorageClass",
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "string",
+            "description": "ConflictPVCStorageClass"
+          },
+          "message": {
+            "type": "string",
+            "description": "Using PVC volumes of different storage classes is not allowed."
+          }
+        }
+      },
+      "error.application.InvalidLoadBalancer4Listener": {
+        "title": "InvalidLoadBalancer4Listener",
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "string",
+            "description": "InvalidLoadBalancer4Listener"
+          },
+          "message": {
+            "type": "string",
+            "description": "The LoadBalancer4 listener {listener name} is invalid. The “backendSelector” does not match {ReplicaSet/StatefulSet/Deployment}.spec.template.metadata.labels."
+          }
+        }
+      },
+      "error.application.ResourceObjectNotExist": {
+        "title": "ResourceObjectNotExist",
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "string",
+            "description": "ResourceObjectNotExist"
+          },
+          "message": {
+            "type": "string",
+            "description": "The application does not contain a {kind} object. Please use PUT method if you would like to add a new object."
+          }
+        }
+      },
+      "error.application.PVCUpdateNotAllowed": {
+        "title": "PVCUpdateNotAllowed",
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "string",
+            "description": "PVCUpdateNotAllowed"
+          },
+          "message": {
+            "type": "string",
+            "description": "Updating PVCs in use is not allowed."
+          }
+        }
+      },
+      "error.application.PoPDoesNotExist": {
+        "title": "PoPDoesNotExist",
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "string",
+            "description": "PoPDoesNotExist"
+          },
+          "message": {
+            "type": "string",
+            "description": "The PoP {pop code} specified is invalid or does not exist."
+          }
+        }
+      },
+      "error.cname.ApplicationNotLoadBalanced": {
+        "title": "ApplicationNotLoadBalanced",
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "string",
+            "description": "ApplicationNotLoadBalanced"
+          },
+          "message": {
+            "type": "string",
+            "description": "Creating a CNAME for an application requires that the application be exposed by ECP layer4 load balancers."
+          }
+        }
+      },
+      "error.application.ApplicationHasCname.new": {
+        "title": "ApplicationHasCname",
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "string",
+            "description": "ApplicationHasCname"
+          },
+          "message": {
+            "type": "string",
+            "description": "A CNAME for the application exists. Please delete the CNAME first before removing layer 4 load balancers from this application."
+          }
+        }
+      },
+      "application.message": {
+        "title": "",
+        "type": "object",
+        "description": "Detailed message explaining the status of deployment"
+      }
+    },
+    "parameters": {
+      "offset": {
+        "name": "offset",
+        "in": "query",
+        "description": "Indicates the first resource to return. The first has an offset of 0.",
+        "required": false,
+        "schema": {
+          "type": "integer",
+          "minimum": 0,
+          "default": "0"
+        }
+      },
+      "limit": {
+        "name": "limit",
+        "in": "query",
+        "description": "Maximum number of resources to return",
+        "required": false,
+        "schema": {
+          "type": "integer",
+          "default": "100",
+          "maximum": 200,
+          "minimum": 1
+        }
+      },
+      "searchString": {
+        "name": "searchString",
+        "in": "query",
+        "description": "Keyword to search for particular resources. The value is matched against the \"name\" field of each resource.",
+        "required": false,
+        "schema": {
+          "type": "string"
+        }
+      },
+      "Location": {
+        "name": "Location",
+        "in": "header",
+        "description": "Location of the newly created resource.",
+        "required": false,
+        "schema": {
+          "type": "string"
+        }
+      },
+      "endTime": {
+        "schema": {
+          "type": "string"
+        },
+        "in": "query",
+        "name": "endTime",
+        "description": "RFC 3339 date indicating the end of a time period. Example: <code>endTime=2019-11-14T00:00:00Z</code> Your endTime may be rounded up to the nearest minute, hour, or day depending on the interval parameter. For example, if you enter <code>endTime=2019-09-05T03:14:01Z&interval=hourly</code>, the response includes data ending at 2019-09-05T04:00:00Z.",
+        "required": true
+      },
+      "startTime": {
+        "in": "query",
+        "name": "startTime",
+        "description": "RFC 3339 date indicating the beginning of a time period. Example: <code>startTime=2019-10-30T00:00:00Z</code>. Your startTime may be rounded down to the nearest minute, hour, or day depending on the interval parameter. For example, if you enter <code>startTime=2019-09-05T03:14:01Z&interval=hourly</code>, the response includes data beginning at 2019-09-05T03:00:00Z.",
+        "required": true,
+        "schema": {
+          "type": "string"
+        }
+      },
+      "interval": {
+        "schema": {
+          "type": "string",
+          "enum": [
+            "oneminute",
+            "fiveminutes",
+            "hourly",
+            "daily",
+            "monthly"
+          ]
+        },
+        "name": "interval",
+        "required": true,
+        "description": "The granularity of returned data. Raw report data is generated per 1 minute. The data is aggregated to give reports of different granularities. The aggregation method is “sum” for the metrics \"inboundTraffic\", \"outboundTraffic\" and \"totalTraffic\". For all other metrics, the aggregation method is \"average\". \n\n\"oneminute\" interval is supported only when the timespan is not longer than 7 days. \"fiveminutes\" interval is supported only when the timespan is not longer than 31 days.",
+        "in": "query"
+      },
+      "Report-Range": {
+        "schema": {
+          "type": "string",
+          "default": "self-only",
+          "enum": [
+            "self-only",
+            "children-only",
+            "self+children"
+          ]
+        },
+        "name": "Report-Range",
+        "description": "An optional header that resellers can use to specify whether to include data from children customers.",
+        "in": "header"
+      },
+      "pop": {
+        "schema": {
+          "type": "string"
+        },
+        "name": "pop",
+        "description": "Code of an ECP PoP",
+        "in": "path",
+        "required": true
+      },
+      "servicezone": {
+        "schema": {
+          "type": "string",
+          "enum": [
+            "business",
+            "standard",
+            "premium"
+          ]
+        },
+        "name": "servicezone",
+        "description": "Code of an ECP service zone",
+        "in": "path",
+        "required": true
+      },
+      "metric": {
+        "name": "metric",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "enum": [
+            "inboundTraffic",
+            "inboundBandwidth",
+            "outboundTraffic",
+            "outboundBandwidth",
+            "totalTraffic",
+            "totalBandwidth",
+            "podCount",
+            "vcpu",
+            "mem",
+            "local-ssd",
+            "persist-ssd",
+            "ipCount"
+          ]
+        },
+        "description": "Usage metric on compute, storage and network resources.\n\nMetric | Description | Measured in\n--- | --- | --- \ninboundTraffic | amount of data transmitted to ECP during a time period | byte\ninboundBandwidth | rate of data transfer to ECP during a time period | bps\noutboundTraffic | amount of data transmitted from ECP during a time period | byte\noutboundBandwidth | rate of data transfer from ECP during a time period | bps\ntotalTraffic | amount of data transmitted to and from ECP during a time period | byte\ntotalBandwidth | rate of data transfer to and from ECP during a time period | bps\nvcpu | amount of CPU cores allocated and available during a time period | core\nmem | amount of memory allocated and available during a time peirod | byte\nlocal-ssd | amount of local storage capacity allocated and available during a time period | byte\npersist-ssd | amount of remote storage capacity allocated and available during a time period | byte\npodCount | number of kubernetes pods existing and maintained for your application(s) during a time period | ea\nipCount | number of public IPv4 addresses allocated and available during a time period | ea\n"
+      },
+      "podMetric": {
+        "name": "metric",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "enum": [
+            "inboundTraffic",
+            "inboundBandwidth",
+            "outboundTraffic",
+            "outboundBandwidth",
+            "cpuUsage",
+            "memUsage",
+            "diskUsage"
+          ]
+        },
+        "description": "Usage metric on compute, storage and network resources.\n\nMetric | Description | Measured in\n--- | --- | ---\ninboundTraffic | amount of data transmitted to a pod during a time period | byte\ninboundBandwidth | rate of data transfer to a pod during a time period | bps\noutboundTraffic | amount of data transmitted from a pod during a time period | byte\noutboundBandwidth | rate of data transfer from a pod during a time period | bps\ncpuUsage | amount of CPU cores consumed by container process(es) in a pod during a time period | core\nmemUsage | amount of memory consumed by container process(es) in a pod during a time period | byte\ndiskUsage | Disk usage rate. Here \"disk\" could be the rootFS of a container in a pod, or a PVC volume attached to a pod. | --\n"
+      },
+      "applicationID": {
+        "name": "applicationID",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string"
+        },
+        "description": "ID of an ECP application"
+      },
+      "status": {
+        "name": "status",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "type": "string",
+          "enum": [
+            "waiting",
+            "deploying",
+            "deployed",
+            "failed"
+          ]
+        },
+        "description": "The deployment status of an application"
+      },
+      "podMetric-interval": {
+        "schema": {
+          "type": "string",
+          "enum": [
+            "oneminute",
+            "fiveminutes",
+            "hourly",
+            "daily",
+            "monthly"
+          ]
+        },
+        "name": "interval",
+        "required": true,
+        "description": "The granularity of returned data. Raw report data is generated per 1 minute. The data is aggregated to give reports of different granularities. The aggregation method is “sum” for the metrics \"inboundTraffic\", and \"outboundTraffic\". For all other metrics, the aggregation method is \"average\".",
+        "in": "query"
+      },
+      "limit(allows limit=0)": {
+        "name": "limit",
+        "in": "query",
+        "description": "Maximum number of resources to return. To retrieve a complete list of resources, please pass this parameter with value “0”.",
+        "required": false,
+        "schema": {
+          "type": "integer",
+          "default": "100",
+          "maximum": 200,
+          "minimum": 0
+        }
+      },
+      "Qtl-Request-Id": {
+        "name": "Qtl-Request-Id",
+        "in": "header",
+        "description": "A string automatically generated by the api server to identify each request.",
+        "required": false,
+        "schema": {
+          "type": "string"
+        }
+      },
+      "On-Behalf-Of": {
+        "name": "On-Behalf-Of",
+        "in": "header",
+        "description": "If you are a reseller, you can use this header to specify the ID of a child customer and make API call on their behalf.",
+        "required": false,
+        "schema": {
+          "type": "string"
+        }
+      }
+    },
+    "securitySchemes": {
+      "basicAuth": {
+        "type": "http",
+        "scheme": "Basic",
+        "description": "All requests to CDNetworks' platform must be authenticated using an API login name and key assigned to your organization. For security, the API key is not passed directly but is secured as described below. \n\nThe authentication type is HTTP Basic, and the authorization string is specified in the HTTP request header called Authorization.\n```\n#!/bin/bash\n#URL of the CDN360 API server\nAPI_SERVER=https://ngapi.cdnetworks.com\n\n#You will be given the following information by the CDNetworks sales team\nUSER=\"{API user name}\"\nAPI_KEY=\"{API key (make sure to escape the $ sign if any)}\"\n\n#Date in RFC 1123 format\nDATE=`date \"+%a, %d %b %Y %H:%M:%S %Z\"`\n\n#Generate the password. Raw output from openssl by adding the \"-binary\" flag\npassw=$(echo -n \"$DATE\" | openssl dgst -sha1 -hmac \"$API_KEY\" -binary | base64)\necho \" \"\n\n#Construct the curl command to query list of applications\napiCall =\"curl -i --url '${API_SERVER}/ecp/v1/applications'\n                  -X GET\n                  -u $USER:$passw\n                  -H 'Date: $DATE'\n                  -H 'Accept: application/json'\"\neval $apiCall\necho \" \"\n```\n If you are a reseller, you can also specify a child customer's ID in an On-Behalf-Of HTTP header to make API calls to manage your child customer."
+      }
+    }
+  },
+  "tags": [
+    {
+      "name": "Applications",
+      "description": "Configure your containerized application once and then distribute your application to our ECP locations across the globe."
+    },
+    {
+      "name": "PoPs and regions",
+      "description": "Get a list of ECP PoPs and regions."
+    },
+    {
+      "name": "imagePullSecrets",
+      "description": "An ImagePullSecret is a type of kubernetes secret that contains an image registry password. The secret is passed to and used by Kubelet to authenticate with your image registry and pull private images on behalf of your pod."
+    },
+    {
+      "name": "CNAMEs",
+      "description": "A Canonical Name Record (or \"CNAME\") is a DNS record used to alias one domain name to a different domain name. While your application runs on ECP, you can create a CNAME and point the hostname of your application to this CNAME. Then ECP will help manage global traffic for your application by resolving the CNAME to different IP addresses pointing to your application instances at the edge as per user/client location. Incoming requests will always be routed to the closest application instances."
+    },
+    {
+      "name": "Reports",
+      "description": "Call our report APIs to get information about your resources consumption on ECP."
+    }
+  ]
+}
+>>>>>>> parent of 14fce8d... Corrected Typos
