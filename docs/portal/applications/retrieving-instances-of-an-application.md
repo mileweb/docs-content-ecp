@@ -9,7 +9,7 @@
 | -------------------------|-----------------------------------------------| 
 | 1                        | By default all PoPs for all phases are shown. Use the PoP and Phase drop-down lists to view a particular PoP and phase. The two right buttons reset the filters and refresh the instances shown.                                                                      |
 | 2                        | Click an ID to view information about an   instance.                                                                   |
-| 3                        | The **Actions** drop-down list on each row has options for viewing metrics, logs, and shell for an instance.               |
+| 3                        | The **Actions** drop-down list on each row has options for viewing metrics, viewing logs, and accessing a shell for an instance.               |
 | 4                        | Use these buttons to go to other Instances pages.                                                                      |
 |5                         | Use these icons to toggle between list view (which is the default) or map.                                              |
 |6                         | Click this button to return to the Applications page.                                                                       |
