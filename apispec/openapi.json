@@ -11420,9 +11420,6 @@
                           "description": "Name of a \"RegionPreference\" resource. Must be the same as the query param \"appName\"."
                         },
                         "namespace": {
-<<<<<<< HEAD
-                          "type": "string",
-=======
                           "type": "string",
                           "description": "The kubernetes namespace created for your ECP account"
                         }
@@ -13672,4 +13669,3 @@
     }
   ]
 }
->>>>>>> parent of 14fce8d... Corrected Typos
