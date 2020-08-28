@@ -19,7 +19,7 @@ If you select **Redistribute** from the Quick Update drop-down list, one of two 
 
 If your application is distributed per region, a dialog box similar to the following appears.
 
-![null](</docs/resources/images/applications/new_Redistribute-Your-Application-Distribute-per-Region.png>)
+![null](</docs/resources/images/applications/redistribute-your-application-distribute-per-region.png>)
 
 1. Under **Targets**, accept or change the regions and replicas per region shown for existing targets.
 2. To add targets, click the **+ Add Target** button. When a new row appears at the bottom of **Targets**, select a region and enter the number of replicas for that region.
@@ -30,7 +30,7 @@ If your application is distributed per region, a dialog box similar to the follo
 
 If your application is distributed per PoP, a dialog box similar to the following appears.
 
-![null](</docs/resources/images/applications/new_Redistribute-Your-Application-Distribute-per-Pop.png>)
+![null](</docs/resources/images/applications/redistribute-your-application-distribute-per-pop.png>)
 
 1. Under **Targets**, accept or change the PoPs and replicas per PoP shown for existing targets.
 2. To add targets, click the **+ Add Target** button. When a new row appears at the bottom of **Targets**, select a PoP and enter the number of replicas for that PoP.
@@ -40,7 +40,7 @@ If your application is distributed per PoP, a dialog box similar to the followin
 ## Setting Container Image
 If you select **Set container image** from the Quick Update drop-down list, a Set Container Image dialog box similar to the following appears. 
 
-![null](</docs/resources/images/applications/new_Set-Container-Image-Dialog-Box.png>)
+![null](</docs/resources/images/applications/set-container-image-dialog-box.png>)
 
 **Note:** This operation might cause your existing pods to be deleted and recreated.
 
@@ -53,7 +53,7 @@ If you select **Set container image** from the Quick Update drop-down list, a Se
 ## Upgrading Resources
 If you select **Upgrade resources** from the Quick Update drop-down list, an Upgrade Container Spec dialog box similar to the following appears. 
 
-![null](</docs/resources/images/applications/new_Upgrade-Container-Spec-Dialog-Box.png>)
+![null](</docs/resources/images/applications/upgrade-container-spec-dialog-box.png>)
 
 **Note:** This operation might cause your existing pods to be deleted and recreated.
 
