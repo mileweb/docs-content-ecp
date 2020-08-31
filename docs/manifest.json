@@ -58,8 +58,20 @@
                 "path": "/docs/portal/applications/managing-applications.md"
               },
               {
-                "title": "Adding and Deploying Aplications",
-                "path": "/docs/portal/applications/adding-and-deploying-applications.md"
+                "title": "Configuring Aplications",
+                "path": "/docs/portal/applications/configuring-applications.md"
+              },
+              {
+                "title": "Adding and Deploying Aplications Using a Wizard",
+                "path": "/docs/portal/applications/adding-and-deploying-applications-using-a-wizard.md"
+              },
+              {
+                "title": "Adding and Deploying Aplications Using an Existing Configuration File",
+                "path": "/docs/portal/applications/adding-and-deploying-applications-using-an-existing-configuration-file.md"
+              },
+              {
+                "title": "Using Advanced ECP Features",
+                "path": "/docs/portal/applications/using-advanced-ecp-features.md"
               },
               {
                 "title": "Viewing Application Information",
