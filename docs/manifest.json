@@ -143,11 +143,65 @@
               {
                 "title": "Deleting a CNAME",
                 "path": "/docs/portal/cnames/deleting-a-cname.md"
-              }
-            ]
-          },
-          { "title": "Global Presence", "path": "/docs/portal/global-presence.md" }
-        ]
-      }
-    ]
-  }
+              },
+              {
+                  "title": "Managing Registry Projects and Users",
+                  "routes": [
+                    {
+                      "title": "Managing Registry Projects",
+                      "path": "/docs/portal/image-registry/managing-registry-projects.md"
+                    },
+                         {
+                           "title": "Adding New Projects",
+                           "path": "/docs/portal/image-registry/adding-projects.md"
+                         },
+                         {
+                          "title": "Editing Projects",
+                          "path": "/docs/portal/image-registry/editing-projects.md"
+                        },
+                        {
+                          "title": "Viewing Logs",
+                          "path": "/docs/portal/image-registry/viewing-logs.md"
+                        },
+                        {
+                          "title": "Updating Projects",
+                          "path": "/docs/portal/image-registry/updating-projects.md"
+                        },
+                        {
+                          "title": "Deleting Projects",
+                          "path": "/docs/portal/image-registry/deleting-projects.md"
+                        },
+                    {
+                      "title": "Managing Registry Users",
+                      "path": "/docs/portal/registry-users/managing-registry-users.md"
+                    },
+                         {
+                           "title": "Adding New Users",
+                           "path": "/docs/portal/registry-users/adding-users.md"
+                         },
+                         {
+                          "title": "Editing Users",
+                          "path": "/docs/portal/registry-users/editing-users.md"
+                        },
+                        {
+                          "title": "Changing Passwords",
+                          "path": "/docs/portal/registry-users/changing-passwords.md"
+                        },
+                        {
+                          "title": "Updating Users",
+                          "path": "/docs/portal/registry-users/updating-users.md"
+                        },
+                        {
+                          "title": "Deleting Users",
+                          "path": "/docs/portal/registry-users/deleting-users.md"
+                        }
+                      ]
+                    },
+                  ]
+                },
+              { "title": "Global Presence", "path": "/docs/portal/global-presence.md" }
+          ]
+        }
+      ]
+    }
+
