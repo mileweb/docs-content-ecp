@@ -1,6 +1,7 @@
 # Updating Projects
 
-Updating a project allows you to change its deployment security and vulnerability scan settings. The following procedure describes how to update projects. To make sure you update the appropriate project, you can view a project's information before updating it.
+Updating a project allows admin portal users to change its deployment security and vulnerability scan settings. The following procedure describes how to update projects. To make sure the appropriate project is updated, the project can be viewed before it is updated.
+**Note:** Non-admin portal users are not permitted to upgrade projects.
 1. In the left pane, click **Image Registry > Registry Projects**.
 2. Perform one of the following tasks:<ul><li>To update a project from the Registry Projects page, click its **Actions** button and select **Update**. </ul></li> <ul><li>To view information about a project before updating it, click its name to display the Edit page. To update the project, click the **Update** button at the top right.</ul></li>
       ![null](</docs/resources/images/registry/update-project.png>)

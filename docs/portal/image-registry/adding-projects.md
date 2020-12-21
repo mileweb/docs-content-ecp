@@ -1,7 +1,7 @@
 # Adding Projects
 
-To add a project:
-
+Admin portal users can use the following procedure to add projects.
+**Note:** Non-admin portal users are not permitted to add projects.
 1. In the left pane, click **Image Registry > Registry Projects**.
 2. At the top right of the Registry Projects page, click the **\+ Add New Project** button. 
 3. Complete the fields in the Add Project form. Required fields are denoted by an asterisk (\*).

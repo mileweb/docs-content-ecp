@@ -1,7 +1,7 @@
 # Adding Users
 
-To add a user:
-
+Admin portal users can use the following procedure to add users.
+**Note:** Non-admin portal users are not permitted to add users.
 1. In the left pane, click **Image Registry > Registry Users** .
 2. At the top right of the Registry Users page, click the **\+ Add New User** button. 
 3. Complete the fields in the Add User form. Required fields are denoted by an asterisk (\*).

@@ -1,6 +1,7 @@
 # Updating Users
 
-Updating a user allows you to change a user's email address, description, access to projects, and access type. To make sure you update the appropriate user, you can view a user's information before updating the user.
+Updating a user allows admin portal users to change a user's email address, description, access to projects, and access type. To make sure the appropriate user is updated, a user's information can be displayed before the user is updated.
+**Note:** Non-admin portal users are not permitted to upgrade users.
 1. In the left pane, click **Image Registry > Registry Users**.
 2. Perform one of the following tasks:<ul><li>To update a user from the Registry Users page, click the user's **Actions** button and select **Update**. </ul></li> <ul><li>To view information about a user before updating the, click the username to display the Edit page. To update the user, click the **Update** button at the top right.</ul></li>
       ![null](</docs/resources/images/registry/update-user.png>)
