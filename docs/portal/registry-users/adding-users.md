@@ -1,12 +1,14 @@
-# Adding Users
+# Adding Registry Users
 
-Admin portal users can use the following procedure to add users.
-**Note:** Non-admin portal users are not permitted to add users.
-1. In the left pane, click **Image Registry > Registry Users** .
+Admin portal users can use the following procedure to add registry users.
+
+**Note:** Non-admin portal users are not permitted to add registry users.
+
+1. In the left pane, click **Image Registry > Registry Users**.
 2. At the top right of the Registry Users page, click the **\+ Add New User** button. 
 3. Complete the fields in the Add User form. Required fields are denoted by an asterisk (\*).
 
-![null](</docs/resources/images/registry/add-user.png>)
+<p align=center><img src="/docs/resources/images/registry/add-user.png" width="600"></p>
 
 | **Field**              | **Description**                                |
 | -----------------------|------------------------------------------------| 
@@ -15,5 +17,5 @@ Admin portal users can use the following procedure to add users.
 | Confirm Password       | Same case-sensitive password typed in the **Password** field.                                                      |
 | Email                  | Email address for the new registry user.      |
 | Description            | Optional description about the new registry user (up to 20 characters).                                                   |
-| Access to Projects     | Select the projects that will be accessible to the new registry user and the new user's access type. Choices are:<ul><li>Allow readOnly access to all existing projects = user can view existing projects, but not edit them.</ul></li><ul><li>Allow readWrite access to all existing projects = user can view and edit existing projects.</ul></li><ul><li>Custom permissions = select the projects available to this user, and whether the user can only view them (**readOnly**) or view and edit them (**read/Write**)</ul></li>                                    |
+| Access to Projects     | Select the projects that will be accessible to the new registry user and the new registry user's access type. Choices are:<ul><li>Allow readOnly access to all existing projects = registry user can only pull images from a project registry.</ul></li><ul><li>Allow readWrite access to all existing projects = registry user can pull images from and push images to a project registry.</ul></li><ul><li>Custom permissions = select the projects available to this registry user, and whether the registry user has readOnly or read/Write permission.</ul></li>                                    |
 4. Click the **Submit** button.

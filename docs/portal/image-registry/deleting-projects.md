@@ -1,5 +1,9 @@
 # Deleting Projects
 
-If you no longer need a project, you can delete it from the image registry. To make sure you delete the appropriate project, you can view its information before deleting it.
+The following procedure describes how to delete registry projects from the Registry Projects page. You can also delete projects from the form used to [view registry projects](</docs/portal/image-registry/viewing-projects.md>).
+
+**Note:** Only admin portal users can delete projects. Non-admin portal users are not permitted to delete projects.
+
 1. In the left pane, click **Image Registry > Registry Projects**.
-2. Perform one of the following tasks:<ul><li>To delete a project from the Registry Projects page, click its **Actions** button and select **Delete**. When prompted, click **Yes, delete!**</ul></li> <ul><li>To view information about a project before deleting it, click its name to display the Edit page. To delete the project, click the **Delete** button at the top right. When prompted, click **Yes, delete!**</ul></li>
+2. Click the Actions drop-down list of the project you want to delete, and then select **Delete**.
+3. When prompted to confirm the deletion, click **Yes, delete!** to delete the project.

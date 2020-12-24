@@ -1,5 +1,9 @@
-# Deleting Users
+# Deleting Registry Users
 
-If you no longer need a user, you can delete the user from the image registry. To make sure you delete the appropriate user, you can view the user's information before deleting the user.
-1. In the left pane, click **Image Registry > Registry Users**.
-2. Perform one of the following tasks:<ul><li>To delete a user from the Registry Users page, click the user's **Actions** button and select **Delete**. When prompted, click **Yes, delete!**</ul></li> <ul><li>To view information about a user before deleting the user, click the username to display the Edit page. To delete the user, click the **Delete** button at the top right. When prompted, click **Yes, delete!**</ul></li>
+The following procedure describes how to delete registry users from the Registry Projects page. You can also delete registry users from the form used to [view registry users](</docs/portal/registry-users/viewing-users.md>).
+
+**Note:** Only admin portal users can delete registry users. Non-admin portal users are not permitted to delete registry users.
+
+1. In the left pane, click **Image Registry > Registry Projects**.
+2. Click the Actions drop-down list of the registry user you want to delete, and then select **Delete**.
+3. When prompted to confirm the deletion, click **Yes, delete!** to delete the registry user.
