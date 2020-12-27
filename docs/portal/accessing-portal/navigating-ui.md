@@ -28,6 +28,10 @@ The [ImagePullSecrets page](</docs/portal/image-pull-secrets/managing-image-pull
 
 The [CNAMEs page](</docs/portal/cnames/managing-cnames.md>) allows you to create and manage the Canonical Name Record (CNAME) that allows the ECP to manage traffic routing for the application.
 
+## Image Registry
+
+The Image Registry menu allows you to manage [registry projects](</docs/portal/image-registry/managing-image-registry.md>) and [registry users](</docs/portal/registry-users/managing-registry-users.md>).
+
 ## Global Presence Page
 
 The [Global Presence page](</docs/portal/global-presence.md>) shows the worldwide locations of CDNetworks' PoPs. Controls allow you to filter PoPs by region, service zone, and status.
