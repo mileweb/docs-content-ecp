@@ -5,7 +5,7 @@ The following procedure describes how to update an ImagePullSecret from the Imag
 1. In the left pane, click **ImagePullSecrets**.
 2. Find the ImagePullSecret you want to update, then click its **Actions** menu and select **Update**. An Update ImagePullSecret form similar to the following appears.
 
-![null](</docs/resources/images/image-pull-secrets/image-pull-secrets-update.png>)
+<p align=center><img src="/docs/resources/images/image-pull-secrets/image-pull-secrets-update.png" width="600"></p>
 
 3. Complete the fields in the form. Required fields are denoted by an asterisk (\*).
 

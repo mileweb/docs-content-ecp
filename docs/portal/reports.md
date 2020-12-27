@@ -12,7 +12,7 @@ Reports are generated from the Reports page. To display this page, click **Repor
 
 The following figure shows the key elements on the page.
 
-![null](</docs/resources/images/reports/reports-w-numbers.png>)
+<p align=center><img src="/docs/resources/images/reports/reports-w-numbers.png" width="550">
 
 | **Element Number**       | **Description**                               |
 | -------------------------|-----------------------------------------------| 
@@ -24,7 +24,7 @@ The following figure shows the key elements on the page.
 
 The ECP supports the following type of reports. You select a report type from the **Report Type** drop-down list on the Reports page.
 
-![null](</docs/resources/images/reports/reports-dropdown.png>)
+<p align=center><img src="/docs/resources/images/reports/reports-dropdown.png" width="550">
 
 | **Report**               | **Description**                               |
 | -------------------------|-----------------------------------------------| 
@@ -40,7 +40,7 @@ The ECP supports the following type of reports. You select a report type from th
 1. In the left pane, click **Reports**. 
 2. Complete the fields in the Reports form. Required fields are denoted by an asterisk (\*).
 
-![null](</docs/resources/images/reports/reports-wo-numbers.png>)
+<p align=center><img src="/docs/resources/images/reports/reports-wo-numbers.png" width="550">
 
 | **Fields**               | **Description**                               |
 | -------------------------|-----------------------------------------------| 
@@ -57,4 +57,4 @@ The ECP supports the following type of reports. You select a report type from th
 <ul><ul><li>Use the icons at the right side of the report to zoom regions, cancel zoom, and reset zoom.</li></ul></ul>
 <ul><ul><li>Use the <strong>Download</strong> button at the top-right of the report to download the report in JPEG, PNG, and PDF formats.</li></ul></ul>
 
-![null](</docs/resources/images/reports/reports-generated-report.png>)
+<p align=center><img src="/docs/resources/images/reports/reports-generated-report.png" width="600">

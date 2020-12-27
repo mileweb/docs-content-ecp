@@ -7,7 +7,7 @@ The following procedure describes how to update applications.
 3. To update an application by editing the YAML file directly, click the **Edit YAML** button at the top right of the form.
 4. To quickly update an application without having to touch the YAML file, click the **Update** button, select one of the following options, and refer to the appropriate section below:<ul><li> **Redistribute** allows you to add, edit, and delete distribution targets.</ul></li><ul><li>**Set container image** allows you to update your pods to a newer application version.<br></ul></li><ul><li>**Upgrade resources** allows you to upgrade the spec of your container instance to maintain performance and/or save costs.</ul></li>
 
-![null](</docs/resources/images/applications/applications-update.png>)
+<p align=center><img src="/docs/resources/images/applications/applications-update.png" width="450"></p>
 
 ## Redistributing Your Application
 
@@ -19,7 +19,7 @@ If you select **Redistribute** from the Quick Update drop-down list, one of two 
 
 If your application is distributed per region, a dialog box similar to the following appears.
 
-![null](</docs/resources/images/applications/redistribute-your-application-distribute-per-region.png>)
+<p align=center><img src="/docs/resources/images/applications/redistribute-your-application-distribute-per-region.png" width="600"></p>
 
 1. Under **Targets**, accept or change the regions and replicas per region shown for existing targets.
 2. To add targets, click the **+ Add Target** button. When a new row appears at the bottom of **Targets**, select a region and enter the number of replicas for that region.
@@ -30,7 +30,7 @@ If your application is distributed per region, a dialog box similar to the follo
 
 If your application is distributed per PoP, a dialog box similar to the following appears.
 
-![null](</docs/resources/images/applications/redistribute-your-application-distribute-per-pop.png>)
+<p align=center><img src="/docs/resources/images/applications/redistribute-your-application-distribute-per-pop.png" width="600"></p>
 
 1. Under **Targets**, accept or change the PoPs and replicas per PoP shown for existing targets.
 2. To add targets, click the **+ Add Target** button. When a new row appears at the bottom of **Targets**, select a PoP and enter the number of replicas for that PoP.
@@ -40,7 +40,7 @@ If your application is distributed per PoP, a dialog box similar to the followin
 ## Setting Container Image
 If you select **Set container image** from the Quick Update drop-down list, a Set Container Image dialog box similar to the following appears. 
 
-![null](</docs/resources/images/applications/set-container-image-dialog-box.png>)
+<p align=center><img src="/docs/resources/images/applications/set-container-image-dialog-box.png" width="600"></p>
 
 **Note:** This operation might cause your existing pods to be deleted and recreated.
 
@@ -53,7 +53,7 @@ If you select **Set container image** from the Quick Update drop-down list, a Se
 ## Upgrading Resources
 If you select **Upgrade resources** from the Quick Update drop-down list, an Upgrade Container Spec dialog box similar to the following appears. 
 
-![null](</docs/resources/images/applications/upgrade-container-spec-dialog-box.png>)
+<p align=center><img src="/docs/resources/images/applications/upgrade-container-spec-dialog-box.png" width="600"></p>
 
 **Note:** This operation might cause your existing pods to be deleted and recreated.
 

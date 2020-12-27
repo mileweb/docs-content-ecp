@@ -5,7 +5,7 @@ The following procedure describes how to update CNAME descriptions from the CNAM
 1. In the left pane, click **CNAMEs**.
 2. Find the CNAME you want to update, then click its **Actions** menu and select **Update**. An Update CNAME form similar to the following appears.
 
-![null](</docs/resources/images/cnames/cnames-update-cname.png>)
+<p align=center><img src="/docs/resources/images/cnames/cnames-update-cname.png" width="600"></p>
 
 3. In the **Description** field, enter or edit a description for this CNAME.
 

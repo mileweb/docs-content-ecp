@@ -5,7 +5,7 @@ The following procedure describes how to view information about ImagePullSecrets
 1. In the left pane, click **ImagePullSecrets**.
 2. Click the name of the ImagePullSecret whose information you want to view. A form similar to the following appears. The table below the figure describes the elements on this form.<br>
 
-![null](</docs/resources/images/image-pull-secrets/image-pull-secrets-details-w-numbers.png>)
+<p align=center><img src="/docs/resources/images/image-pull-secrets/image-pull-secrets-details-w-numbers.png" width="600"></p>
 
 | **Element Number**       | **Description**                               |
 | -------------------------|-----------------------------------------------| 

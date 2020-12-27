@@ -2,12 +2,12 @@
 
 A registry user is an entity that is created and given certain permissions to access and manage repositories and tags in the registry. Usually, a registry user uses the docker CLI client to access an image registry.
 
-##Registry Users Page
+## Registry Users Page
 Registry users are managed from the Registry Users page. To display this page, click **Image Registry > Registry Users** in the left pane.
 
 The following figure shows the key elements on the page, and the table following the figure describes them.
 
-![null](</docs/resources/images/registry/registry-users-page.png>)</ul>
+<p align=center><img src="/docs/resources/images/registry/registry-users-page.png" width="700">
 
 
 | **Element Number**       | **Description**                               |

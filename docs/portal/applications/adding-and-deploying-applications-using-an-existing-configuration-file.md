@@ -4,17 +4,16 @@
 3. In the left pane of the portal, click **Applications**.
 4. At the top right of the Applications page, click the **\+ Add New Application** button. 
 
-![null](</docs/resources/images/applications/applications.png>)
+<p align=center><img src="/docs/resources/images/applications/applications.png" width="600"></p>
 
 4. When prompted, click **Use a YAML/JSON file**.
 
-![null](</docs/resources/images/applications/applications-add.png>)
+<p align=center><img src="/docs/resources/images/applications/applications-add.png" width="600"></p>
 
 5. In the **Application Name** field, enter a name that helps you identify this application.
 6. In the **Application Specification** field, upload the local YAML or JSON file, enter a URL that points to the file, or drag and drop the file into the designated location on the form.
 
-![null](</docs/resources/images/applications/applications-add-upload-spec.png>)
-
+<p align=center><img src="/docs/resources/images/applications/applications-add-upload-spec.png" width="600"></p>
 
 7. Click **Submit & Deploy**.<br>
 

@@ -3,7 +3,7 @@
 1. In the left pane, click **Applications**.
 2. On the Applications page, click a link below the **Instances** column. A page similar to the following shows a list view of instance information for the selected application. The table below the figure describes the elements on this page.
 
-![null](</docs/resources/images/applications/applications-instances-w-numbers.png>)
+<p align=center><img src="/docs/resources/images/applications/applications-instances-w-numbers.png" width="600"></p>
 
 | **Element Number**       | **Description**                               |
 | -------------------------|-----------------------------------------------| 
@@ -21,16 +21,16 @@
 2. On the Applications page, click a link below the **Instances** column. 
 3. At the top right of the Instances page, click the <span><img src="/docs/resources/images/applications/applications-globe-icon.png" alt="globe" width="30"></span> icon.
 
-![null](</docs/resources/images/applications/applications-instances.png>)
+<p align=center><img src="/docs/resources/images/applications/applications-instances.png" width="700"></p>
 
 A map view similar to the following shows the location of the instances and their phases.
 
-![null](</docs/resources/images/applications/applications-instances-map-view.png>)
+<p align=center><img src="/docs/resources/images/applications/applications-instances-map-view.png" width="700"></p>
 
 4. By default, the map shows all PoPs and all phases. Using the **PoP** and **Phase** drop-down lists above the map, you can view a particular PoP and phase. The two right buttons next to the drop-down lists reset the filters and refresh the instances shown.
 5. Clicking an Instance displays a popup similar to the following figure with detailed information. Clicking the link next to **Instance** displays detailed information about that instance, with buttons for viewing metrics, viewing and downloading logs, and running commands inside containers. For an example, see the figure under [Viewing Instance Information](<#viewing-instance-information>) below.
 
-![null](</docs/resources/images/applications/applications-instances-map-view-detail.png>)
+<p align=center><img src="/docs/resources/images/applications/applications-instances-map-view-detail.png" width="700"></p>
 
 6. To return to the Applications page, click the **< Back** button at the top right.
 
@@ -42,13 +42,14 @@ The following procedure describes how to view information about application inst
 2. On the Applications page, click the instance whose information you want to view. 
 3. On the Instances page, click a link below the **ID** column. A form similar to the following appears. The table below the figure describes the elements on this form.
 
-![null](</docs/resources/images/applications/applications-instance-details-basic-info-w-numbers.png>)
+<p align=center><img src="/docs/resources/images/applications/applications-instance-details-basic-info-w-numbers.png" width="700"></p>
 
-![null](</docs/resources/images/applications/applications-instance-details-conditions.png>)
+<p align=center><img src="/docs/resources/images/applications/applications-instance-details-conditions.png" width="700"></p>
 
-![null](</docs/resources/images/applications/applications-instance-details-events.png>)
+<p align=center><img src="/docs/resources/images/applications/applications-instance-details-events.png" width="700"></p>
 
-![null](</docs/resources/images/applications/applications-instance-details-containers.png>)
+<p align=center><img src="/docs/resources/images/applications/applications-instance-details-containers.png" width="700"></p>
+
 
 | **Element Number**       | **Description**                               |
 | -------------------------|-----------------------------------------------| 

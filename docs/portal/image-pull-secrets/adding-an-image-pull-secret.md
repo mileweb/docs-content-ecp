@@ -4,7 +4,7 @@
 2. At the top right of the ImagePullSecrets page, click the **\+ Add New ImagePullSecret** button. 
 3. Complete the fields in the Add ImagePullSecret form. Required fields are denoted by an asterisk (\*).
 
-![null](</docs/resources/images/image-pull-secrets/image-pull-secrets-add.png>)
+<p align=center><img src="/docs/resources/images/image-pull-secrets/image-pull-secrets-add.png" width="600"></p>
 
 | **Fields**                                                                                                         | **Description**                                                                                                    |
 | ------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------ |
