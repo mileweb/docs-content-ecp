@@ -6,7 +6,7 @@ When you first log in to the ECP portal, the Dashboard appears with menus and su
 
 The default menu lists the ECP activities you can perform.
 
-<p align=center><img src="/docs/resources/images/accessing-portal/side-menu.png" alt="navigation menu" width="300"></p>
+<p align=center><img src="/docs/resources/images/accessing-portal/side-menu.png" width="300"></p>
 
 ## Dashboard
 

@@ -5,7 +5,7 @@ The following procedure describes how to view information about projects. Button
 1. In the left pane, click **Image Registry > Registry Projects**.
 2. Click the name of the project whose information you want to view. A form similar to the following appears. The table below the figure describes the elements on this form.
 
- ![null](</docs/resources/images/registry/edit-project.png>)</ul>
+<p align=center><img src="/docs/resources/images/registry/edit-project.png" width="700"></p>
 
 | **Element Number**       | **Description**                               |
 | -------------------------|-----------------------------------------------| 

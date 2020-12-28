@@ -4,7 +4,7 @@ Application management allows you to configure your containerized applications o
 
 Applications are managed from the Applications page. To display this page, click **Applications** in the left pane. The following figure shows the key elements on the page, and the table following the figure describes them.
 
-![null](</docs/resources/images/applications/applications-w-numbers.png>)
+<p align=center><img src="/docs/resources/images/applications/applications-w-numbers.png" width="700"></p>
 
 | **Element Number**       | **Description**                               |
 | -------------------------|-----------------------------------------------| 

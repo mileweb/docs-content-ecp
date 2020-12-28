@@ -3,15 +3,13 @@
 1. In the left pane of the portal, click **Applications**.
 2. At the top right of the Applications page, click the **\+ Add New Application** button.
 
-![null](</docs/resources/images/applications/applications.png>)
+<p align=center><img src="/docs/resources/images/applications/applications.png" width="600"></p>
 
 3. When prompted, click **Use a wizard**.
-
-![null](</docs/resources/images/applications/applications-add.png>)
+<p align=center><img src="/docs/resources/images/applications/applications-add.png" width="600"></p>
 
 4. Complete the configure fields in the first page of the wizard.
-
-![null](</docs/resources/images/applications/applications-add-wizard-configure.png>)
+<p align=center><img src="/docs/resources/images/applications/applications-add-wizard-configure.png" width="600"></p>
 
 | **Wizard Fields: Configure Page**                                                                                                                                                                                                                              | **Description**                                                                                                                                                                                                                                                |
 | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -28,7 +26,7 @@
 5. At the top right of the wizard, click **\> Next**. 
 6. Select whether to expose your application using a [Layer 4 load balancer](<#exposing-via-a-load-balancer>) or the [public network interfaces of a pod replica](<#exposing-via-the-public-network-interfaces-of-a-pod-replica>), and then complete the remaining fields based on your selection.
 
-![null](</docs/resources/images/applications/applications-add-wizard-expose.png>)
+<p align=center><img src="/docs/resources/images/applications/applications-add-wizard-expose.png" width="600"></p>
 
 ### Exposing via a Load Balancer
 
@@ -49,7 +47,7 @@
 7. At the top right of the wizard, click **\> Next**. 
 8. Select whether to distribute your application to ECP edge PoPs by [region](<#distribute-per-region>) or [PoP](<#distribute-per-pop>), and then complete the remaining fields based on your selection.
 
-![null](</docs/resources/images/applications/applications-add-wizard-distribute.png>)
+<p align=center><img src="/docs/resources/images/applications/applications-add-wizard-distribute.png" width="600"></p>
 
 ### Distribute per region
 

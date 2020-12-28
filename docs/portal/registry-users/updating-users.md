@@ -6,7 +6,9 @@ The following procedure describes how to update a registry user from the Registr
 
 1. In the left pane, click **Image Registry > Registry Users**.
 2. Find the registry user you want to update, then click its **Actions** menu and select **Update**.</ul></li> An Update User form similar to the following appears.
-      ![null](</docs/resources/images/registry/update-user.png>)
+
+<p align=center><img src="/docs/resources/images/registry/update-user.png" width="600">
+
 3. Complete the fields in the form.
    
  

@@ -6,7 +6,7 @@ You can create a CNAME for an application only when the application is exposed b
 2. At the top right of the CNAMEs page, click the **\+ Add New CNAME** button. 
 3. Complete the fields in the Add CNAME form. Required fields are denoted by an asterisk (\*).
 
-![null](</docs/resources/images/cnames/cnames-add-cname.png>)
+<p align=center><img src="/docs/resources/images/cnames/cnames-add-cname.png" width="600"></p>
 
 | **Field**              | **Description**                                 |
 | -----------------------|-------------------------------------------------| 

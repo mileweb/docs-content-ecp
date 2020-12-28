@@ -2,7 +2,7 @@
 
 1. Visit our login page at [https://console.cdnetworks.com/ecp](<https://console.cdnetworks.com/ecp>).
 
-![null](</docs/resources/images/accessing-portal/portal-login.png>)
+<p align=center><img src="/docs/resources/images/accessing-portal/portal-login.png" width="600"></p>
 
 2. Enter your username in the top field and your password in the bottom field. For security, each typed password character is masked with a dot (●). To unmask the password, click the ![null](</docs/resources/images/accessing-portal/eye-icon.png>) icon.
 
