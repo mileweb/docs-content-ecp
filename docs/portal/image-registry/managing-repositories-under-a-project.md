@@ -9,4 +9,4 @@ The following procedure describes how to view repositories under a project, how 
 <p align=center><img src="/docs/resources/images/registry/edit-repository.png" width="600"></p>
 3. To change a repository's description, click the pencil icon in the <strong>Description</strong> column. When the field opens, change the description, and then click the check mark.
 <p align=center><img src="/docs/resources/images/registry/repository-description.png" width="600"></p>
-4. To delete a repository, click its <strong>Actions</strong> menu, and then select **Delete**. When prompted, click <strong>Yes, delete!</strong>
+4. To delete a repository, click its <strong>Actions</strong> menu, and then select <strong>Delete</strong>. When prompted, click <strong>Yes, delete!</strong>
