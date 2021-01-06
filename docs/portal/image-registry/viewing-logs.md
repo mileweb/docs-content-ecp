@@ -7,5 +7,6 @@ ECP keeps a log of your registry projects. The log contains a date- and time-sta
 The Access Logs page lists the log entries associated with the selected project. The most current entries appear at the top of the list. Filters at the top of the page allow you to filter entries by registry user, repository, operation, tag, and time range.<br>
 **Note:** The more filters you use, the narrower the results. For example, if you enter criteria for User, Repository, and Operation, the log records must match all three sets of criteria to appear in the log list. Records that match one or two criteria are not shown.</br>
 <p align=center><img src="/docs/resources/images/registry/log-project.png" width="600"></p>
-3. Buttons and fields at the bottom right allow you to view other pages and increase the number of entries shown on a page.
-4. When you finish viewing, click the **Cancel** button at the bottom right.
+
+3. Buttons and fields at the bottom right allow you to view other pages and increase the number of entries shown on a page.<br>
+4. When you finish viewing, click the <strong>Cancel</strong> button at the bottom right.</br>

@@ -23,7 +23,7 @@ Charts at the bottom of the Dashboard show usage metrics. Buttons above the usag
 
 <p align=center><img src="/docs/resources/images/dashboard/dashboard-metrics-traffic.png" width="600">
 
-<p align=center><img src="/docs/resources/images/dashboard/dashboard-metrics-bandwifth.png" width="600">
+<p align=center><img src="/docs/resources/images/dashboard/dashboard-metrics-bandwidth.png" width="600">
 
 <p align=center><img src="/docs/resources/images/dashboard/dashboard-metrics-storage.png" width="600">
 
