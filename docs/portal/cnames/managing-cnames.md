@@ -16,7 +16,7 @@ CNAMEs are managed from the CNAME page. To display this page, click **CNAMEs** 
 
 The following figure shows the key elements on the page, and the table following the figure describes them.
 
-![null](</docs/resources/images/cnames/cnames-w-numbers.png>)
+<p align=center><img src="/docs/resources/images/cnames/cnames-w-numbers.png" width="700"></p>
 
 | **Element Number**     | **Description**                                 |
 | -----------------------|-------------------------------------------------| 

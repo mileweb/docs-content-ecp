@@ -2,7 +2,7 @@
 
 Clicking **Global Presence** in the left pane displays the Global Presence page. This page shows a worldwide map of CDNetworks' PoP locations and the status of the PoPs.
 
-![null](</docs/resources/images/global-presence-w-numbers.png>)
+<p align=center><img src="/docs/resources/images/global-presence-w-numbers.png" width="600">
 
 The following table describes the elements on the Global Presence page.
 

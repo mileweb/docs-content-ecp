@@ -6,7 +6,7 @@ When you first log in to the ECP portal, the Dashboard appears with menus and su
 
 The default menu lists the ECP activities you can perform.
 
-<p align=center><img src="/docs/resources/images/accessing-portal/side-menu.png" alt="navigation menu" width="300"></p>
+<p align=center><img src="/docs/resources/images/accessing-portal/side-menu.png" width="300"></p>
 
 ## Dashboard
 
@@ -27,6 +27,10 @@ The [ImagePullSecrets page](</docs/portal/image-pull-secrets/managing-image-pull
 ## CNAMEs
 
 The [CNAMEs page](</docs/portal/cnames/managing-cnames.md>) allows you to create and manage the Canonical Name Record (CNAME) that allows the ECP to manage traffic routing for the application.
+
+## Image Registry
+
+The Image Registry menu allows you to manage [registry projects](</docs/portal/image-registry/managing-image-registry.md>) and [registry users](</docs/portal/registry-users/managing-registry-users.md>).
 
 ## Global Presence Page
 

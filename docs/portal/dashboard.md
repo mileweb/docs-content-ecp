@@ -12,28 +12,28 @@ Resource quota charts at the top of the Dashboard show “quota consumed” and 
 - Number of pods
 - Capacity of local-SSD storage
 
-![null](</docs/resources/images/dashboard/dashboard-resource-quota.png>)
+<p align=center><img src="/docs/resources/images/dashboard/dashboard-resource-quota.png" width="600">
 
 Charts at the bottom of the Dashboard show usage metrics. Buttons above the usage metrics charts allow you to filter the metrics by the last 24 hours (the default view), last 7 days, or last month. A legend below the usage metrics charts shows the names of the data entry points in the chart. Clicking a data entry point name in the legend removes that data entry point from the chart. Clicking it again redisplays the data entry point. Clicking **View Full Report** below a usage metrics chart displays that chart on the [Reports page](</docs/portal/reports.md>), where you can define report parameters, and then view the results on the selected chart.
 
-![null](</docs/resources/images/dashboard/dashboard-metrics-cpu.png>)
 
-![null](</docs/resources/images/dashboard/dashboard-metrics-memory.png>)
+<p align=center><img src="/docs/resources/images/dashboard/dashboard-metrics-cpu.png" width="600">
 
-![null](</docs/resources/images/dashboard/dashboard-metrics-traffic.png>)
+<p align=center><img src="/docs/resources/images/dashboard/dashboard-metrics-memory.png" width="600">
 
-![null](</docs/resources/images/dashboard/dashboard-metrics-bandwidth.png>)
+<p align=center><img src="/docs/resources/images/dashboard/dashboard-metrics-traffic.png" width="600">
 
-![null](</docs/resources/images/dashboard/dashboard-metrics-storage.png>)
+<p align=center><img src="/docs/resources/images/dashboard/dashboard-metrics-bandwidth.png" width="600">
 
-![null](</docs/resources/images/dashboard/dashboard-metrics-pods-and-ips.png>)
+<p align=center><img src="/docs/resources/images/dashboard/dashboard-metrics-storage.png" width="600">
 
+<p align=center><img src="/docs/resources/images/dashboard/dashboard-metrics-pods-and-ips.png" width="600">
 
 Hovering your cursor over the data points in a resource quota or usage metrics chart displays detailed information. For example:
 
-![null](</docs/resources/images/dashboard/dashboard-resource-quota-hovered.png>)
+<p align=center><img src="/docs/resources/images/dashboard/dashboard-resource-quota-hovered.png" width="600">
 
-![null](</docs/resources/images/dashboard/dashboard-metrics-pods-and-ips-hovered.png>)
+<p align=center><img src="/docs/resources/images/dashboard/dashboard-metrics-pods-and-ips-hovered.png" width="600">
 
 The metrics related to CPU, memory, and storage are reported according to your resource requests for your applications. These metrics do not refer to real-time resource consumption by the processes running in your applications. For instance, if you request 1 vCPU core for your application when only 0.5 core is being used, the CPU metric value shown on the Dashboard will be the 1 vCPU core.
 
