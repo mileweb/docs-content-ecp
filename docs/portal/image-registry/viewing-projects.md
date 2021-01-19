@@ -9,9 +9,9 @@ The following procedure describes how to view information about projects. Button
 
 | **Element Number**       | **Description**                               |
 | -------------------------|-----------------------------------------------| 
-1                                                                                                       | The Basic Information area shows basic information about the project.                                             |
-| 2                        | Click this button to return to the Registry Projects page.                                                             |
-| 3                        | Click this button to view the [logs](</docs/portal/image-registry/viewing-logs.md>) associated with the project.                                                          |
-| 4                        | Click this button to [delete](</docs/portal/image-registry/deleting-projects.md>) the project.      |
-| 5                        | Click this button to [update](</docs/portal/image-registry/updating-projects.md>) the project.      |
-| 6                        | The Repositories area shows repositories associated with the project. Click a number in the **Tags** column to display [detailed tag information](</docs/portal/image-registry/managing-tags-under-a-repository.md>).                                               |
+<p style="text-align: center;">1</p>                                                                                                       | The Basic Information area shows basic information about the project.                                             |
+| <p style="text-align: center;">2</p>                        | Click this button to return to the Registry Projects page.                                                             |
+| <p style="text-align: center;">3</p>                        | Click this button to view the [logs](</docs/portal/image-registry/viewing-logs.md>) associated with the project.                                                          |
+| <p style="text-align: center;">4</p>                        | Click this button to [delete](</docs/portal/image-registry/deleting-projects.md>) the project.      |
+| <p style="text-align: center;">5</p>                        | Click this button to [update](</docs/portal/image-registry/updating-projects.md>) the project.      |
+| <p style="text-align: center;">6</p>                        | The Repositories area shows repositories associated with the project. Click a number in the **Tags** column to display [detailed tag information](</docs/portal/image-registry/managing-tags-under-a-repository.md>).                                               |

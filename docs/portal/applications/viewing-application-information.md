@@ -11,10 +11,10 @@ The following procedure describes how to view information about applications.
 
 | **Element Number**       | **Description**                               |
 | -------------------------|-----------------------------------------------| 
-| 1                        | Click this button to return to the Applications page.                                                                      |
-| 2                        | Click this button to edit the YAML file.                                                               |
-| 3                        | Click this button to delete the application.                                                               |
-| 4                        | Click this button to make quick updates to the application without having to edit the corresponding YAML file. Choices are:<br><ul><li><strong>**Redistribute**</strong> = redistributes your application across ECP locations to maintain performance, save costs, or both. After an application is created, you cannot change the distribution method.<li><strong>**Set container image**</strong> = updates your pods to a newer application version. Performing this action might delete and recreate your existing pods.<li><strong>**Upgrade resources**</strong> = upgrades the spec of your container instance to maintain performance, save costs, or both. Performing this action might delete and recreate your existing pods.</br></li>                                                               |
+| <p style="text-align: center;">1</p>                        | Click this button to return to the Applications page.                                                                      |
+| <p style="text-align: center;">2</p>                        | Click this button to edit the YAML file.                                                               |
+| <p style="text-align: center;">3</p>                        | Click this button to delete the application.                                                               |
+| <p style="text-align: center;">4</p>                        | Click this button to make quick updates to the application without having to edit the corresponding YAML file. Choices are:<br><ul><li><strong>**Redistribute**</strong> = redistributes your application across ECP locations to maintain performance, save costs, or both. After an application is created, you cannot change the distribution method.<li><strong>**Set container image**</strong> = updates your pods to a newer application version. Performing this action might delete and recreate your existing pods.<li><strong>**Upgrade resources**</strong> = upgrades the spec of your container instance to maintain performance, save costs, or both. Performing this action might delete and recreate your existing pods.</br></li>                                                               |
 
 
 ## Viewing YAML Files

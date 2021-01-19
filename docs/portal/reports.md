@@ -16,8 +16,8 @@ The following figure shows the key elements on the page.
 
 | **Element Number**       | **Description**                               |
 | -------------------------|-----------------------------------------------| 
-| 1                        | Specify the report type, date range, report interval, and service zone. Resellers with child accounts can also select a report range.                                                              |
-| 2                        | The **Generate Report** button allows you to generate the report defined by the report parameters.                      |
+| <p style="text-align: center;">1</p>                        | Specify the report type, date range, report interval, and service zone. Resellers with child accounts can also select a report range.                                                              |
+| <p style="text-align: center;">2</p>                        | The **Generate Report** button allows you to generate the report defined by the report parameters.                      |
 
 
 # Understanding Report Types

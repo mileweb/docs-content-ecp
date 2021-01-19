@@ -9,7 +9,7 @@ The following procedure describes how to view information about CNAMEs. Buttons 
 
 | **Element Number**     | **Description**                                 |
 | -----------------------|-------------------------------------------------| 
-| 1                      | The Basic Information area shows basic information about the CNAME. Clicking the value next to Application allows you to view the  [application information](</docs/portal/applications/viewing-application-information.md>) associated with the CNAME.                                                                     |
-| 2                      | Click this button to return to the CNAMEs page. |
-| 3                      | Click this button to update the CNAME description.                                                               |
-| 4                      | Click this button to delete the CNAME.          |
+| <p style="text-align: center;">1</p>                      | The Basic Information area shows basic information about the CNAME. Clicking the value next to Application allows you to view the  [application information](</docs/portal/applications/viewing-application-information.md>) associated with the CNAME.                                                                     |
+| <p style="text-align: center;">2</p>                      | Click this button to return to the CNAMEs page. |
+| <p style="text-align: center;">3</p>                      | Click this button to update the CNAME description.                                                               |
+| <p style="text-align: center;">4</p>                      | Click this button to delete the CNAME.          |
