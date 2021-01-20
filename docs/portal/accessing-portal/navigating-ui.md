@@ -30,7 +30,7 @@ The [CNAMEs page](</docs/portal/cnames/managing-cnames.md>) allows you to create
 
 ## Image Registry
 
-The Image Registry menu allows you to manage [registry projects](</docs/portal/image-registry/managing-image-registry.md>) and [registry users](</docs/portal/registry-users/managing-registry-users.md>).
+The Image Registry menu allows you to manage [registry projects](</docs/portal/image-registry/managing-registry-projects.md>) and [registry users](</docs/portal/registry-users/managing-registry-users.md>).
 
 ## Global Presence Page
 
