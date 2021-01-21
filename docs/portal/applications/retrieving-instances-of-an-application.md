@@ -5,14 +5,14 @@
 
 <p align=center><img src="/docs/resources/images/applications/applications-instances-w-numbers.png" width="600"></p>
 
-| **Element Number**       | **Description**                               |
-| -------------------------|-----------------------------------------------| 
-| <p style="text-align: center;">1</p>                        | By default all PoPs for all phases are shown. Use the PoP and Phase drop-down lists to view a particular PoP and phase. The two right buttons reset the filters and refresh the instances shown.                                                                      |
-| <p style="text-align: center;">2</p>                        | Click an ID to view information about an   instance.                                                                   |
-| <p style="text-align: center;">3</p>                        | The **Actions** drop-down list on each row has options for viewing metrics, viewing logs, and accessing a shell for an instance.               |
-| <p style="text-align: center;">4</p>                        | Use these buttons to go to other Instances pages.                                                                      |
-|<p style="text-align: center;">5</p>                         | Use these icons to toggle between list view (which is the default) or map.                                              |
-|<p style="text-align: center;">6</p>                         | Click this button to return to the Applications page.                                                                       |
+| **Fields**   | **Description**                                                                           |
+| :----------: | ----------------------------------------------------------------------------------------- |
+| 1            | By default all PoPs for all phases are shown. Use the PoP and Phase drop-down lists to view a particular PoP and phase. The two right buttons reset the filters and refresh the instances shown.                                                                   |
+| 2            | Click an ID to view information about an instance.                                        |
+| 3            | The **Actions** drop-down list on each row has options for viewing metrics, viewing logs, and accessing a shell for an instance.   |
+| 4            | Use these buttons to go to other Instances pages.                                         |
+| 5            | Use these icons to toggle between list view (which is the default) or map.                |
+| 6            | Click this button to return to the Applications page.                                     |
 
 
 # Retrieving Instances of an Application in Map View
@@ -28,6 +28,7 @@ A map view similar to the following shows the location of the instances and thei
 <p align=center><img src="/docs/resources/images/applications/applications-instances-map-view.png" width="700"></p>
 
 4. By default, the map shows all PoPs and all phases. Using the **PoP** and **Phase** drop-down lists above the map, you can view a particular PoP and phase. The two right buttons next to the drop-down lists reset the filters and refresh the instances shown.
+
 5. Clicking an Instance displays a popup similar to the following figure with detailed information. Clicking the link next to **Instance** displays detailed information about that instance, with buttons for viewing metrics, viewing and downloading logs, and running commands inside containers. For an example, see the figure under [Viewing Instance Information](<#viewing-instance-information>) below.
 
 <p align=center><img src="/docs/resources/images/applications/applications-instances-map-view-detail.png" width="700"></p>
@@ -50,10 +51,9 @@ The following procedure describes how to view information about application inst
 
 <p align=center><img src="/docs/resources/images/applications/applications-instance-details-containers.png" width="700"></p>
 
-
-| **Element Number**       | **Description**                               |
-| -------------------------|-----------------------------------------------| 
-| <p style="text-align: center;">1</p>                        | Click this button to return to the Instances page.                                                                      |
-|<p style="text-align: center;">2</p>                         | Click this button to view metrics such as CPU, memory, traffic, and bandwidth usage in a popup. Controls at the top of the popup allow you to select metrics, interval, date and time, and UTC.                                                                        |
-| <p style="text-align: center;">3</p>                        | Click this button to obtain a live stream of logs from the instance.                                                     |
-| <p style="text-align: center;">4</p>                        | Click this button to run commands inside the instance.                                                                   |
+| **Fields**   | **Description**                                                                           |
+| :----------: | ----------------------------------------------------------------------------------------- |
+| 1            | Click this button to return to the Instances page.                                        |
+| 2            | Click this button to view metrics such as CPU, memory, traffic, and bandwidth usage in a popup. Controls at the top of the popup allow you to select metrics, interval, date and time, and UTC.                                                                 |
+| 3            | Click this button to obtain a live stream of logs from the instance.                      |
+| 4            | Click this button to run commands inside the instance.                                    |

@@ -6,10 +6,10 @@ Clicking **Global Presence** in the left pane displays the Global Presence page.
 
 The following table describes the elements on the Global Presence page.
 
-| **Element Number**     | **Description**                                 |
-| -----------------------|-------------------------------------------------| 
-| <p style="text-align: center;">1</p>                      | Color-coded legend shows the number of PoPs that are in service (green) or under maintenance (yellow).                 |
-| <p style="text-align: center;">2</p>                     | Global map of PoP locations. Mousing over a PoP shows its location and status.                                                       |
-| <p style="text-align: center;">3</p>                     | Controls allow you to filter the PoPs in the list by search criteria, region, service zone, and status. The two right buttons reset the filters and refresh the list.                                                      |
-| <p style="text-align: center;">4</p>                     | Table lists the PoPs along with their code, region, service zone, and status.                                                           |      
-|<p style="text-align: center;">5</p>                       | Use these buttons to go to other Global Presence pages.                                                                      |
+| **Fields**   | **Description**                                                                                           |
+| :----------: | --------------------------------------------------------------------------------------------------------- |
+| 1            | Color-coded legend shows the number of PoPs that are in service (green) or under maintenance (yellow).    |
+| 2            | Global map of PoP locations. Mousing over a PoP shows its location and status.                            |
+| 3            | Controls allow you to filter the PoPs in the list by search criteria, region, service zone, and status. The two right buttons reset the filters and refresh the list.                                                                                                          |
+| 4            | Table lists the PoPs along with their code, region, service zone, and status.                             |
+| 5            | Use these buttons to go to other Global Presence pages.                                                   |

@@ -7,10 +7,10 @@ The following procedure describes how to view information about registry users. 
 
 <p align=center><img src="/docs/resources/images/registry/edit-user.png" width="650">
 
-| **Element Number**       | **Description**                               |
-| -------------------------|-----------------------------------------------| 
-<p style="text-align: center;">1<p>                                                                                                       | The Basic Information area shows basic information about the registry user. To [view a project](</docs/portal/image-registry/viewing-projects.md>) associated with the registry user, click a project in the table within the **Access to Projects** field.                                            |
-| <p style="text-align: center;">2</p>                        | Click this button to return to the Registry Users page.                                                                 |
-| <p style="text-align: center;">3</p>                        | Click this button to change the registry user's [password](</docs/portal/registry-users/changing-passwords.md>).            |
-| <p style="text-align: center;">4</p>                        | Click this button to [delete](</docs/portal/registry-users/deleting-users.md>) the registry user. |
-| <p style="text-align: center;">5</p>                        | Click this button to [update](</docs/portal/registry-users/updating-users.md>) the registry user.                       |
+| **Fields**   | **Description**                                                                                           |
+| :----------: | --------------------------------------------------------------------------------------------------------- |
+| 1            | The Basic Information area shows basic information about the registry user. To [view a project](</docs/portal/image-registry/viewing-projects.md>) associated with the registry user, click a project in the table within the **Access to Projects** field.                   |
+| 2            | Click this button to return to the Registry Users page.                                                   |
+| 3            | Click this button to change the registry user's [password](</docs/portal/registry-users/changing-passwords.md>).  |
+| 4            | Click this button to [delete](</docs/portal/registry-users/deleting-users.md>) the registry user.         |
+| 5            | Click this button to [update](</docs/portal/registry-users/updating-users.md>) the registry user.         |

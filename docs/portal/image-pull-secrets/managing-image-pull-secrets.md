@@ -17,9 +17,9 @@ The following figure shows the key elements on the page, and the table following
 
 <p align=center><img src="/docs/resources/images/image-pull-secrets/image-pull-secrets-w-numbers.png" width="700"></p>
 
-| **Element Number**       | **Description**                               |
-| -------------------------|-----------------------------------------------| 
- <p style="text-align: center;">1</p>                         | To filter ImagePullSecrets, type characters in this field and then press the Enter key. All ImagePullSecrets that do not contain the typed characters are hidden. Filtering is not case-sensitive. To remove the filter, click the **Reset** button.                                                                   |
-| <p style="text-align: center;">2</p>                        | Each ImagePullSecret appears on its own row. Clicking an ImagePullSecret allows you to view basic information about the ImagePullSecret.                                                           |
-| <p style="text-align: center;">3</p>                        | The Actions drop-down list on each row has options to [update](</docs/portal/image-pull-secrets/updating-image-pull-secret.md>) or [delete](</docs/portal/image-pull-secrets/deleting-an-image-pull-secret.md>) an ImagePullSecret.                                                           |
-| <p style="text-align: center;">4</p>                        | The **+ Add New ImagePullSecret** button allows you to [add](</docs/portal/image-pull-secrets/adding-an-image-pull-secret.md>) ImagePullSecrets.                                                     |
+| **Fields**   | **Description**                                                                                           |
+| :----------: | --------------------------------------------------------------------------------------------------------- |
+| 1            | To filter ImagePullSecrets, type characters in this field and then press the Enter key. All ImagePullSecrets that do not contain the typed characters are hidden. Filtering is not case-sensitive. To remove the filter, click the **Reset** button.                                 |
+| 2            | Each ImagePullSecret appears on its own row. Clicking an ImagePullSecret allows you to view basic information about the ImagePullSecret.                                                                                                           |
+| 3            | The Actions drop-down list on each row has options to [update](</docs/portal/image-pull-secrets/updating-image-pull-secret.md>) or [delete](</docs/portal/image-pull-secrets/deleting-an-image-pull-secret.md>) an ImagePullSecret.                                                  |
+| 4            | The **+ Add New ImagePullSecret** button allows you to [add](</docs/portal/image-pull-secrets/adding-an-image-pull-secret.md>) ImagePullSecrets.                                                                                                          |

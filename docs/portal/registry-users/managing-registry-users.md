@@ -9,10 +9,9 @@ The following figure shows the key elements on the page, and the table following
 
 <p align=center><img src="/docs/resources/images/registry/registry-users-page.png" width="700">
 
-
-| **Element Number**       | **Description**                               |
-| -------------------------|-----------------------------------------------| 
-<p style="text-align: center;">1</p>                                                                                                       | To filter registry users, type characters in this field and then press the Enter key. All registry users that do not contain the typed characters are hidden. Filtering is not case-sensitive. To remove the filter, click the **Reset** button.                                             |
-| <p style="text-align: center;">2</p>                        | Each registry user appears on its own row. Clicking a registry user allows you to view basic information about the registry user and the projects associated with the user.             |
-| <p style="text-align: center;">3</p>                        | The **Actions** drop-down list on each row has options to [update the registry user](</docs/portal/registry-users/updating-users.md>), [change the registry user's password](</docs/portal/registry-users/changing-passwords.md>), and [delete the registry user](</docs/portal/registry-users/deleting-users.md>).                                                                          |
-| <p style="text-align: center;">4</p>                        | The **+ Add New User** button allows you to [add registry users](</docs/portal/registry-users/adding-users.md>).          |
+| **Fields**   | **Description**                                                                           |
+| :----------: | ----------------------------------------------------------------------------------------- |
+| 1            | To filter registry users, type characters in this field and then press the Enter key. All registry users that do not contain the typed characters are hidden. Filtering is not case-sensitive. To remove the filter, click the **Reset** button.                 |
+| 2            | Each registry user appears on its own row. Clicking a registry user allows you to view basic information about the registry user and the projects associated with the user.                                                                                  |
+| 3            | The **Actions** drop-down list on each row has options to [update the registry user](</docs/portal/registry-users/updating-users.md>), [change the registry user's password](</docs/portal/registry-users/changing-passwords.md>), and [delete the registry user](</docs/portal/registry-users/deleting-users.md>).                                                                                                           |
+| 4            | The **+ Add New User** button allows you to [add registry users](</docs/portal/registry-users/adding-users.md>).       |
