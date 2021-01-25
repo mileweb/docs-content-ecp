@@ -7,9 +7,9 @@ The following procedure describes how to view information about ImagePullSecrets
 
 <p align=center><img src="/docs/resources/images/image-pull-secrets/image-pull-secrets-details-w-numbers.png" width="600"></p>
 
-| **Element Number**       | **Description**                               |
-| -------------------------|-----------------------------------------------| 
-1                                                                                                       | The Basic Information area shows basic information about the ImagePullSecret.                                     |
-| 2                        | Click this button to return to the ImagePullSecrets page.                                                     |
-| 3                        | Click this button to update the ImagePullSecret.                                                           |
-| 4                        | Click this button to delete the ImagePullSecret.                                                           |
+| **Fields**   | **Description**                                                                                           |
+| :----------: | --------------------------------------------------------------------------------------------------------- |
+| 1            | The Basic Information area shows basic information about the ImagePullSecret.                             |
+| 2            | Click this button to return to the ImagePullSecrets page.                                                 |
+| 3            | Click this button to update the ImagePullSecret.                                                          |
+| 4            | Click this button to delete the ImagePullSecret.                                                          |

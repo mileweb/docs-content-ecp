@@ -14,11 +14,10 @@ The following figure shows the key elements on the page.
 
 <p align=center><img src="/docs/resources/images/reports/reports-w-numbers.png" width="550">
 
-| **Element Number**       | **Description**                               |
-| -------------------------|-----------------------------------------------| 
-| 1                        | Specify the report type, date range, report interval, and service zone. Resellers with child accounts can also select a report range.                                                              |
-| 2                        | The **Generate Report** button allows you to generate the report defined by the report parameters.                      |
-
+| **Fields**   | **Description**                                                                                           |
+| :----------: | --------------------------------------------------------------------------------------------------------- |
+| 1            | Specify the report type, date range, report interval, and service zone. Resellers with child accounts can also select a report range.  |
+| 2            | The **Generate Report** button allows you to generate the report defined by the report parameters.        | 
 
 # Understanding Report Types
 
