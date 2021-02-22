@@ -7,12 +7,6 @@
       "url": "https://www.cdnetworks.com"
     },
     "description": "The ECP API is a RESTful API that allows you to manage ECP services.",
-    "x-logo": {
-      "url": "/ecp_api_reference/cdn6.jpg",
-      "backgroundColor": "#FFFFFF",
-      "altText": "CDNetworks logo",
-      "href": "https://www.cdnetworks.com/"
-    }
   },
   "servers": [
     {
