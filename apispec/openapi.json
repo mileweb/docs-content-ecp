@@ -6,7 +6,8 @@
     "contact": {
       "url": "https://www.cdnetworks.com"
     },
-    "description": "The ECP API is a RESTful API that allows you to manage ECP services.",
+    "description": "The ECP API is a RESTful API that allows you to manage ECP services."
+  },
   "servers": [
     {
       "url": "https://ngapi.cdnetworks.com"
