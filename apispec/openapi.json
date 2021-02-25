@@ -9879,7 +9879,7 @@
                           "name": {
                             "title": "",
                             "type": "string",
-                            "description": "Name of a registry project"
+                            "description": "Name of a registry project. Must be unique globally. Allows lower case alphanumeric characters, ‘-’, ‘_’ and ‘.’ only, must start and end with an alphanumeric character, and must be not more than 128 characters."
                           },
                           "createdBy": {
                             "title": "",
@@ -10208,7 +10208,7 @@
                   "name": {
                     "title": "",
                     "type": "string",
-                    "description": "Name of a registry project"
+                    "description": "Name of a registry project. Must be unique globally. Allows lower case alphanumeric characters, ‘-’, ‘_’ and ‘.’ only, must start and end with an alphanumeric character, and must be not more than 128 characters."
                   },
                   "preventVulnerable": {
                     "title": "",
@@ -10299,7 +10299,7 @@
                     "name": {
                       "title": "",
                       "type": "string",
-                      "description": "Name of a registry project"
+                      "description": "Name of a registry project. Must be unique globally. Allows lower case alphanumeric characters, ‘-’, ‘_’ and ‘.’ only, must start and end with an alphanumeric character, and must be not more than 128 characters."
                     },
                     "createdBy": {
                       "title": "",
@@ -10461,7 +10461,7 @@
                     "name": {
                       "title": "",
                       "type": "string",
-                      "description": "Name of a registry project"
+                      "description": "Name of a registry project. Must be unique globally. Allows lower case alphanumeric characters, ‘-’, ‘_’ and ‘.’ only, must start and end with an alphanumeric character, and must be not more than 128 characters."
                     },
                     "createdBy": {
                       "title": "",
@@ -12887,7 +12887,7 @@
                           "description": {
                             "title": "",
                             "type": "string",
-                            "description": "Arbitrary text about the registry user"
+                            "description": "Arbitrary text about the registry user. Must be not more than 20 characters."
                           },
                           "projectsAccess": {
                             "type": "array",
@@ -13397,7 +13397,7 @@
                     "description": {
                       "title": "",
                       "type": "string",
-                      "description": "Arbitrary text about the registry user"
+                      "description": "Arbitrary text about the registry user. Must be not more than 20 characters."
                     },
                     "projectsAccess": {
                       "type": "array",
@@ -13413,7 +13413,7 @@
                           "project": {
                             "title": "",
                             "type": "string",
-                            "description": "Name of a registry project"
+                            "description": "Name of a registry project. Must be unique globally. Allows lower case alphanumeric characters, ‘-’, ‘_’ and ‘.’ only, must start and end with an alphanumeric character, and must be not more than 128 characters."
                           },
                           "accessType": {
                             "type": "string",
@@ -13567,7 +13567,7 @@
                     "description": {
                       "title": "",
                       "type": "string",
-                      "description": "Arbitrary text about the registry user"
+                      "description": "Arbitrary text about the registry user. Must be not more than 20 characters."
                     },
                     "projectsAccess": {
                       "type": "array",
@@ -13578,7 +13578,7 @@
                           "project": {
                             "title": "",
                             "type": "string",
-                            "description": "Name of a registry project"
+                            "description": "Name of a registry project. Must be unique globally. Allows lower case alphanumeric characters, ‘-’, ‘_’ and ‘.’ only, must start and end with an alphanumeric character, and must be not more than 128 characters."
                           },
                           "accessType": {
                             "type": "string",
@@ -13853,7 +13853,7 @@
                   "description": {
                     "title": "",
                     "type": "string",
-                    "description": "Arbitrary text about the registry user"
+                    "description": "Arbitrary text about the registry user. Must be not more than 20 characters."
                   },
                   "projectsAccess": {
                     "type": "array",
@@ -13864,7 +13864,7 @@
                         "project": {
                           "title": "",
                           "type": "string",
-                          "description": "Name of a registry project"
+                          "description": "Name of a registry project. Must be unique globally. Allows lower case alphanumeric characters, ‘-’, ‘_’ and ‘.’ only, must start and end with an alphanumeric character, and must be not more than 128 characters."
                         },
                         "accessType": {
                           "type": "string",
@@ -17747,7 +17747,7 @@
       "project.name": {
         "title": "",
         "type": "string",
-        "description": "Name of a registry project"
+        "description": "Name of a registry project. Must be unique globally. Allows lower case alphanumeric characters, ‘-’, ‘_’ and ‘.’ only, must start and end with an alphanumeric character, and must be not more than 128 characters."
       },
       "project.createdBy": {
         "title": "",
@@ -17951,7 +17951,7 @@
       "user.description": {
         "title": "",
         "type": "string",
-        "description": "Arbitrary text about the registry user"
+        "description": "Arbitrary text about the registry user. Must be not more than 20 characters."
       },
       "user.project.accessType": {
         "type": "string",
