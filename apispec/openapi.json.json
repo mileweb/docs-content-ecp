@@ -4994,6 +4994,7 @@
                     {
                       "title": "App Exposure",
                       "type": "object",
+                      "description": "LoadBalancer4",
                       "properties": {
                         "apiVersion": {
                           "type": "string",
@@ -5111,7 +5112,7 @@
                                     "minimum": 1,
                                     "maximum": 50
                                   },
-                                  "healthCheckUnhealthyThreshold": {
+                                  "unhealthyThreshold": {
                                     "type": "integer",
                                     "default": 3,
                                     "description": "Minimum consecutive failures for the health check to be considered failed after having succeeded",
@@ -5134,8 +5135,7 @@
                         "Kind",
                         "metadata",
                         "spec"
-                      ],
-                      "description": "LoadBalancer4"
+                      ]
                     },
                     {
                       "title": "App Distribution",
@@ -6652,6 +6652,7 @@
                     {
                       "title": "App Exposure",
                       "type": "object",
+                      "description": "LoadBalancer4",
                       "properties": {
                         "apiVersion": {
                           "type": "string",
@@ -6769,7 +6770,7 @@
                                     "minimum": 1,
                                     "maximum": 50
                                   },
-                                  "healthCheckUnhealthyThreshold": {
+                                  "unhealthyThreshold": {
                                     "type": "integer",
                                     "default": 3,
                                     "description": "Minimum consecutive failures for the health check to be considered failed after having succeeded",
@@ -6792,8 +6793,7 @@
                         "Kind",
                         "metadata",
                         "spec"
-                      ],
-                      "description": "LoadBalancer4"
+                      ]
                     },
                     {
                       "title": "App Distribution",
@@ -7847,6 +7847,7 @@
                     {
                       "title": "App Exposure",
                       "type": "object",
+                      "description": "LoadBalancer4",
                       "properties": {
                         "apiVersion": {
                           "type": "string",
@@ -7964,7 +7965,7 @@
                                     "minimum": 1,
                                     "maximum": 50
                                   },
-                                  "healthCheckUnhealthyThreshold": {
+                                  "unhealthyThreshold": {
                                     "type": "integer",
                                     "default": 3,
                                     "description": "Minimum consecutive failures for the health check to be considered failed after having succeeded",
@@ -7987,8 +7988,7 @@
                         "Kind",
                         "metadata",
                         "spec"
-                      ],
-                      "description": "LoadBalancer4"
+                      ]
                     },
                     {
                       "title": "App Distribution",
@@ -14749,6 +14749,7 @@
       "application.spec.loadbalancer4": {
         "title": "App Exposure",
         "type": "object",
+        "description": "LoadBalancer4",
         "properties": {
           "apiVersion": {
             "type": "string",
@@ -14866,7 +14867,7 @@
                       "minimum": 1,
                       "maximum": 50
                     },
-                    "healthCheckUnhealthyThreshold": {
+                    "unhealthyThreshold": {
                       "type": "integer",
                       "default": 3,
                       "description": "Minimum consecutive failures for the health check to be considered failed after having succeeded",
@@ -14889,8 +14890,7 @@
           "Kind",
           "metadata",
           "spec"
-        ],
-        "description": "LoadBalancer4"
+        ]
       },
       "application.spec.statefulset": {
         "title": "StatefulSet",
@@ -15550,6 +15550,7 @@
             {
               "title": "App Exposure",
               "type": "object",
+              "description": "LoadBalancer4",
               "properties": {
                 "apiVersion": {
                   "type": "string",
@@ -15667,7 +15668,7 @@
                             "minimum": 1,
                             "maximum": 50
                           },
-                          "healthCheckUnhealthyThreshold": {
+                          "unhealthyThreshold": {
                             "type": "integer",
                             "default": 3,
                             "description": "Minimum consecutive failures for the health check to be considered failed after having succeeded",
@@ -15690,8 +15691,7 @@
                 "Kind",
                 "metadata",
                 "spec"
-              ],
-              "description": "LoadBalancer4"
+              ]
             },
             {
               "title": "App Distribution",
