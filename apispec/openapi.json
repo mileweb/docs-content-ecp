@@ -18,7 +18,7 @@
       "post": {
         "summary": "Create an imagePullSecret",
         "operationId": "post-imagepullsecrets",
-        "description": "This interface enables you to create imagePullSecrets to be used when pulling private images for your applications.",
+        "description": "This interface enables you to create imagePullSecrets to be used by Kubernetes when pulling private images for your applications. \n\nNote that ECP apiserver itself will not attempt to use the username and password passed to authenticate against the image registry. Please make sure that the credentials are valid. Invalid credentials will cause failure in image pulling when deploying an application using that imagePullSecret.",
         "requestBody": {
           "content": {
             "application/json": {
@@ -79,14 +79,14 @@
               }
             }
           },
-          "description": "Note that ECP apiserver will not attempt to use the username and password passed to authenticate against the registry. Please make sure that the credentials are valid. Invalid credentials will cause failure in image pulling when deploying an application."
+          "description": ""
         },
         "tags": [
           "imagePullSecrets"
         ],
         "responses": {
           "201": {
-            "description": "Created",
+            "description": "This response indicates the imagePullSecret is successfully created.",
             "headers": {
               "Location": {
                 "schema": {
@@ -109,117 +109,42 @@
             }
           },
           "400": {
-            "description": "Bad Request",
+            "description": "The request is invalid. Refer to response body for details.",
             "content": {
               "application/json": {
                 "schema": {
-                  "oneOf": [
-                    {
-                      "title": "InvalidSecretName",
-                      "type": "object",
-                      "description": "",
-                      "properties": {
-                        "error": {
-                          "type": "string",
-                          "description": "InvalidSecretName"
-                        },
-                        "message": {
-                          "type": "string",
-                          "description": "Invalid secret name. A valid secret name must consist of lower-case alphanumeric characters, ‘-', or '.’, must start and end with a lower-case alphanumeric character, and must be no more than 63 characters."
-                        }
-                      }
+                  "title": "",
+                  "type": "object",
+                  "description": "A standard error object.",
+                  "x-tags": [
+                    "Common"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "string"
                     },
-                    {
-                      "title": "NamespaceNotExist",
-                      "type": "object",
-                      "properties": {
-                        "error": {
-                          "type": "string",
-                          "description": "NamespaceNotExist"
-                        },
-                        "message": {
-                          "type": "string",
-                          "description": "The namespace given does not exist."
-                        }
-                      }
-                    },
-                    {
-                      "title": "NameEmpty",
-                      "type": "object",
-                      "properties": {
-                        "error": {
-                          "type": "string",
-                          "description": "NameEmpty"
-                        },
-                        "message": {
-                          "type": "string",
-                          "description": "The name field cannot be empty."
-                        }
-                      }
-                    },
-                    {
-                      "title": "NamespaceEmpty",
-                      "type": "object",
-                      "properties": {
-                        "error": {
-                          "type": "string",
-                          "description": "NamespaceEmpty"
-                        },
-                        "message": {
-                          "type": "string",
-                          "description": "The namespace field cannot be empty."
-                        }
-                      }
-                    },
-                    {
-                      "title": "RegistryEmpty",
-                      "type": "object",
-                      "properties": {
-                        "error": {
-                          "type": "string",
-                          "description": "RegistryEmpty"
-                        },
-                        "message": {
-                          "type": "string",
-                          "description": "The registry field cannot be empty."
-                        }
-                      }
-                    },
-                    {
-                      "title": "UsernameEmpty",
-                      "type": "object",
-                      "properties": {
-                        "error": {
-                          "type": "string",
-                          "description": "UsernameEmpty"
-                        },
-                        "message": {
-                          "type": "string",
-                          "description": "The username field cannot be empty."
-                        }
-                      }
-                    },
-                    {
-                      "title": "PasswordEmpty",
-                      "type": "object",
-                      "properties": {
-                        "error": {
-                          "type": "string",
-                          "description": "PasswordEmpty"
-                        },
-                        "message": {
-                          "type": "string",
-                          "description": "The password field cannot be empty."
-                        }
-                      }
+                    "message": {
+                      "type": "string"
                     }
-                  ]
+                  }
                 },
                 "examples": {
-                  "example-1": {
+                  "InvalidSecretName": {
                     "value": {
                       "error": "InvalidSecretName",
                       "message": "Invalid secret name. A valid secret name must consist of lower-case alphanumeric characters, ‘-', or '.’, must start and end with a lower-case alphanumeric character, and must be no more than 63 characters."
+                    }
+                  },
+                  "NamespaceNotExist": {
+                    "value": {
+                      "error": "NamespaceNotExist",
+                      "message": "The namespace given does not exist."
+                    }
+                  },
+                  "RequiredFieldMissing": {
+                    "value": {
+                      "error": "RequiredFieldMissing",
+                      "message": "The field {field} is required."
                     }
                   }
                 }
@@ -238,20 +163,22 @@
             }
           },
           "409": {
-            "description": "Conflict",
+            "description": "This error is returned if you try to create an imagePullSecret that already exists.",
             "content": {
               "application/json": {
                 "schema": {
-                  "title": "SecretNameExists",
+                  "title": "",
                   "type": "object",
+                  "description": "A standard error object.",
+                  "x-tags": [
+                    "Common"
+                  ],
                   "properties": {
                     "error": {
-                      "type": "string",
-                      "description": "SecretNameExists"
+                      "type": "string"
                     },
                     "message": {
-                      "type": "string",
-                      "description": "The secret name is already taken."
+                      "type": "string"
                     }
                   }
                 },
@@ -284,7 +211,7 @@
         "operationId": "get-imagepullsecrets",
         "responses": {
           "200": {
-            "description": "OK",
+            "description": "The response contains a list of imagePullSecrets.",
             "content": {
               "application/json": {
                 "schema": {
@@ -345,24 +272,24 @@
                           "name": "mysecret1",
                           "namespace": "demo",
                           "description": "image pull secret for qcc registry",
-                          "creationTime": "2019-10-02T15:00:00Z",
-                          "lastUpdateTime": "2019-10-02T15:00:00Z"
+                          "creationTime": "2020-10-02T15:00:00Z",
+                          "lastUpdateTime": "2020-10-02T15:00:00Z"
                         },
                         {
                           "imagepullsecretID": "123456",
                           "name": "mysecret2",
                           "namespace": "demo",
                           "description": "image pull secret for qcc registry",
-                          "creationTime": "2019-10-02T15:00:00Z",
-                          "lastUpdateTime": "2019-10-02T15:00:00Z"
+                          "creationTime": "2020-10-02T15:00:00Z",
+                          "lastUpdateTime": "2020-10-02T15:00:00Z"
                         },
                         {
                           "imagepullsecretID": "123456",
                           "name": "mysecret3",
                           "namespace": "demo",
                           "description": "image pull secret for qcc registry",
-                          "creationTime": "2019-10-02T15:00:00Z",
-                          "lastUpdateTime": "2019-10-02T15:00:00Z"
+                          "creationTime": "2020-10-02T15:00:00Z",
+                          "lastUpdateTime": "2020-10-02T15:00:00Z"
                         }
                       ],
                       "totalCount": 3
@@ -384,46 +311,36 @@
             }
           },
           "400": {
-            "description": "Bad Request",
+            "description": "The request is invalid. Refer to response body for details.",
             "content": {
               "application/json": {
                 "schema": {
-                  "oneOf": [
-                    {
-                      "title": "InvalidListOffset",
-                      "type": "object",
-                      "properties": {
-                        "error": {
-                          "type": "string",
-                          "description": "InvalidListOffset"
-                        },
-                        "message": {
-                          "type": "string",
-                          "description": "The value of offset must be a valid non-negative integer."
-                        }
-                      }
+                  "title": "",
+                  "type": "object",
+                  "description": "A standard error object.",
+                  "x-tags": [
+                    "Common"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "string"
                     },
-                    {
-                      "title": "InvalidListLimit",
-                      "type": "object",
-                      "properties": {
-                        "error": {
-                          "type": "string",
-                          "description": "InvalidListLimit"
-                        },
-                        "message": {
-                          "type": "string",
-                          "description": "The value of limit must be a valid integer between 1 and 200, both inclusive."
-                        }
-                      }
+                    "message": {
+                      "type": "string"
                     }
-                  ]
+                  }
                 },
                 "examples": {
-                  "example-1": {
+                  "InvalidListOffset": {
                     "value": {
                       "error": "InvalidListOffset",
                       "message": "The value of offset must be a valid non-negative integer."
+                    }
+                  },
+                  "InvalidListLimit": {
+                    "value": {
+                      "error": "InvalidListLimit",
+                      "message": "The value of limit must be a valid integer between 1 and 200, both inclusive."
                     }
                   }
                 }
@@ -442,7 +359,7 @@
             }
           }
         },
-        "description": "Get a list of imagePullSecrets. You can specify a search parameter, offset and limit to filter your results.",
+        "description": "Get a list of imagePullSecrets. You can specify a search parameter, offset and limit to filter the results.",
         "tags": [
           "imagePullSecrets"
         ],
@@ -512,7 +429,7 @@
         ],
         "responses": {
           "200": {
-            "description": "OK",
+            "description": "The response contains details of the imagePullSecret.",
             "content": {
               "application/json": {
                 "schema": {
@@ -577,8 +494,8 @@
                       "registry": "docker.io",
                       "username": "demo",
                       "password": "123456",
-                      "creationTime": "2019-10-02T15:00:00Z",
-                      "lastUpdateTime": "2019-10-02T15:00:00Z"
+                      "creationTime": "2020-10-02T15:00:00Z",
+                      "lastUpdateTime": "2020-10-02T15:00:00Z"
                     }
                   }
                 }
@@ -601,16 +518,18 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "title": "SecretNotFound",
+                  "title": "",
                   "type": "object",
+                  "description": "A standard error object.",
+                  "x-tags": [
+                    "Common"
+                  ],
                   "properties": {
                     "error": {
-                      "type": "string",
-                      "description": "SecretNotFound"
+                      "type": "string"
                     },
                     "message": {
-                      "type": "string",
-                      "description": "The secret ID given does not exist."
+                      "type": "string"
                     }
                   }
                 },
@@ -656,7 +575,7 @@
         "operationId": "patch-imagepullsecret-by-ID",
         "responses": {
           "200": {
-            "description": "OK",
+            "description": "This response indicates the imagePullSecret is successfully updated.",
             "content": {
               "application/json": {
                 "schema": {
@@ -721,8 +640,8 @@
                       "registry": "docker.io",
                       "username": "demo",
                       "password": "123456",
-                      "creationTime": "2019-10-02T15:00:00Z",
-                      "lastUpdateTime": "2019-10-02T15:05:00Z"
+                      "creationTime": "2020-10-02T15:00:00Z",
+                      "lastUpdateTime": "2020-10-02T15:05:00Z"
                     }
                   }
                 }
@@ -745,16 +664,18 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "title": "SecretNotFound",
+                  "title": "",
                   "type": "object",
+                  "description": "A standard error object.",
+                  "x-tags": [
+                    "Common"
+                  ],
                   "properties": {
                     "error": {
-                      "type": "string",
-                      "description": "SecretNotFound"
+                      "type": "string"
                     },
                     "message": {
-                      "type": "string",
-                      "description": "The secret ID given does not exist."
+                      "type": "string"
                     }
                   }
                 },
@@ -784,7 +705,7 @@
         "tags": [
           "imagePullSecrets"
         ],
-        "description": "Update an existing imagePullSecret. The fields “name”, “namespace” and “registry” cannot be updated. If a request body includes any of these fields, they will be simply ignored.\n\nNote that updating an imagePullSecret in use might cause temporary failure in image pulling.",
+        "description": "Update an existing imagePullSecret. The fields “name”, “namespace” and “registry” cannot be updated. If a request body includes any of these fields, they will simply be ignored.\n\nNote that updating an imagePullSecret in use might cause temporary failure in image pulling.",
         "requestBody": {
           "content": {
             "application/json": {
@@ -827,7 +748,7 @@
         "operationId": "delete-imagepullsecret-by-ID",
         "responses": {
           "204": {
-            "description": "No Content",
+            "description": "This response is returned if the imagePullSecret is successfully deleted.",
             "headers": {
               "Qtl-Request-Id": {
                 "name": "Qtl-Request-Id",
@@ -841,20 +762,22 @@
             }
           },
           "400": {
-            "description": "Bad Request",
+            "description": "The request is invalid. Refer to response body for details.",
             "content": {
               "application/json": {
                 "schema": {
-                  "title": "SecretBeingUsed",
+                  "title": "",
                   "type": "object",
+                  "description": "A standard error object.",
+                  "x-tags": [
+                    "Common"
+                  ],
                   "properties": {
                     "error": {
-                      "type": "string",
-                      "description": "SecretBeingUsed"
+                      "type": "string"
                     },
                     "message": {
-                      "type": "string",
-                      "description": "The secret is being used by applications and cannot be deleted."
+                      "type": "string"
                     }
                   }
                 },
@@ -885,16 +808,18 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "title": "SecretNotFound",
+                  "title": "",
                   "type": "object",
+                  "description": "A standard error object.",
+                  "x-tags": [
+                    "Common"
+                  ],
                   "properties": {
                     "error": {
-                      "type": "string",
-                      "description": "SecretNotFound"
+                      "type": "string"
                     },
                     "message": {
-                      "type": "string",
-                      "description": "The secret ID given does not exist."
+                      "type": "string"
                     }
                   }
                 },
@@ -18250,7 +18175,7 @@
     },
     {
       "name": "imagePullSecrets",
-      "description": "An ImagePullSecret is a type of kubernetes secret that contains an image registry password. The secret is passed to and used by Kubelet to authenticate with your image registry and pull private images on behalf of your pod."
+      "description": "An ImagePullSecret is a type of Kubernetes secret that contains encoded image registry credentials. The secret is used by Kubernetes to authenticate with your image registry when pulling your private images from the registry."
     },
     {
       "name": "CNAMEs",
