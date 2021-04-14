@@ -5041,7 +5041,8 @@
                                     "description": "Name of a listener. Must be unique across a \"LoadBalancer4\" obejct. Allows lower-case letters, digits and hyphens only. Must not start or end with a hyphen, and must be less than 63 characters."
                                   },
                                   "backendSelector": {
-                                    "type": "object"
+                                    "type": "object",
+                                    "description": "Key value pair that is used to match target pods as backend of the LoadBalancer4."
                                   },
                                   "listenerPort": {
                                     "type": "integer",
@@ -5080,10 +5081,9 @@
                                     "type": "string",
                                     "enum": [
                                       "TCP",
-                                      "UDP",
                                       "HTTP"
                                     ],
-                                    "description": "If the \"protocol\" field is set to \"UDP\", this health check type can only be \"UDP\".  If \"protocol\" is set to \"TCP\", the type can be \"TCP\" or \"HTTP\"."
+                                    "description": "If \"protocol\" is set to \"TCP\", the health check type can be \"TCP\" or \"HTTP\". If the \"protocol\" field is set to \"UDP\", no health check can be configured."
                                   },
                                   "healthCheckDomain": {
                                     "type": "string",
@@ -5105,19 +5105,6 @@
                                     "description": "How often (in seconds) to perform the health check",
                                     "minimum": 1,
                                     "maximum": 5
-                                  },
-                                  "healthCheckTimeout": {
-                                    "type": "integer",
-                                    "default": 10,
-                                    "description": "Number of seconds after which the health check times out",
-                                    "minimum": 1,
-                                    "maximum": 50
-                                  },
-                                  "unhealthyThreshold": {
-                                    "type": "integer",
-                                    "default": 3,
-                                    "description": "Minimum consecutive failures for the health check to be considered failed after having succeeded",
-                                    "minimum": 1
                                   }
                                 },
                                 "required": [
@@ -6700,7 +6687,8 @@
                                     "description": "Name of a listener. Must be unique across a \"LoadBalancer4\" obejct. Allows lower-case letters, digits and hyphens only. Must not start or end with a hyphen, and must be less than 63 characters."
                                   },
                                   "backendSelector": {
-                                    "type": "object"
+                                    "type": "object",
+                                    "description": "Key value pair that is used to match target pods as backend of the LoadBalancer4."
                                   },
                                   "listenerPort": {
                                     "type": "integer",
@@ -6739,10 +6727,9 @@
                                     "type": "string",
                                     "enum": [
                                       "TCP",
-                                      "UDP",
                                       "HTTP"
                                     ],
-                                    "description": "If the \"protocol\" field is set to \"UDP\", this health check type can only be \"UDP\".  If \"protocol\" is set to \"TCP\", the type can be \"TCP\" or \"HTTP\"."
+                                    "description": "If \"protocol\" is set to \"TCP\", the health check type can be \"TCP\" or \"HTTP\". If the \"protocol\" field is set to \"UDP\", no health check can be configured."
                                   },
                                   "healthCheckDomain": {
                                     "type": "string",
@@ -6764,19 +6751,6 @@
                                     "description": "How often (in seconds) to perform the health check",
                                     "minimum": 1,
                                     "maximum": 5
-                                  },
-                                  "healthCheckTimeout": {
-                                    "type": "integer",
-                                    "default": 10,
-                                    "description": "Number of seconds after which the health check times out",
-                                    "minimum": 1,
-                                    "maximum": 50
-                                  },
-                                  "unhealthyThreshold": {
-                                    "type": "integer",
-                                    "default": 3,
-                                    "description": "Minimum consecutive failures for the health check to be considered failed after having succeeded",
-                                    "minimum": 1
                                   }
                                 },
                                 "required": [
@@ -7896,7 +7870,8 @@
                                     "description": "Name of a listener. Must be unique across a \"LoadBalancer4\" obejct. Allows lower-case letters, digits and hyphens only. Must not start or end with a hyphen, and must be less than 63 characters."
                                   },
                                   "backendSelector": {
-                                    "type": "object"
+                                    "type": "object",
+                                    "description": "Key value pair that is used to match target pods as backend of the LoadBalancer4."
                                   },
                                   "listenerPort": {
                                     "type": "integer",
@@ -7935,10 +7910,9 @@
                                     "type": "string",
                                     "enum": [
                                       "TCP",
-                                      "UDP",
                                       "HTTP"
                                     ],
-                                    "description": "If the \"protocol\" field is set to \"UDP\", this health check type can only be \"UDP\".  If \"protocol\" is set to \"TCP\", the type can be \"TCP\" or \"HTTP\"."
+                                    "description": "If \"protocol\" is set to \"TCP\", the health check type can be \"TCP\" or \"HTTP\". If the \"protocol\" field is set to \"UDP\", no health check can be configured."
                                   },
                                   "healthCheckDomain": {
                                     "type": "string",
@@ -7960,19 +7934,6 @@
                                     "description": "How often (in seconds) to perform the health check",
                                     "minimum": 1,
                                     "maximum": 5
-                                  },
-                                  "healthCheckTimeout": {
-                                    "type": "integer",
-                                    "default": 10,
-                                    "description": "Number of seconds after which the health check times out",
-                                    "minimum": 1,
-                                    "maximum": 50
-                                  },
-                                  "unhealthyThreshold": {
-                                    "type": "integer",
-                                    "default": 3,
-                                    "description": "Minimum consecutive failures for the health check to be considered failed after having succeeded",
-                                    "minimum": 1
                                   }
                                 },
                                 "required": [
@@ -14799,7 +14760,8 @@
                       "description": "Name of a listener. Must be unique across a \"LoadBalancer4\" obejct. Allows lower-case letters, digits and hyphens only. Must not start or end with a hyphen, and must be less than 63 characters."
                     },
                     "backendSelector": {
-                      "type": "object"
+                      "type": "object",
+                      "description": "Key value pair that is used to match target pods as backend of the LoadBalancer4."
                     },
                     "listenerPort": {
                       "type": "integer",
@@ -14838,10 +14800,9 @@
                       "type": "string",
                       "enum": [
                         "TCP",
-                        "UDP",
                         "HTTP"
                       ],
-                      "description": "If the \"protocol\" field is set to \"UDP\", this health check type can only be \"UDP\".  If \"protocol\" is set to \"TCP\", the type can be \"TCP\" or \"HTTP\"."
+                      "description": "If \"protocol\" is set to \"TCP\", the health check type can be \"TCP\" or \"HTTP\". If the \"protocol\" field is set to \"UDP\", no health check can be configured."
                     },
                     "healthCheckDomain": {
                       "type": "string",
@@ -14863,19 +14824,6 @@
                       "description": "How often (in seconds) to perform the health check",
                       "minimum": 1,
                       "maximum": 5
-                    },
-                    "healthCheckTimeout": {
-                      "type": "integer",
-                      "default": 10,
-                      "description": "Number of seconds after which the health check times out",
-                      "minimum": 1,
-                      "maximum": 50
-                    },
-                    "unhealthyThreshold": {
-                      "type": "integer",
-                      "default": 3,
-                      "description": "Minimum consecutive failures for the health check to be considered failed after having succeeded",
-                      "minimum": 1
                     }
                   },
                   "required": [
@@ -15601,7 +15549,8 @@
                             "description": "Name of a listener. Must be unique across a \"LoadBalancer4\" obejct. Allows lower-case letters, digits and hyphens only. Must not start or end with a hyphen, and must be less than 63 characters."
                           },
                           "backendSelector": {
-                            "type": "object"
+                            "type": "object",
+                            "description": "Key value pair that is used to match target pods as backend of the LoadBalancer4."
                           },
                           "listenerPort": {
                             "type": "integer",
@@ -15640,10 +15589,9 @@
                             "type": "string",
                             "enum": [
                               "TCP",
-                              "UDP",
                               "HTTP"
                             ],
-                            "description": "If the \"protocol\" field is set to \"UDP\", this health check type can only be \"UDP\".  If \"protocol\" is set to \"TCP\", the type can be \"TCP\" or \"HTTP\"."
+                            "description": "If \"protocol\" is set to \"TCP\", the health check type can be \"TCP\" or \"HTTP\". If the \"protocol\" field is set to \"UDP\", no health check can be configured."
                           },
                           "healthCheckDomain": {
                             "type": "string",
@@ -15665,19 +15613,6 @@
                             "description": "How often (in seconds) to perform the health check",
                             "minimum": 1,
                             "maximum": 5
-                          },
-                          "healthCheckTimeout": {
-                            "type": "integer",
-                            "default": 10,
-                            "description": "Number of seconds after which the health check times out",
-                            "minimum": 1,
-                            "maximum": 50
-                          },
-                          "unhealthyThreshold": {
-                            "type": "integer",
-                            "default": 3,
-                            "description": "Minimum consecutive failures for the health check to be considered failed after having succeeded",
-                            "minimum": 1
                           }
                         },
                         "required": [
