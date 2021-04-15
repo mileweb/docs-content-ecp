@@ -3179,7 +3179,7 @@
         "summary": "Query list of ECP regions",
         "responses": {
           "200": {
-            "description": "OK",
+            "description": "This response contains a list of ECP regions.",
             "content": {
               "application/json": {
                 "schema": {
@@ -3201,7 +3201,7 @@
                           },
                           "priority": {
                             "type": "integer",
-                            "description": "Priority of a region which affects how application instances are scheduled. The legal value is within the range 1~100. Higher value means higher priority. When ECP schedules application instances to ECP PoPs, regions of higher priorities will be satisfied firt."
+                            "description": "Priority of a region which affects how instances of an application are distributed. Valid value is within the range 1~100. Higher value means higher priority. Each ECP PoP might be grouped into multiple ECP regions of differnt priorities. When ECP distributes application instances to ECP PoPs, regions of higher priority will be satisfied firt."
                           }
                         }
                       }
@@ -3219,12 +3219,12 @@
                       "regions": [
                         {
                           "code": "NA-WEST",
-                          "description": "Western North America",
+                          "description": "East of North America",
                           "priority": 10
                         },
                         {
                           "code": "NA-EAST",
-                          "description": "Eastern North America",
+                          "description": "West of North America",
                           "priority": 10
                         },
                         {
@@ -3262,46 +3262,36 @@
             }
           },
           "400": {
-            "description": "Bad Request",
+            "description": "The request is invalid. Refer to response body for details.",
             "content": {
               "application/json": {
                 "schema": {
-                  "oneOf": [
-                    {
-                      "title": "InvalidListOffset",
-                      "type": "object",
-                      "properties": {
-                        "error": {
-                          "type": "string",
-                          "description": "InvalidListOffset"
-                        },
-                        "message": {
-                          "type": "string",
-                          "description": "The value of offset must be a valid non-negative integer."
-                        }
-                      }
+                  "title": "",
+                  "type": "object",
+                  "description": "A standard error object.",
+                  "x-tags": [
+                    "Common"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "string"
                     },
-                    {
-                      "title": "InvalidListLimit",
-                      "type": "object",
-                      "properties": {
-                        "error": {
-                          "type": "string",
-                          "description": "InvalidListLimit"
-                        },
-                        "message": {
-                          "type": "string",
-                          "description": "The value of limit must be a valid integer between 0 and 200, both inclusive. Set limit to 0 to retrieve a complete list."
-                        }
-                      }
+                    "message": {
+                      "type": "string"
                     }
-                  ]
+                  }
                 },
                 "examples": {
-                  "example-1": {
+                  "InvalidListOffset": {
                     "value": {
                       "error": "InvalidListOffset",
                       "message": "The value of offset must be a valid non-negative integer."
+                    }
+                  },
+                  "InvalidListLimit": {
+                    "value": {
+                      "error": "InvalidListLimit",
+                      "message": "The value of limit must be a valid integer between 0 and 200, both inclusive. Set limit to 0 to retrieve a complete list."
                     }
                   }
                 }
@@ -3321,7 +3311,7 @@
           }
         },
         "operationId": "get-regions",
-        "description": "Get a list of ECP regions. An ECP region represents multiple ECP PoPs grouped together (geographically). For instance, “APAC” is an ECP region which refers to all ECP PoPs serving in Asia Pacific (excluding mainland China).",
+        "description": "Get a list of ECP regions.",
         "parameters": [
           {
             "name": "offset",
@@ -3348,7 +3338,7 @@
           }
         ],
         "tags": [
-          "PoPs and Regions"
+          "ECP Locations"
         ]
       },
       "parameters": []
@@ -3358,7 +3348,7 @@
         "summary": "Query list of ECP PoPs",
         "responses": {
           "200": {
-            "description": "OK",
+            "description": "The response contains a list of ECP PoPs.",
             "content": {
               "application/json": {
                 "schema": {
@@ -3382,7 +3372,8 @@
                             "type": "string",
                             "enum": [
                               "online",
-                              "offline"
+                              "offline",
+                              "suspended"
                             ],
                             "description": "Status of an ECP PoP"
                           },
@@ -3393,7 +3384,18 @@
                               "standard",
                               "premium"
                             ],
-                            "description": "Service zone that reflects the costs of an ECP PoP"
+                            "description": "Service zone that reflects the costs of an ECP PoP",
+                            "deprecated": true
+                          },
+                          "serverGroup": {
+                            "type": "string",
+                            "enum": [
+                              "standard",
+                              "premium",
+                              "premium+",
+                              "ultra"
+                            ],
+                            "description": "Server group that reflects the costs of an ECP PoP"
                           },
                           "longitude": {
                             "description": "Geographic longtitude of an ECP PoP",
@@ -3446,6 +3448,7 @@
                             }
                           ],
                           "serviceZone": "business",
+                          "serverGroup": "standard",
                           "status": "online"
                         },
                         {
@@ -3460,6 +3463,7 @@
                             }
                           ],
                           "serviceZone": "business",
+                          "serverGroup": "standard",
                           "status": "online"
                         },
                         {
@@ -3474,6 +3478,7 @@
                             }
                           ],
                           "serviceZone": "business",
+                          "serverGroup": "standard",
                           "status": "online"
                         },
                         {
@@ -3488,6 +3493,7 @@
                             }
                           ],
                           "serviceZone": "business",
+                          "serverGroup": "standard",
                           "status": "online"
                         },
                         {
@@ -3502,6 +3508,7 @@
                             }
                           ],
                           "serviceZone": "business",
+                          "serverGroup": "standard",
                           "status": "online"
                         },
                         {
@@ -3516,6 +3523,7 @@
                             }
                           ],
                           "serviceZone": "business",
+                          "serverGroup": "standard",
                           "status": "online"
                         }
                       ],
@@ -3538,46 +3546,36 @@
             }
           },
           "400": {
-            "description": "Bad Request",
+            "description": "The request is invalid. Refer to response body for details.",
             "content": {
               "application/json": {
                 "schema": {
-                  "oneOf": [
-                    {
-                      "title": "InvalidListOffset",
-                      "type": "object",
-                      "properties": {
-                        "error": {
-                          "type": "string",
-                          "description": "InvalidListOffset"
-                        },
-                        "message": {
-                          "type": "string",
-                          "description": "The value of offset must be a valid non-negative integer."
-                        }
-                      }
+                  "title": "",
+                  "type": "object",
+                  "description": "A standard error object.",
+                  "x-tags": [
+                    "Common"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "string"
                     },
-                    {
-                      "title": "InvalidListLimit",
-                      "type": "object",
-                      "properties": {
-                        "error": {
-                          "type": "string",
-                          "description": "InvalidListLimit"
-                        },
-                        "message": {
-                          "type": "string",
-                          "description": "The value of limit must be a valid integer between 0 and 200, both inclusive. Set limit to 0 to retrieve a complete list."
-                        }
-                      }
+                    "message": {
+                      "type": "string"
                     }
-                  ]
+                  }
                 },
                 "examples": {
-                  "example-1": {
+                  "InvalidListOffset": {
                     "value": {
                       "error": "InvalidListOffset",
                       "message": "The value of offset must be a valid non-negative integer."
+                    }
+                  },
+                  "InvalidListLimit": {
+                    "value": {
+                      "error": "InvalidListLimit",
+                      "message": "The value of limit must be a valid integer between 0 and 200, both inclusive. Set limit to 0 to retrieve a complete list."
                     }
                   }
                 }
@@ -3597,7 +3595,7 @@
           }
         },
         "operationId": "get-pops",
-        "description": "Get a list of ECP PoPs available for application distribution",
+        "description": "Get a list of ECP PoPs.",
         "parameters": [
           {
             "in": "query",
@@ -3609,7 +3607,8 @@
               "type": "string",
               "enum": [
                 "online",
-                "offline"
+                "offline",
+                "suspended"
               ]
             },
             "in": "query",
@@ -3622,7 +3621,7 @@
             },
             "in": "query",
             "name": "region",
-            "description": "Code of an ECP region which represents a subset of ECP PoPs grouped geographically"
+            "description": "Code of an ECP region which represents a set of ECP PoPs grouped together"
           },
           {
             "schema": {
@@ -3635,7 +3634,22 @@
             },
             "in": "query",
             "name": "serviceZone",
-            "description": "Code of an ECP service zone which represents a subset of ECP PoPs grouped per costs"
+            "description": "Code of an ECP service zone which represents a set of ECP PoPs grouped per costs for billing purpose",
+            "deprecated": true
+          },
+          {
+            "schema": {
+              "type": "string",
+              "enum": [
+                "standard",
+                "premium",
+                "premium+",
+                "ultra"
+              ]
+            },
+            "in": "query",
+            "name": "serverGroup",
+            "description": "ECP server group which represents a set of ECP PoPs grouped per costs for billing purpose"
           },
           {
             "name": "offset",
@@ -3662,7 +3676,7 @@
           }
         ],
         "tags": [
-          "PoPs and Regions"
+          "ECP Locations"
         ]
       },
       "parameters": []
@@ -17916,8 +17930,8 @@
       "description": "A registry user is an entity that is created and given certain permissions to access/manage repositories and tags in the registry. A registry user usually uses the docker CLI client to access an image registry."
     },
     {
-      "name": "PoPs and Regions",
-      "description": "Get a list of ECP PoPs and regions."
+      "name": "ECP Locations",
+      "description": "ECP service is available at ECP PoPs and ECP regions. An ECP PoP refers to a specific location where an ECP Kubernetes cluster is operated and offers container service, while an ECP region represents multiple ECP PoPs grouped together (geographically or otherwise). For instance, “APAC” is an ECP region which refers to all ECP PoPs serving in Asia Pacific (excluding mainland China). The endpoints below help you get to know about the global footprint of ECP service and how you can leverage this to run your applications everywhere around the world."
     },
     {
       "name": "Reports",
