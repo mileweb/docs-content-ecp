@@ -860,7 +860,7 @@
         ],
         "responses": {
           "200": {
-            "description": "OK",
+            "description": "The response contains a list of CNAMEs.",
             "content": {
               "application/json": {
                 "schema": {
@@ -873,7 +873,8 @@
                         "properties": {
                           "cnameID": {
                             "title": "",
-                            "type": "string"
+                            "type": "string",
+                            "description": "ID of a CNAME"
                           },
                           "cname": {
                             "title": "",
@@ -924,30 +925,30 @@
                       "cnames": [
                         {
                           "cnameID": "12345601",
-                          "cname": "cnamedemo1.qtlglb.com",
+                          "cname": "cnamedemo1.ecp.qtlcdn.com",
                           "applicationID": "123456abcdef01",
                           "applicationName": "myapp1",
                           "description": "CNAME for myapp1",
-                          "creationTime": "2019-10-02T15:00:00Z",
-                          "lastUpdateTime": "2019-10-02T15:00:00Z"
+                          "creationTime": "2020-10-02T15:00:00Z",
+                          "lastUpdateTime": "2020-10-02T15:00:00Z"
                         },
                         {
                           "cnameID": "12345602",
-                          "cname": "cnamedemo2.qtlglb.com",
+                          "cname": "cnamedemo2.ecp.qtlcdn.com",
                           "applicationID": "123456abcdef02",
                           "applicationName": "myapp2",
                           "description": "CNAME for myapp2",
-                          "creationTime": "2019-10-02T15:00:00Z",
-                          "lastUpdateTime": "2019-10-02T15:00:00Z"
+                          "creationTime": "2020-10-02T15:00:00Z",
+                          "lastUpdateTime": "2020-10-02T15:00:00Z"
                         },
                         {
                           "cnameID": "12345603",
-                          "cname": "cnamedemo3.qtlglb.com",
+                          "cname": "cnamedemo3.ecp.qtlcdn.com",
                           "applicationID": "123456abcdef03",
                           "applicationName": "myapp3",
                           "description": "CNAME for myapp3",
-                          "creationTime": "2019-10-02T15:00:00Z",
-                          "lastUpdateTime": "2019-10-02T15:00:00Z"
+                          "creationTime": "2020-10-02T15:00:00Z",
+                          "lastUpdateTime": "2020-10-02T15:00:00Z"
                         }
                       ],
                       "totalCount": 3
@@ -969,46 +970,36 @@
             }
           },
           "400": {
-            "description": "Bad Request",
+            "description": "The request is invalid. Refer to response body for details.",
             "content": {
               "application/json": {
                 "schema": {
-                  "oneOf": [
-                    {
-                      "title": "InvalidListOffset",
-                      "type": "object",
-                      "properties": {
-                        "error": {
-                          "type": "string",
-                          "description": "InvalidListOffset"
-                        },
-                        "message": {
-                          "type": "string",
-                          "description": "The value of offset must be a valid non-negative integer."
-                        }
-                      }
+                  "title": "",
+                  "type": "object",
+                  "description": "A standard error object.",
+                  "x-tags": [
+                    "Common"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "string"
                     },
-                    {
-                      "title": "InvalidListLimit",
-                      "type": "object",
-                      "properties": {
-                        "error": {
-                          "type": "string",
-                          "description": "InvalidListLimit"
-                        },
-                        "message": {
-                          "type": "string",
-                          "description": "The value of limit must be a valid integer between 1 and 200, both inclusive."
-                        }
-                      }
+                    "message": {
+                      "type": "string"
                     }
-                  ]
+                  }
                 },
                 "examples": {
-                  "example-1": {
+                  "InvalidListOffset": {
                     "value": {
                       "error": "InvalidListOffset",
                       "message": "The value of offset must be a valid non-negative integer."
+                    }
+                  },
+                  "InvalidListLimit": {
+                    "value": {
+                      "error": "InvalidListLimit",
+                      "message": "The value of limit must be a valid integer between 1 and 200, both inclusive."
                     }
                   }
                 }
@@ -1028,7 +1019,7 @@
           }
         },
         "operationId": "get-cnames",
-        "description": "Get a list of CNAMEs. You can specify a search parameter, offset and limit to filter your results.",
+        "description": "Get a list of CNAMEs. You can specify a search parameter, offset and limit to filter the results.",
         "parameters": [
           {
             "name": "On-Behalf-Of",
@@ -1077,7 +1068,7 @@
         "operationId": "post-cnames",
         "responses": {
           "201": {
-            "description": "Created",
+            "description": "This response indicates the CNAME is successfully created.",
             "headers": {
               "Location": {
                 "schema": {
@@ -1100,89 +1091,54 @@
             }
           },
           "400": {
-            "description": "Bad Request",
+            "description": "The request is invalid. Refer to response body for details.",
             "content": {
               "application/json": {
                 "schema": {
-                  "oneOf": [
-                    {
-                      "title": "InvalidCnamePrefix",
-                      "type": "object",
-                      "properties": {
-                        "error": {
-                          "type": "string",
-                          "description": "InvalidCnamePrefix"
-                        },
-                        "message": {
-                          "type": "string",
-                          "description": "Invalid prefix. A valid prefix must consist of lower-case alphanumeric characters and must be no more than 63 characters."
-                        }
-                      }
+                  "title": "",
+                  "type": "object",
+                  "description": "A standard error object.",
+                  "x-tags": [
+                    "Common"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "string"
                     },
-                    {
-                      "title": "ApplicationIDEmpty",
-                      "type": "object",
-                      "properties": {
-                        "error": {
-                          "type": "string",
-                          "description": "ApplicationIDEmpty"
-                        },
-                        "message": {
-                          "type": "string",
-                          "description": "The applicationID cannot be empty."
-                        }
-                      }
-                    },
-                    {
-                      "title": "ApplicationNotFound",
-                      "type": "object",
-                      "properties": {
-                        "error": {
-                          "type": "string",
-                          "description": "ApplicationNotFound"
-                        },
-                        "message": {
-                          "type": "string",
-                          "description": "The application ID given does not exist."
-                        }
-                      }
-                    },
-                    {
-                      "title": "ApplicationHasCname",
-                      "type": "object",
-                      "properties": {
-                        "error": {
-                          "type": "string",
-                          "description": "ApplicationHasCname"
-                        },
-                        "message": {
-                          "type": "string",
-                          "description": "A CNAME for the application already exists."
-                        }
-                      },
-                      "x-examples": {}
-                    },
-                    {
-                      "title": "ApplicationNotLoadBalanced",
-                      "type": "object",
-                      "properties": {
-                        "error": {
-                          "type": "string",
-                          "description": "ApplicationNotLoadBalanced"
-                        },
-                        "message": {
-                          "type": "string",
-                          "description": "Creating a CNAME for an application requires that the application be exposed by ECP layer4 load balancers."
-                        }
-                      }
+                    "message": {
+                      "type": "string"
                     }
-                  ]
+                  }
                 },
                 "examples": {
-                  "example-1": {
+                  "InvalidCnamePrefix": {
                     "value": {
                       "error": "InvalidCnamePrefix",
                       "message": "Invalid prefix. A valid prefix must consist of lower-case alphanumeric characters and must be no more than 63 characters."
+                    }
+                  },
+                  "RequiredFieldMissing": {
+                    "value": {
+                      "error": "RequiredFieldMissing",
+                      "message": "The field {field} is required."
+                    }
+                  },
+                  "ApplicationNotFound": {
+                    "value": {
+                      "error": "ApplicationNotFound",
+                      "message": "The application ID given does not exist."
+                    }
+                  },
+                  "ApplicationHasCname": {
+                    "value": {
+                      "error": "ApplicationHasCname",
+                      "message": "A CNAME for the application already exists."
+                    }
+                  },
+                  "ApplicationNotLoadBalanced": {
+                    "value": {
+                      "error": "ApplicationNotLoadBalanced",
+                      "message": "Creating a CNAME for an application requires that the application be exposed by ECP layer4 load balancers."
                     }
                   }
                 }
@@ -1201,20 +1157,22 @@
             }
           },
           "409": {
-            "description": "Conflict",
+            "description": "This error is returned if you try to create a CNAME that already exists.",
             "content": {
               "application/json": {
                 "schema": {
-                  "title": "CnamePrefixExists",
+                  "title": "",
                   "type": "object",
+                  "description": "A standard error object.",
+                  "x-tags": [
+                    "Common"
+                  ],
                   "properties": {
                     "error": {
-                      "type": "string",
-                      "description": "CnamePrefixExists"
+                      "type": "string"
                     },
                     "message": {
-                      "type": "string",
-                      "description": "The prefix is already taken."
+                      "type": "string"
                     }
                   }
                 },
@@ -1244,7 +1202,7 @@
         "tags": [
           "CNAMEs"
         ],
-        "description": "This interface enables you to create a CNAME. If your application is exposed via layer 4 load balancers, you can create for the application a CNAME which will be resolved to IP addresses of those layer 4 load balancers. \n\nA CNAME can be created for an application only when the application is exposed by layer 4 load balancer. This is true across the lifecycle of an application. For example, if an application is initially deployed with layer 4 load balancers but is later updated to remove the load balancers, the CNAME (if existing) for the application shall be deleted first before the said application update can be accepted.",
+        "description": "This interface allows you to create a CNAME for your ECP application. The CNAME created will let ECP route global traffic for the application. \n\nNote that ECP can manage global traffic for your application only when the application instances distributed at the edge locations are exposed by ECP defined LoadBalancer4 objects.",
         "requestBody": {
           "content": {
             "application/json": {
@@ -1254,7 +1212,7 @@
                   "prefix": {
                     "title": "",
                     "type": "string",
-                    "description": "Prefix of a CNAME. Shall be unique. Allows lower case alphanumeric characters only, and must be no more than 63 characters. Will be auto-generated if unspecified. The prefix will be combined with a fixed DNS zone to form a FQDN."
+                    "description": "Prefix of a CNAME. Must be unique. Allows lower case alphanumeric characters only, and must be no more than 63 characters. Will be auto-generated if unspecified. The prefix will be combined with a fixed DNS zone to form a FQDN."
                   },
                   "applicationID": {
                     "title": "",
@@ -1308,7 +1266,7 @@
         ],
         "responses": {
           "200": {
-            "description": "OK",
+            "description": "The response contains details of the CNAME.",
             "content": {
               "application/json": {
                 "schema": {
@@ -1316,7 +1274,8 @@
                   "properties": {
                     "cnameID": {
                       "title": "",
-                      "type": "string"
+                      "type": "string",
+                      "description": "ID of a CNAME"
                     },
                     "cname": {
                       "title": "",
@@ -1357,12 +1316,12 @@
                   "example-1": {
                     "value": {
                       "cnameID": "4cbb31772e0211eaae6398ac35ded775",
-                      "cname": "b82745fdcad891.ecp.qtlgslb.com",
+                      "cname": "b82745fdcad891.ecp.qtlcdn.com",
                       "applicationID": "fb46b51c125411eae36396ac35ded775",
                       "applicationName": "myapp1",
                       "description": "demo cname for myapp1",
-                      "creationTime": "2019-10-03T08:23:20Z",
-                      "lastUpdateTime": "2019-10-03T08:23:20Z"
+                      "creationTime": "2020-10-03T08:23:20Z",
+                      "lastUpdateTime": "2020-10-03T08:23:20Z"
                     }
                   }
                 }
@@ -1385,16 +1344,18 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "title": "CnameNotFound",
+                  "title": "",
                   "type": "object",
+                  "description": "A standard error object.",
+                  "x-tags": [
+                    "Common"
+                  ],
                   "properties": {
                     "error": {
-                      "type": "string",
-                      "description": "CnameNotFound"
+                      "type": "string"
                     },
                     "message": {
-                      "type": "string",
-                      "description": "The CNAME ID given does not exist."
+                      "type": "string"
                     }
                   }
                 },
@@ -1422,7 +1383,7 @@
           }
         },
         "operationId": "get-cname-by-ID",
-        "description": "Get the details of a CNAME",
+        "description": "Get the details of an existing CNAME.",
         "parameters": [
           {
             "name": "On-Behalf-Of",
@@ -1440,7 +1401,7 @@
         "operationId": "patch-cnames-by-ID",
         "responses": {
           "200": {
-            "description": "OK",
+            "description": "This response indicates the CNAME is successfully updated.",
             "content": {
               "application/json": {
                 "schema": {
@@ -1448,7 +1409,8 @@
                   "properties": {
                     "cnameID": {
                       "title": "",
-                      "type": "string"
+                      "type": "string",
+                      "description": "ID of a CNAME"
                     },
                     "cname": {
                       "title": "",
@@ -1484,12 +1446,12 @@
                   "example-1": {
                     "value": {
                       "cnameID": "4cbb31772e0211eaae6398ac35ded775",
-                      "cname": "b82745fdcad891.ecp.qtlgslb.com",
+                      "cname": "b82745fdcad891.ecp.qtlcdn.com",
                       "applicationID": "fb46b51c125411eae36396ac35ded775",
                       "applicationName": "myapp1",
                       "description": "demo cname for myapp1",
-                      "creationTime": "2019-10-03T08:23:20Z",
-                      "lastUpdateTime": "2019-10-03T08:23:20Z"
+                      "creationTime": "2020-10-03T08:23:20Z",
+                      "lastUpdateTime": "2020-10-03T08:23:20Z"
                     }
                   }
                 }
@@ -1512,16 +1474,18 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "title": "CnameNotFound",
+                  "title": "",
                   "type": "object",
+                  "description": "A standard error object.",
+                  "x-tags": [
+                    "Common"
+                  ],
                   "properties": {
                     "error": {
-                      "type": "string",
-                      "description": "CnameNotFound"
+                      "type": "string"
                     },
                     "message": {
-                      "type": "string",
-                      "description": "The CNAME ID given does not exist."
+                      "type": "string"
                     }
                   }
                 },
@@ -1581,7 +1545,7 @@
         "operationId": "delete-cnames-by-ID",
         "responses": {
           "204": {
-            "description": "No Content",
+            "description": "This response is returned if the CNAME is successfully deleted.",
             "headers": {
               "Qtl-Request-Id": {
                 "name": "Qtl-Request-Id",
@@ -1599,16 +1563,18 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "title": "CnameNotFound",
+                  "title": "",
                   "type": "object",
+                  "description": "A standard error object.",
+                  "x-tags": [
+                    "Common"
+                  ],
                   "properties": {
                     "error": {
-                      "type": "string",
-                      "description": "CnameNotFound"
+                      "type": "string"
                     },
                     "message": {
-                      "type": "string",
-                      "description": "The CNAME ID given does not exist."
+                      "type": "string"
                     }
                   }
                 },
@@ -1638,7 +1604,7 @@
         "tags": [
           "CNAMEs"
         ],
-        "description": "Delete an existing CNAME. "
+        "description": "Delete an existing CNAME.\n\nAfter the CNAME is deleted, ECP will stop routing traffic for your application. Please make sure you've made necessary changes to the DNS record(s) for your application before deleting the CNAME."
       }
     },
     "/ecp/v1/metrics/{metric}": {
@@ -16825,232 +16791,6 @@
           }
         }
       },
-      "error.cname.CnamePrefixExists": {
-        "title": "CnamePrefixExists",
-        "type": "object",
-        "properties": {
-          "error": {
-            "type": "string",
-            "description": "CnamePrefixExists"
-          },
-          "message": {
-            "type": "string",
-            "description": "The prefix is already taken."
-          }
-        }
-      },
-      "error.cname.InvalidCnamePrefix": {
-        "title": "InvalidCnamePrefix",
-        "type": "object",
-        "properties": {
-          "error": {
-            "type": "string",
-            "description": "InvalidCnamePrefix"
-          },
-          "message": {
-            "type": "string",
-            "description": "Invalid prefix. A valid prefix must consist of lower-case alphanumeric characters and must be no more than 63 characters."
-          }
-        }
-      },
-      "error.cname.ApplicationNotFound": {
-        "title": "ApplicationNotFound",
-        "type": "object",
-        "properties": {
-          "error": {
-            "type": "string",
-            "description": "ApplicationNotFound"
-          },
-          "message": {
-            "type": "string",
-            "description": "The application ID given does not exist."
-          }
-        }
-      },
-      "error.cname.ApplicationIDEmpty": {
-        "title": "ApplicationIDEmpty",
-        "type": "object",
-        "properties": {
-          "error": {
-            "type": "string",
-            "description": "ApplicationIDEmpty"
-          },
-          "message": {
-            "type": "string",
-            "description": "The applicationID cannot be empty."
-          }
-        }
-      },
-      "error.cname.ApplicationHasCname": {
-        "title": "ApplicationHasCname",
-        "type": "object",
-        "properties": {
-          "error": {
-            "type": "string",
-            "description": "ApplicationHasCname"
-          },
-          "message": {
-            "type": "string",
-            "description": "A CNAME for the application already exists."
-          }
-        },
-        "x-examples": {}
-      },
-      "error.cname.CnameNotFound": {
-        "title": "CnameNotFound",
-        "type": "object",
-        "properties": {
-          "error": {
-            "type": "string",
-            "description": "CnameNotFound"
-          },
-          "message": {
-            "type": "string",
-            "description": "The CNAME ID given does not exist."
-          }
-        }
-      },
-      "error.secret.SecretNameExists": {
-        "title": "SecretNameExists",
-        "type": "object",
-        "properties": {
-          "error": {
-            "type": "string",
-            "description": "SecretNameExists"
-          },
-          "message": {
-            "type": "string",
-            "description": "The secret name is already taken."
-          }
-        }
-      },
-      "error.secret.InvalidSecretName": {
-        "title": "InvalidSecretName",
-        "type": "object",
-        "description": "",
-        "properties": {
-          "error": {
-            "type": "string",
-            "description": "InvalidSecretName"
-          },
-          "message": {
-            "type": "string",
-            "description": "Invalid secret name. A valid secret name must consist of lower-case alphanumeric characters, ‘-', or '.’, must start and end with a lower-case alphanumeric character, and must be no more than 63 characters."
-          }
-        }
-      },
-      "error.secret.NamespaceNotExist": {
-        "title": "NamespaceNotExist",
-        "type": "object",
-        "properties": {
-          "error": {
-            "type": "string",
-            "description": "NamespaceNotExist"
-          },
-          "message": {
-            "type": "string",
-            "description": "The namespace given does not exist."
-          }
-        }
-      },
-      "error.secret.NameEmpty": {
-        "title": "NameEmpty",
-        "type": "object",
-        "properties": {
-          "error": {
-            "type": "string",
-            "description": "NameEmpty"
-          },
-          "message": {
-            "type": "string",
-            "description": "The name field cannot be empty."
-          }
-        }
-      },
-      "error.secret.NamespaceEmpty": {
-        "title": "NamespaceEmpty",
-        "type": "object",
-        "properties": {
-          "error": {
-            "type": "string",
-            "description": "NamespaceEmpty"
-          },
-          "message": {
-            "type": "string",
-            "description": "The namespace field cannot be empty."
-          }
-        }
-      },
-      "error.secret.RegistryEmpty": {
-        "title": "RegistryEmpty",
-        "type": "object",
-        "properties": {
-          "error": {
-            "type": "string",
-            "description": "RegistryEmpty"
-          },
-          "message": {
-            "type": "string",
-            "description": "The registry field cannot be empty."
-          }
-        }
-      },
-      "error.secret.UsernameEmpty": {
-        "title": "UsernameEmpty",
-        "type": "object",
-        "properties": {
-          "error": {
-            "type": "string",
-            "description": "UsernameEmpty"
-          },
-          "message": {
-            "type": "string",
-            "description": "The username field cannot be empty."
-          }
-        }
-      },
-      "error.secret.PasswordEmpty": {
-        "title": "PasswordEmpty",
-        "type": "object",
-        "properties": {
-          "error": {
-            "type": "string",
-            "description": "PasswordEmpty"
-          },
-          "message": {
-            "type": "string",
-            "description": "The password field cannot be empty."
-          }
-        }
-      },
-      "error.secret.SecretNotFound": {
-        "title": "SecretNotFound",
-        "type": "object",
-        "properties": {
-          "error": {
-            "type": "string",
-            "description": "SecretNotFound"
-          },
-          "message": {
-            "type": "string",
-            "description": "The secret ID given does not exist."
-          }
-        }
-      },
-      "error.secret.SecretBeingUsed": {
-        "title": "SecretBeingUsed",
-        "type": "object",
-        "properties": {
-          "error": {
-            "type": "string",
-            "description": "SecretBeingUsed"
-          },
-          "message": {
-            "type": "string",
-            "description": "The secret is being used by applications and cannot be deleted."
-          }
-        }
-      },
       "error.application.InvalidStatus": {
         "title": "InvalidStatus",
         "type": "object",
@@ -17568,20 +17308,6 @@
           "message": {
             "type": "string",
             "description": "The PoP {pop code} specified is invalid or does not exist."
-          }
-        }
-      },
-      "error.cname.ApplicationNotLoadBalanced": {
-        "title": "ApplicationNotLoadBalanced",
-        "type": "object",
-        "properties": {
-          "error": {
-            "type": "string",
-            "description": "ApplicationNotLoadBalanced"
-          },
-          "message": {
-            "type": "string",
-            "description": "Creating a CNAME for an application requires that the application be exposed by ECP layer4 load balancers."
           }
         }
       },
@@ -18179,7 +17905,7 @@
     },
     {
       "name": "CNAMEs",
-      "description": "A Canonical Name Record (or \"CNAME\") is a DNS record used to alias one domain name to a different domain name. While your application runs on ECP, you can create a CNAME and point the hostname of your application to this CNAME. Then ECP will help manage global traffic for your application by resolving the CNAME to different IP addresses pointing to your application instances at the edge as per user/client location. Incoming requests will always be routed to the closest application instances."
+      "description": "A Canonical Name Record (or \"CNAME\") is a DNS record used to alias one domain name to a different domain name. While your application runs on ECP, you can create a CNAME and point the hostname of your application to this CNAME. Then ECP will help intelligently route global traffic for your application by resolving the CNAME to different IP addresses pointing to your application instances at the edge as per user/client location. Incoming requests will be routed to your application instances that are the closest or respond the fastest."
     },
     {
       "name": "Registry Projects",
