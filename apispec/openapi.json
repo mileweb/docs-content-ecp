@@ -381,7 +381,7 @@
             "schema": {
               "type": "integer",
               "minimum": 0,
-              "default": "0"
+              "default": 0
             }
           },
           {
@@ -391,7 +391,7 @@
             "required": false,
             "schema": {
               "type": "integer",
-              "default": "100",
+              "default": 100,
               "maximum": 200,
               "minimum": 1
             }
@@ -412,7 +412,6 @@
     "/ecp/v1/imagepullsecrets/{imagepullsecretID}": {
       "parameters": [
         {
-          "type": "string",
           "name": "imagepullsecretID",
           "in": "path",
           "schema": {
@@ -1046,7 +1045,7 @@
             "schema": {
               "type": "integer",
               "minimum": 0,
-              "default": "0"
+              "default": 0
             }
           },
           {
@@ -1056,7 +1055,7 @@
             "required": false,
             "schema": {
               "type": "integer",
-              "default": "100",
+              "default": 100,
               "maximum": 200,
               "minimum": 1
             }
@@ -1249,7 +1248,6 @@
     "/ecp/v1/cnames/{cnameID}": {
       "parameters": [
         {
-          "type": "string",
           "name": "cnameID",
           "in": "path",
           "required": true,
@@ -1630,64 +1628,64 @@
               "ipCount"
             ]
           },
-          "description": "Usage metric on compute, storage and network resources.\n\nMetric | Description | Measured in\n--- | --- | --- \ninboundTraffic | amount of data transmitted to ECP during a time period | byte\ninboundBandwidth | rate of data transfer to ECP during a time period | bps\noutboundTraffic | amount of data transmitted from ECP during a time period | byte\noutboundBandwidth | rate of data transfer from ECP during a time period | bps\ntotalTraffic | amount of data transmitted to and from ECP during a time period | byte\ntotalBandwidth | rate of data transfer to and from ECP during a time period | bps\nvcpu | amount of CPU cores allocated and available during a time period | core\nmem | amount of memory allocated and available during a time peirod | byte\nlocal-ssd | amount of local storage capacity allocated and available during a time period | byte\npersist-ssd | amount of remote storage capacity allocated and available during a time period | byte\npodCount | number of kubernetes pods existing and maintained for your application(s) during a time period | ea\nipCount | number of public IPv4 addresses allocated and available during a time period | ea\n"
+          "description": "Usage metric on compute, storage and network resources.\n\nMetric | Description | Measured in\n--- | --- | --- \ninboundTraffic | Amount of data transmitted to ECP during a time period | byte\ninboundBandwidth | Rate of data transfer to ECP during a time period | bps\noutboundTraffic | Amount of data transmitted from ECP during a time period | byte\noutboundBandwidth | Rate of data transfer from ECP during a time period | bps\ntotalTraffic | Amount of data transmitted to and from ECP during a time period | byte\ntotalBandwidth | Rate of data transfer to and from ECP during a time period | bps\nvcpu | Amount of CPU cores allocated for your application instances during a time period | core\nmem | Amount of memory allocated for your application instances during a time peirod | byte\nlocal-ssd | Amount of local SSD storage capacity allocated for your application instances during a time period | byte\npersist-ssd | Amount of remote SSD storage capacity allocated for your application instances during a time period | byte\npodCount | Number of your application instances (i.e. Kubernetes pods) existing during a time period | ea\nipCount | Number of public IPv4 addresses allocated for your applications during a time period. This includes addresses allocated for both application instances and ECP LoadBalancer4s, if any. | ea\n"
         }
       ],
       "get": {
-        "summary": "Get resources usage across all PoPs",
+        "summary": "Get summary of resource usage across all ECP locations",
         "tags": [
           "Reports"
         ],
         "responses": {
           "200": {
-            "description": "OK",
+            "description": "This response returns report data. Note that it is always in UTC time.",
             "content": {
               "application/json": {
                 "schema": {
                   "title": "",
+                  "type": "object",
                   "properties": {
                     "data": {
                       "type": "array",
-                      "description": "array of time serialized metric values",
+                      "description": "Array of time serialized metric values",
                       "items": {
                         "type": "object",
                         "properties": {
                           "timestamp": {
                             "type": "string",
-                            "description": "timestamp"
+                            "description": "An RFC 3339 format date representing the beginning of a time interval. It is always in UTC time."
                           },
                           "value": {
                             "type": "number",
-                            "description": "metric value"
+                            "description": "A value at that timestamp"
                           }
                         }
                       }
                     }
-                  },
-                  "type": "object"
+                  }
                 },
                 "examples": {
                   "traffic report at 5 min interval": {
                     "value": {
                       "data": [
                         {
-                          "timestamp": "2019-10-02T15:00:00Z",
+                          "timestamp": "2020-10-02T15:00:00Z",
                           "value": 216326
                         },
                         {
-                          "timestamp": "2019-10-02T15:05:00Z",
+                          "timestamp": "2020-10-02T15:05:00Z",
                           "value": 214326
                         },
                         {
-                          "timestamp": "2019-10-02T15:10:00Z",
+                          "timestamp": "2020-10-02T15:10:00Z",
                           "value": 216226
                         },
                         {
-                          "timestamp": "2019-10-02T15:15:00Z",
+                          "timestamp": "2020-10-02T15:15:00Z",
                           "value": 212126
                         },
                         {
-                          "timestamp": "2019-10-02T15:20:00Z",
+                          "timestamp": "2020-10-02T15:20:00Z",
                           "value": 215326
                         }
                       ]
@@ -1709,74 +1707,60 @@
             }
           },
           "400": {
-            "description": "Bad Request",
+            "description": "The request is invalid. Refer to response body for details.",
             "content": {
               "application/json": {
                 "schema": {
-                  "oneOf": [
-                    {
-                      "title": "InvalidDateFormat",
-                      "type": "object",
-                      "properties": {
-                        "error": {
-                          "type": "string",
-                          "description": "InvalidDateFormat"
-                        },
-                        "message": {
-                          "type": "string",
-                          "description": "Invalid parameter {startTime / endTime}. {startTime/endTime} is not a valid RFC3339 timestamp. The timestamp should be in \"yyyy-MM-dd'T'HH:mm:ss'Z'\" format."
-                        }
-                      }
+                  "title": "",
+                  "type": "object",
+                  "description": "A standard error object.",
+                  "x-tags": [
+                    "Common"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "string"
                     },
-                    {
-                      "title": "InvalidRange",
-                      "type": "object",
-                      "properties": {
-                        "error": {
-                          "type": "string",
-                          "description": "InvalidRange"
-                        },
-                        "message": {
-                          "type": "string",
-                          "description": "One of: \"The max time span of {interval} report must be no more than {xxx days}.\" \"The parameter 'startTime' cannot be a time in the future.\" \"The parameter 'endTime' should be after 'startTime'.\""
-                        }
-                      }
-                    },
-                    {
-                      "title": "InvalidInterval",
-                      "type": "object",
-                      "properties": {
-                        "error": {
-                          "type": "string",
-                          "description": "InvalidInterval"
-                        },
-                        "message": {
-                          "type": "string",
-                          "description": "The interval requested is invalid."
-                        }
-                      }
-                    },
-                    {
-                      "title": "InvalidReportRange",
-                      "type": "object",
-                      "properties": {
-                        "error": {
-                          "type": "string",
-                          "description": "InvalidReportRange"
-                        },
-                        "message": {
-                          "type": "string",
-                          "description": "A valid report range shall be “self-only”, “children-only”, or “self+children”."
-                        }
-                      }
+                    "message": {
+                      "type": "string"
                     }
-                  ]
+                  }
                 },
                 "examples": {
-                  "example-1": {
+                  "InvalidDateFormat": {
                     "value": {
                       "error": "InvalidDateFormat",
-                      "message": "The format of startTime or endTime is invalid."
+                      "message": "Invalid parameter {startTime | endTime}. {startTime | endTime} is not a valid RFC3339 timestamp. The timestamp should be in \"yyyy-MM-dd'T'HH:mm:ss'Z'\" format."
+                    }
+                  },
+                  "InvalidRange": {
+                    "value": {
+                      "error": "InvalidRange",
+                      "message": "The max time span of {interval} report must be no more than {xxx days}."
+                    }
+                  },
+                  "InvalidRange(1)": {
+                    "value": {
+                      "error": "InvalidRange",
+                      "message": "The parameter 'startTime' cannot be a time in the future."
+                    }
+                  },
+                  "InvalidRange(2)": {
+                    "value": {
+                      "error": "InvalidRange",
+                      "message": "The parameter 'endTime' should be after 'startTime'."
+                    }
+                  },
+                  "InvalidInterval": {
+                    "value": {
+                      "error": "InvalidInterval",
+                      "message": "The interval requested is invalid."
+                    }
+                  },
+                  "InvalidReportRange": {
+                    "value": {
+                      "error": "InvalidReportRange",
+                      "message": "A valid report range shall be “self-only”, “children-only”, or “self+children”."
                     }
                   }
                 }
@@ -1799,16 +1783,18 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "title": "InvalidMetric",
+                  "title": "",
                   "type": "object",
+                  "description": "A standard error object.",
+                  "x-tags": [
+                    "Common"
+                  ],
                   "properties": {
                     "error": {
-                      "type": "string",
-                      "description": "InvalidMetric"
+                      "type": "string"
                     },
                     "message": {
-                      "type": "string",
-                      "description": "The metric given is invalid."
+                      "type": "string"
                     }
                   }
                 },
@@ -1836,12 +1822,12 @@
           }
         },
         "operationId": "get-summary-reports",
-        "description": "Get a summary of compute, storage and network resources usage across all PoPs. ",
+        "description": "Get summary of your resource usage across all ECP locations. Use the \"metric\" parameter to specify a metric and retrieve usage reports related to compute, storage or network.",
         "parameters": [
           {
             "in": "query",
             "name": "startTime",
-            "description": "RFC 3339 date indicating the beginning of a time period. Example: <code>startTime=2019-10-30T00:00:00Z</code>. Your startTime may be rounded down to the nearest minute, hour, or day depending on the interval parameter. For example, if you enter <code>startTime=2019-09-05T03:14:01Z&interval=hourly</code>, the response includes data beginning at 2019-09-05T03:00:00Z.",
+            "description": "RFC 3339 date indicating the beginning of a time period. Example: <code>startTime=2020-10-30T00:00:00Z</code>. The time must be specified using the UTC timezone. Your startTime may be rounded down to the nearest minute, hour, or day depending on the \"interval\" parameter. For example, if you pass <code>startTime=2020-09-05T03:14:01Z&interval=hourly</code>, the response includes data beginning at 2020-09-05T03:00:00Z.",
             "required": true,
             "schema": {
               "type": "string"
@@ -1853,7 +1839,7 @@
             },
             "in": "query",
             "name": "endTime",
-            "description": "RFC 3339 date indicating the end of a time period. Example: <code>endTime=2019-11-14T00:00:00Z</code> Your endTime may be rounded up to the nearest minute, hour, or day depending on the interval parameter. For example, if you enter <code>endTime=2019-09-05T03:14:01Z&interval=hourly</code>, the response includes data ending at 2019-09-05T04:00:00Z.",
+            "description": "RFC 3339 date indicating the end of a time period. Example: <code>endTime=2020-11-14T00:00:00Z</code> The time must be specified using the UTC timezone. Your endTime may be rounded up to the nearest minute, hour, or day depending on the \"interval\" parameter. For example, if you pass <code>endTime=2020-09-05T03:14:01Z&interval=hourly</code>, the response includes data ending at 2020-09-05T04:00:00Z.",
             "required": true
           },
           {
@@ -1869,7 +1855,7 @@
             },
             "name": "interval",
             "required": true,
-            "description": "The granularity of returned data. Raw report data is generated per 1 minute. The data is aggregated to give reports of different granularities. The aggregation method is “sum” for the metrics \"inboundTraffic\", \"outboundTraffic\" and \"totalTraffic\". For all other metrics, the aggregation method is \"average\". \n\n\"oneminute\" interval is supported only when the timespan is not longer than 7 days. \"fiveminutes\" interval is supported only when the timespan is not longer than 31 days.",
+            "description": "The granularity of returned data. In the backend, raw data is reported every minute. The data is then aggregated to give reports of different granularities. The aggregation method is “sum” for those network i/o metrics, and \"average\" for all other metrics. Note that \"oneminute\" interval is available only when the timespan is not longer than 7 days and that \"fiveminutes\" interval is available only when the timespan is not longer than 31 days.",
             "in": "query"
           },
           {
@@ -1883,7 +1869,7 @@
               ]
             },
             "name": "Report-Range",
-            "description": "An optional header that resellers can use to specify whether to include data from children customers.",
+            "description": "An optional header that resellers can use to specify whether to include report data from children customers.",
             "in": "header"
           },
           {
@@ -1921,17 +1907,17 @@
               "ipCount"
             ]
           },
-          "description": "Usage metric on compute, storage and network resources.\n\nMetric | Description | Measured in\n--- | --- | --- \ninboundTraffic | amount of data transmitted to ECP during a time period | byte\ninboundBandwidth | rate of data transfer to ECP during a time period | bps\noutboundTraffic | amount of data transmitted from ECP during a time period | byte\noutboundBandwidth | rate of data transfer from ECP during a time period | bps\ntotalTraffic | amount of data transmitted to and from ECP during a time period | byte\ntotalBandwidth | rate of data transfer to and from ECP during a time period | bps\nvcpu | amount of CPU cores allocated and available during a time period | core\nmem | amount of memory allocated and available during a time peirod | byte\nlocal-ssd | amount of local storage capacity allocated and available during a time period | byte\npersist-ssd | amount of remote storage capacity allocated and available during a time period | byte\npodCount | number of kubernetes pods existing and maintained for your application(s) during a time period | ea\nipCount | number of public IPv4 addresses allocated and available during a time period | ea\n"
+          "description": "Usage metric on compute, storage and network resources.\n\nMetric | Description | Measured in\n--- | --- | --- \ninboundTraffic | Amount of data transmitted to ECP during a time period | byte\ninboundBandwidth | Rate of data transfer to ECP during a time period | bps\noutboundTraffic | Amount of data transmitted from ECP during a time period | byte\noutboundBandwidth | Rate of data transfer from ECP during a time period | bps\ntotalTraffic | Amount of data transmitted to and from ECP during a time period | byte\ntotalBandwidth | Rate of data transfer to and from ECP during a time period | bps\nvcpu | Amount of CPU cores allocated for your application instances during a time period | core\nmem | Amount of memory allocated for your application instances during a time peirod | byte\nlocal-ssd | Amount of local SSD storage capacity allocated for your application instances during a time period | byte\npersist-ssd | Amount of remote SSD storage capacity allocated for your application instances during a time period | byte\npodCount | Number of your application instances (i.e. Kubernetes pods) existing during a time period | ea\nipCount | Number of public IPv4 addresses allocated for your applications during a time period. This includes addresses allocated for both application instances and ECP LoadBalancer4s, if any. | ea\n"
         }
       ],
       "get": {
-        "summary": "Get resources usage per service zones",
+        "summary": "Get summary of resource usage grouped per ECP service zones",
         "tags": [
           "Reports"
         ],
         "responses": {
           "200": {
-            "description": "OK",
+            "description": "This response returns report data. Note that it is always in UTC time.",
             "content": {
               "application/json": {
                 "schema": {
@@ -1940,7 +1926,7 @@
                   "properties": {
                     "series": {
                       "type": "array",
-                      "description": "usage reports grouped per service zones",
+                      "description": "Summary of resource usage grouped per service zones",
                       "items": {
                         "type": "object",
                         "properties": {
@@ -1950,21 +1936,22 @@
                               "business",
                               "standard",
                               "premium"
-                            ]
+                            ],
+                            "description": "ECP service zone"
                           },
                           "data": {
                             "type": "array",
-                            "description": "array of time serialized metric values",
+                            "description": "Array of time serialized metric values",
                             "items": {
                               "type": "object",
                               "properties": {
                                 "timestamp": {
                                   "type": "string",
-                                  "description": "timestamp"
+                                  "description": "An RFC 3339 format date representing the beginning of a time interval. It is always in UTC time."
                                 },
                                 "value": {
                                   "type": "number",
-                                  "description": "metric value"
+                                  "description": "A value at that timestamp"
                                 }
                               }
                             }
@@ -1982,23 +1969,23 @@
                           "serviceZone": "business",
                           "data": [
                             {
-                              "timestamp": "2019-10-02T15:00:00Z",
+                              "timestamp": "2020-10-02T15:00:00Z",
                               "value": 216326
                             },
                             {
-                              "timestamp": "2019-10-02T15:05:00Z",
+                              "timestamp": "2020-10-02T15:05:00Z",
                               "value": 214326
                             },
                             {
-                              "timestamp": "2019-10-02T15:10:00Z",
+                              "timestamp": "2020-10-02T15:10:00Z",
                               "value": 216226
                             },
                             {
-                              "timestamp": "2019-10-02T15:15:00Z",
+                              "timestamp": "2020-10-02T15:15:00Z",
                               "value": 212126
                             },
                             {
-                              "timestamp": "2019-10-02T15:20:00Z",
+                              "timestamp": "2020-10-02T15:20:00Z",
                               "value": 215326
                             }
                           ]
@@ -2007,24 +1994,24 @@
                           "serviceZone": "standard",
                           "data": [
                             {
-                              "timestamp": "2019-10-02T15:00:00Z",
-                              "value": 0
+                              "timestamp": "2020-10-02T15:00:00Z",
+                              "value": 115326
                             },
                             {
-                              "timestamp": "2019-10-02T15:05:00Z",
-                              "value": 0
+                              "timestamp": "2020-10-02T15:05:00Z",
+                              "value": 115326
                             },
                             {
-                              "timestamp": "2019-10-02T15:10:00Z",
-                              "value": 0
+                              "timestamp": "2020-10-02T15:10:00Z",
+                              "value": 135326
                             },
                             {
-                              "timestamp": "2019-10-02T15:15:00Z",
-                              "value": 0
+                              "timestamp": "2020-10-02T15:15:00Z",
+                              "value": 145326
                             },
                             {
-                              "timestamp": "2019-10-02T15:20:00Z",
-                              "value": 0
+                              "timestamp": "2020-10-02T15:20:00Z",
+                              "value": 125326
                             }
                           ]
                         },
@@ -2032,23 +2019,23 @@
                           "serviceZone": "premium",
                           "data": [
                             {
-                              "timestamp": "2019-10-02T15:00:00Z",
+                              "timestamp": "2020-10-02T15:00:00Z",
                               "value": 0
                             },
                             {
-                              "timestamp": "2019-10-02T15:05:00Z",
+                              "timestamp": "2020-10-02T15:05:00Z",
                               "value": 0
                             },
                             {
-                              "timestamp": "2019-10-02T15:10:00Z",
+                              "timestamp": "2020-10-02T15:10:00Z",
                               "value": 0
                             },
                             {
-                              "timestamp": "2019-10-02T15:15:00Z",
+                              "timestamp": "2020-10-02T15:15:00Z",
                               "value": 0
                             },
                             {
-                              "timestamp": "2019-10-02T15:20:00Z",
+                              "timestamp": "2020-10-02T15:20:00Z",
                               "value": 0
                             }
                           ]
@@ -2072,74 +2059,60 @@
             }
           },
           "400": {
-            "description": "Bad Request",
+            "description": "The request is invalid. Refer to response body for details.",
             "content": {
               "application/json": {
                 "schema": {
-                  "oneOf": [
-                    {
-                      "title": "InvalidDateFormat",
-                      "type": "object",
-                      "properties": {
-                        "error": {
-                          "type": "string",
-                          "description": "InvalidDateFormat"
-                        },
-                        "message": {
-                          "type": "string",
-                          "description": "Invalid parameter {startTime / endTime}. {startTime/endTime} is not a valid RFC3339 timestamp. The timestamp should be in \"yyyy-MM-dd'T'HH:mm:ss'Z'\" format."
-                        }
-                      }
+                  "title": "",
+                  "type": "object",
+                  "description": "A standard error object.",
+                  "x-tags": [
+                    "Common"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "string"
                     },
-                    {
-                      "title": "InvalidRange",
-                      "type": "object",
-                      "properties": {
-                        "error": {
-                          "type": "string",
-                          "description": "InvalidRange"
-                        },
-                        "message": {
-                          "type": "string",
-                          "description": "One of: \"The max time span of {interval} report must be no more than {xxx days}.\" \"The parameter 'startTime' cannot be a time in the future.\" \"The parameter 'endTime' should be after 'startTime'.\""
-                        }
-                      }
-                    },
-                    {
-                      "title": "InvalidInterval",
-                      "type": "object",
-                      "properties": {
-                        "error": {
-                          "type": "string",
-                          "description": "InvalidInterval"
-                        },
-                        "message": {
-                          "type": "string",
-                          "description": "The interval requested is invalid."
-                        }
-                      }
-                    },
-                    {
-                      "title": "InvalidReportRange",
-                      "type": "object",
-                      "properties": {
-                        "error": {
-                          "type": "string",
-                          "description": "InvalidReportRange"
-                        },
-                        "message": {
-                          "type": "string",
-                          "description": "A valid report range shall be “self-only”, “children-only”, or “self+children”."
-                        }
-                      }
+                    "message": {
+                      "type": "string"
                     }
-                  ]
+                  }
                 },
                 "examples": {
-                  "example-1": {
+                  "InvalidDateFormat": {
                     "value": {
                       "error": "InvalidDateFormat",
-                      "message": "The format of startTime or endTime is invalid."
+                      "message": "Invalid parameter {startTime | endTime}. {startTime | endTime} is not a valid RFC3339 timestamp. The timestamp should be in \"yyyy-MM-dd'T'HH:mm:ss'Z'\" format."
+                    }
+                  },
+                  "InvalidRange": {
+                    "value": {
+                      "error": "InvalidRange",
+                      "message": "The max time span of {interval} report must be no more than {xxx days}."
+                    }
+                  },
+                  "InvalidRange(1)": {
+                    "value": {
+                      "error": "InvalidRange",
+                      "message": "The parameter 'startTime' cannot be a time in the future."
+                    }
+                  },
+                  "InvalidRange(2)": {
+                    "value": {
+                      "error": "InvalidRange",
+                      "message": "The parameter 'endTime' should be after 'startTime'."
+                    }
+                  },
+                  "InvalidInterval": {
+                    "value": {
+                      "error": "InvalidInterval",
+                      "message": "The interval requested is invalid."
+                    }
+                  },
+                  "InvalidReportRange": {
+                    "value": {
+                      "error": "InvalidReportRange",
+                      "message": "A valid report range shall be “self-only”, “children-only”, or “self+children”."
                     }
                   }
                 }
@@ -2162,16 +2135,18 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "title": "InvalidMetric",
+                  "title": "",
                   "type": "object",
+                  "description": "A standard error object.",
+                  "x-tags": [
+                    "Common"
+                  ],
                   "properties": {
                     "error": {
-                      "type": "string",
-                      "description": "InvalidMetric"
+                      "type": "string"
                     },
                     "message": {
-                      "type": "string",
-                      "description": "The metric given is invalid."
+                      "type": "string"
                     }
                   }
                 },
@@ -2211,13 +2186,13 @@
               ]
             },
             "name": "Report-Range",
-            "description": "An optional header that resellers can use to specify whether to include data from children customers.",
+            "description": "An optional header that resellers can use to specify whether to include report data from children customers.",
             "in": "header"
           },
           {
             "in": "query",
             "name": "startTime",
-            "description": "RFC 3339 date indicating the beginning of a time period. Example: <code>startTime=2019-10-30T00:00:00Z</code>. Your startTime may be rounded down to the nearest minute, hour, or day depending on the interval parameter. For example, if you enter <code>startTime=2019-09-05T03:14:01Z&interval=hourly</code>, the response includes data beginning at 2019-09-05T03:00:00Z.",
+            "description": "RFC 3339 date indicating the beginning of a time period. Example: <code>startTime=2020-10-30T00:00:00Z</code>. The time must be specified using the UTC timezone. Your startTime may be rounded down to the nearest minute, hour, or day depending on the \"interval\" parameter. For example, if you pass <code>startTime=2020-09-05T03:14:01Z&interval=hourly</code>, the response includes data beginning at 2020-09-05T03:00:00Z.",
             "required": true,
             "schema": {
               "type": "string"
@@ -2229,7 +2204,7 @@
             },
             "in": "query",
             "name": "endTime",
-            "description": "RFC 3339 date indicating the end of a time period. Example: <code>endTime=2019-11-14T00:00:00Z</code> Your endTime may be rounded up to the nearest minute, hour, or day depending on the interval parameter. For example, if you enter <code>endTime=2019-09-05T03:14:01Z&interval=hourly</code>, the response includes data ending at 2019-09-05T04:00:00Z.",
+            "description": "RFC 3339 date indicating the end of a time period. Example: <code>endTime=2020-11-14T00:00:00Z</code> The time must be specified using the UTC timezone. Your endTime may be rounded up to the nearest minute, hour, or day depending on the \"interval\" parameter. For example, if you pass <code>endTime=2020-09-05T03:14:01Z&interval=hourly</code>, the response includes data ending at 2020-09-05T04:00:00Z.",
             "required": true
           },
           {
@@ -2245,7 +2220,7 @@
             },
             "name": "interval",
             "required": true,
-            "description": "The granularity of returned data. Raw report data is generated per 1 minute. The data is aggregated to give reports of different granularities. The aggregation method is “sum” for the metrics \"inboundTraffic\", \"outboundTraffic\" and \"totalTraffic\". For all other metrics, the aggregation method is \"average\". \n\n\"oneminute\" interval is supported only when the timespan is not longer than 7 days. \"fiveminutes\" interval is supported only when the timespan is not longer than 31 days.",
+            "description": "The granularity of returned data. In the backend, raw data is reported every minute. The data is then aggregated to give reports of different granularities. The aggregation method is “sum” for those network i/o metrics, and \"average\" for all other metrics. Note that \"oneminute\" interval is available only when the timespan is not longer than 7 days and that \"fiveminutes\" interval is available only when the timespan is not longer than 31 days.",
             "in": "query"
           },
           {
@@ -2258,21 +2233,11 @@
             }
           }
         ],
-        "description": "Get reports on resources usage grouped per service zone"
+        "description": "Get summary of your resource usage grouped per ECP service zones. Use the \"metric\" parameter to specify a metric and retrieve usage reports related to compute, storage or network."
       }
     },
-    "/ecp/v1/metrics/{metric}/applications/{applicationID}/instances/{instanceID}": {
+    "/ecp/v1/metrics/{metric}/servicezones/{servicezone}": {
       "parameters": [
-        {
-          "type": "string",
-          "name": "instanceID",
-          "in": "path",
-          "required": true,
-          "schema": {
-            "type": "string"
-          },
-          "description": "ID of a pod created for an ECP application"
-        },
         {
           "name": "metric",
           "in": "path",
@@ -2284,212 +2249,89 @@
               "inboundBandwidth",
               "outboundTraffic",
               "outboundBandwidth",
-              "cpuUsage",
-              "memUsage",
-              "diskUsage"
+              "totalTraffic",
+              "totalBandwidth",
+              "podCount",
+              "vcpu",
+              "mem",
+              "local-ssd",
+              "persist-ssd",
+              "ipCount"
             ]
           },
-          "description": "Usage metric on compute, storage and network resources.\n\nMetric | Description | Measured in\n--- | --- | ---\ninboundTraffic | amount of data transmitted to a pod during a time period | byte\ninboundBandwidth | rate of data transfer to a pod during a time period | bps\noutboundTraffic | amount of data transmitted from a pod during a time period | byte\noutboundBandwidth | rate of data transfer from a pod during a time period | bps\ncpuUsage | amount of CPU cores consumed by container process(es) in a pod during a time period | core\nmemUsage | amount of memory consumed by container process(es) in a pod during a time period | byte\ndiskUsage | Disk usage rate. Here \"disk\" could be the rootFS of a container in a pod, or a PVC volume attached to a pod. | --\n"
+          "description": "Usage metric on compute, storage and network resources.\n\nMetric | Description | Measured in\n--- | --- | --- \ninboundTraffic | Amount of data transmitted to ECP during a time period | byte\ninboundBandwidth | Rate of data transfer to ECP during a time period | bps\noutboundTraffic | Amount of data transmitted from ECP during a time period | byte\noutboundBandwidth | Rate of data transfer from ECP during a time period | bps\ntotalTraffic | Amount of data transmitted to and from ECP during a time period | byte\ntotalBandwidth | Rate of data transfer to and from ECP during a time period | bps\nvcpu | Amount of CPU cores allocated for your application instances during a time period | core\nmem | Amount of memory allocated for your application instances during a time peirod | byte\nlocal-ssd | Amount of local SSD storage capacity allocated for your application instances during a time period | byte\npersist-ssd | Amount of remote SSD storage capacity allocated for your application instances during a time period | byte\npodCount | Number of your application instances (i.e. Kubernetes pods) existing during a time period | ea\nipCount | Number of public IPv4 addresses allocated for your applications during a time period. This includes addresses allocated for both application instances and ECP LoadBalancer4s, if any. | ea\n"
         },
         {
-          "name": "applicationID",
-          "in": "path",
-          "required": true,
           "schema": {
-            "type": "string"
+            "type": "string",
+            "enum": [
+              "business",
+              "standard",
+              "premium"
+            ]
           },
-          "description": "ID of an ECP application"
+          "name": "servicezone",
+          "description": "Code of an ECP service zone",
+          "in": "path",
+          "required": true
         }
       ],
       "get": {
-        "summary": "Get resources usage by an instance",
+        "summary": "Get summary of resource usage in a specific ECP service zone",
         "tags": [
           "Reports"
         ],
         "responses": {
           "200": {
-            "description": "OK",
+            "description": "This response returns report data. Note that it is always in UTC time.",
             "content": {
               "application/json": {
                 "schema": {
-                  "oneOf": [
-                    {
-                      "title": "CPU/memory/traffic report",
-                      "properties": {
-                        "data": {
-                          "type": "array",
-                          "description": "Array of time serialized metric values. This schema is used when the queried metric is a metric other than 'diskUsage'",
-                          "items": {
-                            "type": "object",
-                            "properties": {
-                              "timestamp": {
-                                "type": "string",
-                                "description": "timestamp"
-                              },
-                              "value": {
-                                "type": "number",
-                                "description": "metric value"
-                              }
-                            }
+                  "title": "",
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "description": "Array of time serialized metric values",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "timestamp": {
+                            "type": "string",
+                            "description": "An RFC 3339 format date representing the beginning of a time interval. It is always in UTC time."
+                          },
+                          "value": {
+                            "type": "number",
+                            "description": "A value at that timestamp"
                           }
                         }
-                      },
-                      "type": "object"
-                    },
-                    {
-                      "title": "Storage report",
-                      "type": "object",
-                      "properties": {
-                        "data": {
-                          "type": "array",
-                          "description": "Array of time serialized metric values. This schema is used when the queried metric is 'diskUsage'",
-                          "items": {
-                            "type": "object",
-                            "properties": {
-                              "timestamp": {
-                                "type": "string",
-                                "description": "timestamp"
-                              },
-                              "volumes": {
-                                "type": "array",
-                                "description": "metric value",
-                                "items": {
-                                  "type": "object",
-                                  "properties": {
-                                    "volume": {
-                                      "type": "string",
-                                      "description": "Could be a container rootFS or a PVC volume attached to a pod"
-                                    },
-                                    "value": {
-                                      "type": "number",
-                                      "description": "Disk usage rate, e.g. \"0.2\" means 20% of disk capacity is used."
-                                    }
-                                  }
-                                }
-                              }
-                            }
-                          }
-                        }
-                      },
-                      "description": "If the metric is \"diskUsage\", the response will be in this format."
+                      }
                     }
-                  ],
-                  "description": "There are 2 response schemas. The schema for \"diskUsage\" metric is different from the schema for all other metrics."
+                  }
                 },
                 "examples": {
-                  "cpuUsage": {
+                  "traffic report at 5 minute interval": {
                     "value": {
                       "data": [
                         {
-                          "timestamp": "2019-10-02T15:00:00Z",
-                          "value": 1.3
+                          "timestamp": "2020-10-02T15:00:00Z",
+                          "value": 216326
                         },
                         {
-                          "timestamp": "2019-10-02T15:05:00Z",
-                          "value": 1.2
+                          "timestamp": "2020-10-02T15:05:00Z",
+                          "value": 214326
                         },
                         {
-                          "timestamp": "2019-10-02T15:10:00Z",
-                          "value": 1.5
+                          "timestamp": "2020-10-02T15:10:00Z",
+                          "value": 216226
                         },
                         {
-                          "timestamp": "2019-10-02T15:15:00Z",
-                          "value": 1.3
+                          "timestamp": "2020-10-02T15:15:00Z",
+                          "value": 212126
                         },
                         {
-                          "timestamp": "2019-10-02T15:20:00Z",
-                          "value": 1.2
-                        }
-                      ]
-                    }
-                  },
-                  "diskUsage": {
-                    "value": {
-                      "data": [
-                        {
-                          "timestamp": "2019-10-02T15:00:00Z",
-                          "volumes": [
-                            {
-                              "volume": "Root_container1",
-                              "value": 0.22
-                            },
-                            {
-                              "volume": "Root_container2",
-                              "value": 0.36
-                            },
-                            {
-                              "volume": "PVC_data",
-                              "value": 0.27
-                            }
-                          ]
-                        },
-                        {
-                          "timestamp": "2019-10-02T15:05:00Z",
-                          "volumes": [
-                            {
-                              "volume": "Root_container1",
-                              "value": 0.22
-                            },
-                            {
-                              "volume": "Root_container2",
-                              "value": 0.16
-                            },
-                            {
-                              "volume": "PVC_data",
-                              "value": 0.27
-                            }
-                          ]
-                        },
-                        {
-                          "timestamp": "2019-10-02T15:10:00Z",
-                          "volumes": [
-                            {
-                              "volume": "Root_container1",
-                              "value": 0.22
-                            },
-                            {
-                              "volume": "Root_container2",
-                              "value": 0.22
-                            },
-                            {
-                              "volume": "PVC_data",
-                              "value": 0.28
-                            }
-                          ]
-                        },
-                        {
-                          "timestamp": "2019-10-02T15:15:00Z",
-                          "volumes": [
-                            {
-                              "volume": "Root_container1",
-                              "value": 0.22
-                            },
-                            {
-                              "volume": "Root_container2",
-                              "value": 0.36
-                            },
-                            {
-                              "volume": "PVC_data",
-                              "value": 0.27
-                            }
-                          ]
-                        },
-                        {
-                          "timestamp": "2019-10-02T15:20:00Z",
-                          "volumes": [
-                            {
-                              "volume": "Root_container1",
-                              "value": 0.22
-                            },
-                            {
-                              "volume": "Root_container2",
-                              "value": 0.16
-                            },
-                            {
-                              "volume": "PVC_data",
-                              "value": 0.26
-                            }
-                          ]
+                          "timestamp": "2020-10-02T15:20:00Z",
+                          "value": 215326
                         }
                       ]
                     }
@@ -2510,74 +2352,60 @@
             }
           },
           "400": {
-            "description": "Bad Request",
+            "description": "The request is invalid. Refer to response body for details.",
             "content": {
               "application/json": {
                 "schema": {
-                  "oneOf": [
-                    {
-                      "title": "InvalidDateFormat",
-                      "type": "object",
-                      "properties": {
-                        "error": {
-                          "type": "string",
-                          "description": "InvalidDateFormat"
-                        },
-                        "message": {
-                          "type": "string",
-                          "description": "Invalid parameter {startTime / endTime}. {startTime/endTime} is not a valid RFC3339 timestamp. The timestamp should be in \"yyyy-MM-dd'T'HH:mm:ss'Z'\" format."
-                        }
-                      }
+                  "title": "",
+                  "type": "object",
+                  "description": "A standard error object.",
+                  "x-tags": [
+                    "Common"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "string"
                     },
-                    {
-                      "title": "InvalidRange",
-                      "type": "object",
-                      "properties": {
-                        "error": {
-                          "type": "string",
-                          "description": "InvalidRange"
-                        },
-                        "message": {
-                          "type": "string",
-                          "description": "One of: \"The max time span of {interval} report must be no more than {xxx days}.\" \"The parameter 'startTime' cannot be a time in the future.\" \"The parameter 'endTime' should be after 'startTime'.\""
-                        }
-                      }
-                    },
-                    {
-                      "title": "InvalidInterval",
-                      "type": "object",
-                      "properties": {
-                        "error": {
-                          "type": "string",
-                          "description": "InvalidInterval"
-                        },
-                        "message": {
-                          "type": "string",
-                          "description": "The interval requested is invalid."
-                        }
-                      }
-                    },
-                    {
-                      "title": "InvalidReportRange",
-                      "type": "object",
-                      "properties": {
-                        "error": {
-                          "type": "string",
-                          "description": "InvalidReportRange"
-                        },
-                        "message": {
-                          "type": "string",
-                          "description": "A valid report range shall be “self-only”, “children-only”, or “self+children”."
-                        }
-                      }
+                    "message": {
+                      "type": "string"
                     }
-                  ]
+                  }
                 },
                 "examples": {
-                  "example-1": {
+                  "InvalidDateFormat": {
                     "value": {
                       "error": "InvalidDateFormat",
-                      "message": "The format of startTime or endTime is invalid."
+                      "message": "Invalid parameter {startTime | endTime}. {startTime | endTime} is not a valid RFC3339 timestamp. The timestamp should be in \"yyyy-MM-dd'T'HH:mm:ss'Z'\" format."
+                    }
+                  },
+                  "InvalidRange": {
+                    "value": {
+                      "error": "InvalidRange",
+                      "message": "The max time span of {interval} report must be no more than {xxx days}."
+                    }
+                  },
+                  "InvalidRange(1)": {
+                    "value": {
+                      "error": "InvalidRange",
+                      "message": "The parameter 'startTime' cannot be a time in the future."
+                    }
+                  },
+                  "InvalidRange(2)": {
+                    "value": {
+                      "error": "InvalidRange",
+                      "message": "The parameter 'endTime' should be after 'startTime'."
+                    }
+                  },
+                  "InvalidInterval": {
+                    "value": {
+                      "error": "InvalidInterval",
+                      "message": "The interval requested is invalid."
+                    }
+                  },
+                  "InvalidReportRange": {
+                    "value": {
+                      "error": "InvalidReportRange",
+                      "message": "A valid report range shall be “self-only”, “children-only”, or “self+children”."
                     }
                   }
                 }
@@ -2600,56 +2428,32 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "oneOf": [
-                    {
-                      "title": "InvalidMetric",
-                      "type": "object",
-                      "properties": {
-                        "error": {
-                          "type": "string",
-                          "description": "InvalidMetric"
-                        },
-                        "message": {
-                          "type": "string",
-                          "description": "The metric given is invalid."
-                        }
-                      }
+                  "title": "",
+                  "type": "object",
+                  "description": "A standard error object.",
+                  "x-tags": [
+                    "Common"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "string"
                     },
-                    {
-                      "title": "ApplicationNotExist",
-                      "type": "object",
-                      "properties": {
-                        "error": {
-                          "type": "string",
-                          "description": "ApplicationNotExist"
-                        },
-                        "message": {
-                          "type": "string",
-                          "description": "The application ID given does not exist."
-                        }
-                      }
-                    },
-                    {
-                      "title": "InstanceNotFound",
-                      "type": "object",
-                      "properties": {
-                        "error": {
-                          "type": "string",
-                          "description": "InstanceNotFound"
-                        },
-                        "message": {
-                          "type": "string",
-                          "description": "The instance specified does not exist, or is not an instance of the given application."
-                        }
-                      }
+                    "message": {
+                      "type": "string"
                     }
-                  ]
+                  }
                 },
                 "examples": {
-                  "example-1": {
+                  "InvalidMetric": {
                     "value": {
                       "error": "InvalidMetric",
                       "message": "The metric given is invalid."
+                    }
+                  },
+                  "ServiceZoneNotExist": {
+                    "value": {
+                      "error": "ServiceZoneNotExist",
+                      "message": "The serviceZone given is invalid or does not exist."
                     }
                   }
                 }
@@ -2668,13 +2472,27 @@
             }
           }
         },
-        "operationId": "get-reports-for-an-instance",
-        "description": "Get reports on resources usage by a specific ECP application instance. An instance means a kubernetes pod.",
+        "operationId": "get-reports-for-a-service-zone",
+        "description": "Get summary of resource usage in a specific ECP service zone. Use the \"metric\" parameter to specify a metric and retrieve usage reports related to compute, storage or network.",
         "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "default": "self-only",
+              "enum": [
+                "self-only",
+                "children-only",
+                "self+children"
+              ]
+            },
+            "name": "Report-Range",
+            "description": "An optional header that resellers can use to specify whether to include report data from children customers.",
+            "in": "header"
+          },
           {
             "in": "query",
             "name": "startTime",
-            "description": "RFC 3339 date indicating the beginning of a time period. Example: <code>startTime=2019-10-30T00:00:00Z</code>. Your startTime may be rounded down to the nearest minute, hour, or day depending on the interval parameter. For example, if you enter <code>startTime=2019-09-05T03:14:01Z&interval=hourly</code>, the response includes data beginning at 2019-09-05T03:00:00Z.",
+            "description": "RFC 3339 date indicating the beginning of a time period. Example: <code>startTime=2020-10-30T00:00:00Z</code>. The time must be specified using the UTC timezone. Your startTime may be rounded down to the nearest minute, hour, or day depending on the \"interval\" parameter. For example, if you pass <code>startTime=2020-09-05T03:14:01Z&interval=hourly</code>, the response includes data beginning at 2020-09-05T03:00:00Z.",
             "required": true,
             "schema": {
               "type": "string"
@@ -2686,7 +2504,7 @@
             },
             "in": "query",
             "name": "endTime",
-            "description": "RFC 3339 date indicating the end of a time period. Example: <code>endTime=2019-11-14T00:00:00Z</code> Your endTime may be rounded up to the nearest minute, hour, or day depending on the interval parameter. For example, if you enter <code>endTime=2019-09-05T03:14:01Z&interval=hourly</code>, the response includes data ending at 2019-09-05T04:00:00Z.",
+            "description": "RFC 3339 date indicating the end of a time period. Example: <code>endTime=2020-11-14T00:00:00Z</code> The time must be specified using the UTC timezone. Your endTime may be rounded up to the nearest minute, hour, or day depending on the \"interval\" parameter. For example, if you pass <code>endTime=2020-09-05T03:14:01Z&interval=hourly</code>, the response includes data ending at 2020-09-05T04:00:00Z.",
             "required": true
           },
           {
@@ -2702,129 +2520,9 @@
             },
             "name": "interval",
             "required": true,
-            "description": "The granularity of returned data. Raw report data is generated per 1 minute. The data is aggregated to give reports of different granularities. The aggregation method is “sum” for the metrics \"inboundTraffic\", and \"outboundTraffic\". For all other metrics, the aggregation method is \"average\".",
+            "description": "The granularity of returned data. In the backend, raw data is reported every minute. The data is then aggregated to give reports of different granularities. The aggregation method is “sum” for those network i/o metrics, and \"average\" for all other metrics. Note that \"oneminute\" interval is available only when the timespan is not longer than 7 days and that \"fiveminutes\" interval is available only when the timespan is not longer than 31 days.",
             "in": "query"
           },
-          {
-            "name": "On-Behalf-Of",
-            "in": "header",
-            "description": "If you are a reseller, you can use this header to specify the ID of a child customer and make API call on their behalf.",
-            "required": false,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ]
-      }
-    },
-    "/ecp/v1/resourcequota/{quotaname}": {
-      "parameters": [
-        {
-          "schema": {
-            "type": "string",
-            "enum": [
-              "cpu",
-              "mem",
-              "ip",
-              "local-ssd",
-              "persist-ssd"
-            ]
-          },
-          "name": "quotaname",
-          "in": "path",
-          "required": true,
-          "description": "Name of a compute, storage or network resource quota.\n\nQuota | Description\n--- | ---\ncpu | Quota on the maximum amount of CPU cores that can be requested \nmem | Quota on the maximum amount of memory that can be requested\nip | Quota on the maximum number of public IPv4 addresses that can be requested\nlocal-ssd | Quota on the maximum capacity of local storage that can be requested\npersist-ssd | Quota on the maximum capacity of remote storage that can be requested\n"
-        }
-      ],
-      "get": {
-        "summary": "Get resource quota consumption",
-        "tags": [
-          "Reports"
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "available": {
-                      "type": "number",
-                      "description": "Amount of balance resource quota"
-                    },
-                    "used": {
-                      "type": "number",
-                      "description": "Amount of resource quota that has been consumed"
-                    }
-                  }
-                },
-                "examples": {
-                  "CPU quota": {
-                    "value": {
-                      "available": 78,
-                      "used": 32
-                    }
-                  }
-                }
-              }
-            },
-            "headers": {
-              "Qtl-Request-Id": {
-                "name": "Qtl-Request-Id",
-                "in": "header",
-                "description": "A string automatically generated by the api server to identify each request.",
-                "required": false,
-                "schema": {
-                  "type": "string"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not Found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "title": "InvalidQuota",
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string",
-                      "description": "InvalidQuota"
-                    },
-                    "message": {
-                      "type": "string",
-                      "description": "The quota name given is invalid."
-                    }
-                  }
-                },
-                "examples": {
-                  "example-1": {
-                    "value": {
-                      "error": "InvalidQuota",
-                      "message": "The quota name given is invalid."
-                    }
-                  }
-                }
-              }
-            },
-            "headers": {
-              "Qtl-Request-Id": {
-                "name": "Qtl-Request-Id",
-                "in": "header",
-                "description": "A string automatically generated by the api server to identify each request.",
-                "required": false,
-                "schema": {
-                  "type": "string"
-                }
-              }
-            }
-          }
-        },
-        "operationId": "get-resourcequota",
-        "description": "Query the amount of quotas on compute, storage and network resources available to your ECP account.",
-        "parameters": [
           {
             "name": "On-Behalf-Of",
             "in": "header",
@@ -2860,73 +2558,73 @@
               "ipCount"
             ]
           },
-          "description": "Usage metric on compute, storage and network resources.\n\nMetric | Description | Measured in\n--- | --- | --- \ninboundTraffic | amount of data transmitted to ECP during a time period | byte\ninboundBandwidth | rate of data transfer to ECP during a time period | bps\noutboundTraffic | amount of data transmitted from ECP during a time period | byte\noutboundBandwidth | rate of data transfer from ECP during a time period | bps\ntotalTraffic | amount of data transmitted to and from ECP during a time period | byte\ntotalBandwidth | rate of data transfer to and from ECP during a time period | bps\nvcpu | amount of CPU cores allocated and available during a time period | core\nmem | amount of memory allocated and available during a time peirod | byte\nlocal-ssd | amount of local storage capacity allocated and available during a time period | byte\npersist-ssd | amount of remote storage capacity allocated and available during a time period | byte\npodCount | number of kubernetes pods existing and maintained for your application(s) during a time period | ea\nipCount | number of public IPv4 addresses allocated and available during a time period | ea\n"
+          "description": "Usage metric on compute, storage and network resources.\n\nMetric | Description | Measured in\n--- | --- | --- \ninboundTraffic | Amount of data transmitted to ECP during a time period | byte\ninboundBandwidth | Rate of data transfer to ECP during a time period | bps\noutboundTraffic | Amount of data transmitted from ECP during a time period | byte\noutboundBandwidth | Rate of data transfer from ECP during a time period | bps\ntotalTraffic | Amount of data transmitted to and from ECP during a time period | byte\ntotalBandwidth | Rate of data transfer to and from ECP during a time period | bps\nvcpu | Amount of CPU cores allocated for your application instances during a time period | core\nmem | Amount of memory allocated for your application instances during a time peirod | byte\nlocal-ssd | Amount of local SSD storage capacity allocated for your application instances during a time period | byte\npersist-ssd | Amount of remote SSD storage capacity allocated for your application instances during a time period | byte\npodCount | Number of your application instances (i.e. Kubernetes pods) existing during a time period | ea\nipCount | Number of public IPv4 addresses allocated for your applications during a time period. This includes addresses allocated for both application instances and ECP LoadBalancer4s, if any. | ea\n"
         },
         {
           "schema": {
             "type": "string"
           },
           "name": "pop",
-          "description": "Code of an ECP PoP",
+          "description": "Code of an ECP location",
           "in": "path",
           "required": true
         }
       ],
       "get": {
-        "summary": "Get resources usage at a PoP",
+        "summary": "Get resource usage at a specific ECP location",
         "tags": [
           "Reports"
         ],
         "responses": {
           "200": {
-            "description": "OK",
+            "description": "This response returns report data. Note that it is always in UTC time.",
             "content": {
               "application/json": {
                 "schema": {
                   "title": "",
+                  "type": "object",
                   "properties": {
                     "data": {
                       "type": "array",
-                      "description": "array of time serialized metric values",
+                      "description": "Array of time serialized metric values",
                       "items": {
                         "type": "object",
                         "properties": {
                           "timestamp": {
                             "type": "string",
-                            "description": "timestamp"
+                            "description": "An RFC 3339 format date representing the beginning of a time interval. It is always in UTC time."
                           },
                           "value": {
                             "type": "number",
-                            "description": "metric value"
+                            "description": "A value at that timestamp"
                           }
                         }
                       }
                     }
-                  },
-                  "type": "object"
+                  }
                 },
                 "examples": {
                   "traffic report at 5 minute interval": {
                     "value": {
                       "data": [
                         {
-                          "timestamp": "2019-10-02T15:00:00Z",
+                          "timestamp": "2020-10-02T15:00:00Z",
                           "value": 216326
                         },
                         {
-                          "timestamp": "2019-10-02T15:05:00Z",
+                          "timestamp": "2020-10-02T15:05:00Z",
                           "value": 214326
                         },
                         {
-                          "timestamp": "2019-10-02T15:10:00Z",
+                          "timestamp": "2020-10-02T15:10:00Z",
                           "value": 216226
                         },
                         {
-                          "timestamp": "2019-10-02T15:15:00Z",
+                          "timestamp": "2020-10-02T15:15:00Z",
                           "value": 212126
                         },
                         {
-                          "timestamp": "2019-10-02T15:20:00Z",
+                          "timestamp": "2020-10-02T15:20:00Z",
                           "value": 215326
                         }
                       ]
@@ -2948,74 +2646,60 @@
             }
           },
           "400": {
-            "description": "Bad Request",
+            "description": "The request is invalid. Refer to response body for details.",
             "content": {
               "application/json": {
                 "schema": {
-                  "oneOf": [
-                    {
-                      "title": "InvalidDateFormat",
-                      "type": "object",
-                      "properties": {
-                        "error": {
-                          "type": "string",
-                          "description": "InvalidDateFormat"
-                        },
-                        "message": {
-                          "type": "string",
-                          "description": "Invalid parameter {startTime / endTime}. {startTime/endTime} is not a valid RFC3339 timestamp. The timestamp should be in \"yyyy-MM-dd'T'HH:mm:ss'Z'\" format."
-                        }
-                      }
+                  "title": "",
+                  "type": "object",
+                  "description": "A standard error object.",
+                  "x-tags": [
+                    "Common"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "string"
                     },
-                    {
-                      "title": "InvalidRange",
-                      "type": "object",
-                      "properties": {
-                        "error": {
-                          "type": "string",
-                          "description": "InvalidRange"
-                        },
-                        "message": {
-                          "type": "string",
-                          "description": "One of: \"The max time span of {interval} report must be no more than {xxx days}.\" \"The parameter 'startTime' cannot be a time in the future.\" \"The parameter 'endTime' should be after 'startTime'.\""
-                        }
-                      }
-                    },
-                    {
-                      "title": "InvalidInterval",
-                      "type": "object",
-                      "properties": {
-                        "error": {
-                          "type": "string",
-                          "description": "InvalidInterval"
-                        },
-                        "message": {
-                          "type": "string",
-                          "description": "The interval requested is invalid."
-                        }
-                      }
-                    },
-                    {
-                      "title": "InvalidReportRange",
-                      "type": "object",
-                      "properties": {
-                        "error": {
-                          "type": "string",
-                          "description": "InvalidReportRange"
-                        },
-                        "message": {
-                          "type": "string",
-                          "description": "A valid report range shall be “self-only”, “children-only”, or “self+children”."
-                        }
-                      }
+                    "message": {
+                      "type": "string"
                     }
-                  ]
+                  }
                 },
                 "examples": {
-                  "example-1": {
+                  "InvalidDateFormat": {
                     "value": {
                       "error": "InvalidDateFormat",
-                      "message": "The format of startTime or endTime is invalid."
+                      "message": "Invalid parameter {startTime | endTime}. {startTime | endTime} is not a valid RFC3339 timestamp. The timestamp should be in \"yyyy-MM-dd'T'HH:mm:ss'Z'\" format."
+                    }
+                  },
+                  "InvalidRange": {
+                    "value": {
+                      "error": "InvalidRange",
+                      "message": "The max time span of {interval} report must be no more than {xxx days}."
+                    }
+                  },
+                  "InvalidRange(1)": {
+                    "value": {
+                      "error": "InvalidRange",
+                      "message": "The parameter 'startTime' cannot be a time in the future."
+                    }
+                  },
+                  "InvalidRange(2)": {
+                    "value": {
+                      "error": "InvalidRange",
+                      "message": "The parameter 'endTime' should be after 'startTime'."
+                    }
+                  },
+                  "InvalidInterval": {
+                    "value": {
+                      "error": "InvalidInterval",
+                      "message": "The interval requested is invalid."
+                    }
+                  },
+                  "InvalidReportRange": {
+                    "value": {
+                      "error": "InvalidReportRange",
+                      "message": "A valid report range shall be “self-only”, “children-only”, or “self+children”."
                     }
                   }
                 }
@@ -3038,42 +2722,32 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "oneOf": [
-                    {
-                      "title": "InvalidMetric",
-                      "type": "object",
-                      "properties": {
-                        "error": {
-                          "type": "string",
-                          "description": "InvalidMetric"
-                        },
-                        "message": {
-                          "type": "string",
-                          "description": "The metric given is invalid."
-                        }
-                      }
+                  "title": "",
+                  "type": "object",
+                  "description": "A standard error object.",
+                  "x-tags": [
+                    "Common"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "string"
                     },
-                    {
-                      "title": "PoPNotExist",
-                      "type": "object",
-                      "properties": {
-                        "error": {
-                          "type": "string",
-                          "description": "PoPNotExist"
-                        },
-                        "message": {
-                          "type": "string",
-                          "description": "The PoP given is invalid or does not exist."
-                        }
-                      }
+                    "message": {
+                      "type": "string"
                     }
-                  ]
+                  }
                 },
                 "examples": {
-                  "example-1": {
+                  "InvalidMetric": {
                     "value": {
                       "error": "InvalidMetric",
                       "message": "The metric given is invalid."
+                    }
+                  },
+                  "PoPNotExist": {
+                    "value": {
+                      "error": "PoPNotExist",
+                      "message": "The PoP given is invalid or does not exist."
                     }
                   }
                 }
@@ -3093,7 +2767,7 @@
           }
         },
         "operationId": "get-reports-for-a-pop",
-        "description": "Get reports on resources usage at a specific PoP",
+        "description": "Get report of resource usage at a specific ECP location. Use the \"metric\" parameter to specify a metric and retrieve usage reports related to compute, storage or network.",
         "parameters": [
           {
             "schema": {
@@ -3106,13 +2780,13 @@
               ]
             },
             "name": "Report-Range",
-            "description": "An optional header that resellers can use to specify whether to include data from children customers.",
+            "description": "An optional header that resellers can use to specify whether to include report data from children customers.",
             "in": "header"
           },
           {
             "in": "query",
             "name": "startTime",
-            "description": "RFC 3339 date indicating the beginning of a time period. Example: <code>startTime=2019-10-30T00:00:00Z</code>. Your startTime may be rounded down to the nearest minute, hour, or day depending on the interval parameter. For example, if you enter <code>startTime=2019-09-05T03:14:01Z&interval=hourly</code>, the response includes data beginning at 2019-09-05T03:00:00Z.",
+            "description": "RFC 3339 date indicating the beginning of a time period. Example: <code>startTime=2020-10-30T00:00:00Z</code>. The time must be specified using the UTC timezone. Your startTime may be rounded down to the nearest minute, hour, or day depending on the \"interval\" parameter. For example, if you pass <code>startTime=2020-09-05T03:14:01Z&interval=hourly</code>, the response includes data beginning at 2020-09-05T03:00:00Z.",
             "required": true,
             "schema": {
               "type": "string"
@@ -3124,7 +2798,7 @@
             },
             "in": "query",
             "name": "endTime",
-            "description": "RFC 3339 date indicating the end of a time period. Example: <code>endTime=2019-11-14T00:00:00Z</code> Your endTime may be rounded up to the nearest minute, hour, or day depending on the interval parameter. For example, if you enter <code>endTime=2019-09-05T03:14:01Z&interval=hourly</code>, the response includes data ending at 2019-09-05T04:00:00Z.",
+            "description": "RFC 3339 date indicating the end of a time period. Example: <code>endTime=2020-11-14T00:00:00Z</code> The time must be specified using the UTC timezone. Your endTime may be rounded up to the nearest minute, hour, or day depending on the \"interval\" parameter. For example, if you pass <code>endTime=2020-09-05T03:14:01Z&interval=hourly</code>, the response includes data ending at 2020-09-05T04:00:00Z.",
             "required": true
           },
           {
@@ -3140,7 +2814,7 @@
             },
             "name": "interval",
             "required": true,
-            "description": "The granularity of returned data. Raw report data is generated per 1 minute. The data is aggregated to give reports of different granularities. The aggregation method is “sum” for the metrics \"inboundTraffic\", \"outboundTraffic\" and \"totalTraffic\". For all other metrics, the aggregation method is \"average\". \n\n\"oneminute\" interval is supported only when the timespan is not longer than 7 days. \"fiveminutes\" interval is supported only when the timespan is not longer than 31 days.",
+            "description": "The granularity of returned data. In the backend, raw data is reported every minute. The data is then aggregated to give reports of different granularities. The aggregation method is “sum” for those network i/o metrics, and \"average\" for all other metrics. Note that \"oneminute\" interval is available only when the timespan is not longer than 7 days and that \"fiveminutes\" interval is available only when the timespan is not longer than 31 days.",
             "in": "query"
           },
           {
@@ -3153,6 +2827,552 @@
             }
           }
         ]
+      }
+    },
+    "/ecp/v1/metrics/{metric}/applications/{applicationID}/instances/{instanceID}": {
+      "parameters": [
+        {
+          "name": "metric",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "enum": [
+              "inboundTraffic",
+              "inboundBandwidth",
+              "outboundTraffic",
+              "outboundBandwidth",
+              "cpuUsage",
+              "memUsage",
+              "diskUsage"
+            ]
+          },
+          "description": "Usage metric on compute, storage and network resources.\n\nMetric | Description | Measured in\n--- | --- | ---\ninboundTraffic | Amount of data transmitted to an application instance during a time period | byte\ninboundBandwidth | Rate of data transfer to an application instance during a time period | bps\noutboundTraffic | Amount of data transmitted from an application instance during a time period | byte\noutboundBandwidth | Rate of data transfer from an application instance during a time period | bps\ncpuUsage | Amount of CPU cores utilized by processes running in an application instance during a time period | core\nmemUsage | Amount of memory utilized by processes running in an application instance during a time period | byte\ndiskUsage | Disk utilization rate. Here \"disk\" could mean the container rootFS and any data volume attached to an application instance. | --\n"
+        },
+        {
+          "name": "applicationID",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "description": "ID of an ECP application"
+        },
+        {
+          "name": "instanceID",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "description": "ID of an application instance"
+        }
+      ],
+      "get": {
+        "summary": "Get resource usage for a specific application instance",
+        "tags": [
+          "Reports"
+        ],
+        "responses": {
+          "200": {
+            "description": "This response returns report data. Note that it is always in UTC time.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "title": "CPU/memory/traffic report",
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "type": "array",
+                          "description": "Array of time serialized metric values. This schema is used when the metric param is of a value other than 'diskUsage'.",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "timestamp": {
+                                "type": "string",
+                                "description": "An RFC 3339 format date representing the beginning of a time interval. It is always in UTC time."
+                              },
+                              "value": {
+                                "type": "number",
+                                "description": "A value at that timestamp"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "title": "Disk utilization report",
+                      "type": "object",
+                      "description": "",
+                      "properties": {
+                        "data": {
+                          "type": "array",
+                          "description": "Array of time serialized metric values. This schema is used when the metric param is of the value 'diskUsage'.",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "timestamp": {
+                                "type": "string",
+                                "description": "An RFC 3339 format date representing the beginning of a time interval. It is always in UTC time."
+                              },
+                              "volumes": {
+                                "type": "array",
+                                "description": "Array of volumes for an application instance, including container rootFS and data volumes (if any).",
+                                "items": {
+                                  "type": "object",
+                                  "properties": {
+                                    "volume": {
+                                      "type": "string",
+                                      "description": "Name of a volume. \"Root_{containername}\" means the RootFS of {containername}. \"PVC_{PVCname}\" means a data volume which is backed by a PVC (persistentVolumeClaim)."
+                                    },
+                                    "value": {
+                                      "type": "number",
+                                      "description": "Disk utilization rate, e.g. \"0.2\" means 20% of disk capacity is used."
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ],
+                  "description": "There are 2 response schemas. The schema for \"diskUsage\" metric is different from the schema for all other metrics."
+                },
+                "examples": {
+                  "cpuUsage": {
+                    "value": {
+                      "data": [
+                        {
+                          "timestamp": "2020-10-02T15:00:00Z",
+                          "value": 1.3
+                        },
+                        {
+                          "timestamp": "2020-10-02T15:05:00Z",
+                          "value": 1.2
+                        },
+                        {
+                          "timestamp": "2020-10-02T15:10:00Z",
+                          "value": 1.5
+                        },
+                        {
+                          "timestamp": "2020-10-02T15:15:00Z",
+                          "value": 1.3
+                        },
+                        {
+                          "timestamp": "2020-10-02T15:20:00Z",
+                          "value": 1.2
+                        }
+                      ]
+                    }
+                  },
+                  "diskUsage": {
+                    "value": {
+                      "data": [
+                        {
+                          "timestamp": "2020-10-02T15:00:00Z",
+                          "volumes": [
+                            {
+                              "volume": "Root_container1",
+                              "value": 0.22
+                            },
+                            {
+                              "volume": "Root_container2",
+                              "value": 0.36
+                            },
+                            {
+                              "volume": "PVC_data",
+                              "value": 0.27
+                            }
+                          ]
+                        },
+                        {
+                          "timestamp": "2020-10-02T15:05:00Z",
+                          "volumes": [
+                            {
+                              "volume": "Root_container1",
+                              "value": 0.22
+                            },
+                            {
+                              "volume": "Root_container2",
+                              "value": 0.16
+                            },
+                            {
+                              "volume": "PVC_data",
+                              "value": 0.27
+                            }
+                          ]
+                        },
+                        {
+                          "timestamp": "2020-10-02T15:10:00Z",
+                          "volumes": [
+                            {
+                              "volume": "Root_container1",
+                              "value": 0.22
+                            },
+                            {
+                              "volume": "Root_container2",
+                              "value": 0.22
+                            },
+                            {
+                              "volume": "PVC_data",
+                              "value": 0.28
+                            }
+                          ]
+                        },
+                        {
+                          "timestamp": "2020-10-02T15:15:00Z",
+                          "volumes": [
+                            {
+                              "volume": "Root_container1",
+                              "value": 0.22
+                            },
+                            {
+                              "volume": "Root_container2",
+                              "value": 0.36
+                            },
+                            {
+                              "volume": "PVC_data",
+                              "value": 0.27
+                            }
+                          ]
+                        },
+                        {
+                          "timestamp": "2020-10-02T15:20:00Z",
+                          "volumes": [
+                            {
+                              "volume": "Root_container1",
+                              "value": 0.22
+                            },
+                            {
+                              "volume": "Root_container2",
+                              "value": 0.16
+                            },
+                            {
+                              "volume": "PVC_data",
+                              "value": 0.26
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            },
+            "headers": {
+              "Qtl-Request-Id": {
+                "name": "Qtl-Request-Id",
+                "in": "header",
+                "description": "A string automatically generated by the api server to identify each request.",
+                "required": false,
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The request is invalid. Refer to response body for details.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "",
+                  "type": "object",
+                  "description": "A standard error object.",
+                  "x-tags": [
+                    "Common"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "examples": {
+                  "InvalidDateFormat": {
+                    "value": {
+                      "error": "InvalidDateFormat",
+                      "message": "Invalid parameter {startTime | endTime}. {startTime | endTime} is not a valid RFC3339 timestamp. The timestamp should be in \"yyyy-MM-dd'T'HH:mm:ss'Z'\" format."
+                    }
+                  },
+                  "InvalidRange": {
+                    "value": {
+                      "error": "InvalidRange",
+                      "message": "The max time span of {interval} report must be no more than {xxx days}."
+                    }
+                  },
+                  "InvalidRange(1)": {
+                    "value": {
+                      "error": "InvalidRange",
+                      "message": "The parameter 'startTime' cannot be a time in the future."
+                    }
+                  },
+                  "InvalidRange(2)": {
+                    "value": {
+                      "error": "InvalidRange",
+                      "message": "The parameter 'endTime' should be after 'startTime'."
+                    }
+                  },
+                  "InvalidInterval": {
+                    "value": {
+                      "error": "InvalidInterval",
+                      "message": "The interval requested is invalid."
+                    }
+                  },
+                  "InvalidReportRange": {
+                    "value": {
+                      "error": "InvalidReportRange",
+                      "message": "A valid report range shall be “self-only”, “children-only”, or “self+children”."
+                    }
+                  }
+                }
+              }
+            },
+            "headers": {
+              "Qtl-Request-Id": {
+                "name": "Qtl-Request-Id",
+                "in": "header",
+                "description": "A string automatically generated by the api server to identify each request.",
+                "required": false,
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "",
+                  "type": "object",
+                  "description": "A standard error object.",
+                  "x-tags": [
+                    "Common"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "examples": {
+                  "InvalidMetric": {
+                    "value": {
+                      "error": "InvalidMetric",
+                      "message": "The metric given is invalid."
+                    }
+                  },
+                  "ApplicationNotFound": {
+                    "value": {
+                      "error": "ApplicationNotFound",
+                      "message": "The application ID given does not exist."
+                    }
+                  },
+                  "InstanceNotFound": {
+                    "value": {
+                      "error": "InstanceNotFound",
+                      "message": "The instance specified does not exist, or is not an instance of the given application."
+                    }
+                  }
+                }
+              }
+            },
+            "headers": {
+              "Qtl-Request-Id": {
+                "name": "Qtl-Request-Id",
+                "in": "header",
+                "description": "A string automatically generated by the api server to identify each request.",
+                "required": false,
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-reports-for-an-instance",
+        "description": "Get report of actual resource usage by a specific application instance (i.e. Kubernetes pod). Use the \"metric\" parameter to specify a metric and retrieve reports related to netowrk i/o or cpu/memory/disks utilization.",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "startTime",
+            "description": "RFC 3339 date indicating the beginning of a time period. Example: <code>startTime=2020-10-30T00:00:00Z</code>. The time must be specified using the UTC timezone. Your startTime may be rounded down to the nearest minute, hour, or day depending on the \"interval\" parameter. For example, if you pass <code>startTime=2020-09-05T03:14:01Z&interval=hourly</code>, the response includes data beginning at 2020-09-05T03:00:00Z.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "endTime",
+            "description": "RFC 3339 date indicating the end of a time period. Example: <code>endTime=2020-11-14T00:00:00Z</code> The time must be specified using the UTC timezone. Your endTime may be rounded up to the nearest minute, hour, or day depending on the \"interval\" parameter. For example, if you pass <code>endTime=2020-09-05T03:14:01Z&interval=hourly</code>, the response includes data ending at 2020-09-05T04:00:00Z.",
+            "required": true
+          },
+          {
+            "schema": {
+              "type": "string",
+              "enum": [
+                "oneminute",
+                "fiveminutes",
+                "hourly",
+                "daily",
+                "monthly"
+              ]
+            },
+            "name": "interval",
+            "required": true,
+            "description": "The granularity of returned data. In the backend, raw data is reported every minute. The data is then aggregated to give reports of different granularities. The aggregation method is “sum” for those network i/o metrics, and \"average\" for all other metrics. Note that \"oneminute\" interval is available only when the timespan is not longer than 7 days and that \"fiveminutes\" interval is available only when the timespan is not longer than 31 days.",
+            "in": "query"
+          },
+          {
+            "name": "On-Behalf-Of",
+            "in": "header",
+            "description": "If you are a reseller, you can use this header to specify the ID of a child customer and make API call on their behalf.",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    },
+    "/ecp/v1/resourcequota/{resourcequota}": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "string",
+            "enum": [
+              "cpu",
+              "mem",
+              "ip",
+              "local-ssd",
+              "persist-ssd"
+            ]
+          },
+          "name": "resourcequota",
+          "in": "path",
+          "required": true,
+          "description": "Name of a resource quota.\n\nQuota | Description | Measured in\n--- | --- | ---\ncpu | Quota on the maximum amount of CPU cores that can be requested | core\nmem | Quota on the maximum amount of memory that can be requested | byte\nip | Quota on the maximum number of public IPv4 addresses that can be requested | ea\nlocal-ssd | Quota on the maximum capacity of local SSD storage that can be requested | byte\npersist-ssd | Quota on the maximum capacity of remote SSD storage that can be requested | byte\n"
+        }
+      ],
+      "get": {
+        "summary": "Get report on resource quota consumption",
+        "tags": [
+          "Reports"
+        ],
+        "responses": {
+          "200": {
+            "description": "This response returns report data.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "available": {
+                      "type": "number",
+                      "description": "Amount of balance resource quota"
+                    },
+                    "used": {
+                      "type": "number",
+                      "description": "Amount of resource quota that has been consumed"
+                    }
+                  }
+                },
+                "examples": {
+                  "CPU resource quota": {
+                    "value": {
+                      "available": 78,
+                      "used": 32
+                    }
+                  }
+                }
+              }
+            },
+            "headers": {
+              "Qtl-Request-Id": {
+                "name": "Qtl-Request-Id",
+                "in": "header",
+                "description": "A string automatically generated by the api server to identify each request.",
+                "required": false,
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "",
+                  "type": "object",
+                  "description": "A standard error object.",
+                  "x-tags": [
+                    "Common"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "examples": {
+                  "example-1": {
+                    "value": {
+                      "error": "InvalidQuota",
+                      "message": "The quota name given is invalid."
+                    }
+                  }
+                }
+              }
+            },
+            "headers": {
+              "Qtl-Request-Id": {
+                "name": "Qtl-Request-Id",
+                "in": "header",
+                "description": "A string automatically generated by the api server to identify each request.",
+                "required": false,
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-resourcequota",
+        "description": "Get report on resource quota consumption. Use the \"resourcequota\" parameter to specify a resource quota and check how your compute, storage or network resource quotas have been consumed.",
+        "parameters": [
+          {
+            "name": "On-Behalf-Of",
+            "in": "header",
+            "description": "If you are a reseller, you can use this header to specify the ID of a child customer and make API call on their behalf.",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "deprecated": true
       }
     },
     "/ecp/v1/regions": {
@@ -3302,7 +3522,7 @@
             "schema": {
               "type": "integer",
               "minimum": 0,
-              "default": "0"
+              "default": 0
             }
           },
           {
@@ -3312,7 +3532,7 @@
             "required": false,
             "schema": {
               "type": "integer",
-              "default": "100",
+              "default": 100,
               "maximum": 200,
               "minimum": 0
             }
@@ -3581,7 +3801,10 @@
           {
             "in": "query",
             "name": "searchString",
-            "description": "Keywords to search for particular resources. The value is matched against the code and description of a PoP."
+            "description": "Keywords to search for particular resources. The value is matched against the code and description of a PoP.",
+            "schema": {
+              "type": "string"
+            }
           },
           {
             "schema": {
@@ -3640,7 +3863,7 @@
             "schema": {
               "type": "integer",
               "minimum": 0,
-              "default": "0"
+              "default": 0
             }
           },
           {
@@ -3650,7 +3873,7 @@
             "required": false,
             "schema": {
               "type": "integer",
-              "default": "100",
+              "default": 100,
               "maximum": 200,
               "minimum": 0
             }
@@ -3922,7 +4145,7 @@
             "schema": {
               "type": "integer",
               "minimum": 0,
-              "default": "0"
+              "default": 0
             }
           },
           {
@@ -3932,7 +4155,7 @@
             "required": false,
             "schema": {
               "type": "integer",
-              "default": "100",
+              "default": 100,
               "maximum": 200,
               "minimum": 1
             }
@@ -8109,7 +8332,7 @@
             "schema": {
               "type": "integer",
               "minimum": 0,
-              "default": "0"
+              "default": 0
             }
           },
           {
@@ -8119,7 +8342,7 @@
             "required": false,
             "schema": {
               "type": "integer",
-              "default": "100",
+              "default": 100,
               "maximum": 200,
               "minimum": 1
             }
@@ -8415,7 +8638,7 @@
             "schema": {
               "type": "integer",
               "minimum": 0,
-              "default": "0"
+              "default": 0
             }
           },
           {
@@ -8425,7 +8648,7 @@
             "required": false,
             "schema": {
               "type": "integer",
-              "default": "100",
+              "default": 100,
               "maximum": 200,
               "minimum": 1
             }
@@ -8698,7 +8921,7 @@
             "schema": {
               "type": "integer",
               "minimum": 0,
-              "default": "0"
+              "default": 0
             }
           },
           {
@@ -8708,7 +8931,7 @@
             "required": false,
             "schema": {
               "type": "integer",
-              "default": "100",
+              "default": 100,
               "maximum": 200,
               "minimum": 0
             }
@@ -9152,329 +9375,6 @@
         ]
       }
     },
-    "/ecp/v1/metrics/{metric}/servicezones/{servicezone}": {
-      "parameters": [
-        {
-          "name": "metric",
-          "in": "path",
-          "required": true,
-          "schema": {
-            "type": "string",
-            "enum": [
-              "inboundTraffic",
-              "inboundBandwidth",
-              "outboundTraffic",
-              "outboundBandwidth",
-              "totalTraffic",
-              "totalBandwidth",
-              "podCount",
-              "vcpu",
-              "mem",
-              "local-ssd",
-              "persist-ssd",
-              "ipCount"
-            ]
-          },
-          "description": "Usage metric on compute, storage and network resources.\n\nMetric | Description | Measured in\n--- | --- | --- \ninboundTraffic | amount of data transmitted to ECP during a time period | byte\ninboundBandwidth | rate of data transfer to ECP during a time period | bps\noutboundTraffic | amount of data transmitted from ECP during a time period | byte\noutboundBandwidth | rate of data transfer from ECP during a time period | bps\ntotalTraffic | amount of data transmitted to and from ECP during a time period | byte\ntotalBandwidth | rate of data transfer to and from ECP during a time period | bps\nvcpu | amount of CPU cores allocated and available during a time period | core\nmem | amount of memory allocated and available during a time peirod | byte\nlocal-ssd | amount of local storage capacity allocated and available during a time period | byte\npersist-ssd | amount of remote storage capacity allocated and available during a time period | byte\npodCount | number of kubernetes pods existing and maintained for your application(s) during a time period | ea\nipCount | number of public IPv4 addresses allocated and available during a time period | ea\n"
-        },
-        {
-          "schema": {
-            "type": "string",
-            "enum": [
-              "business",
-              "standard",
-              "premium"
-            ]
-          },
-          "name": "servicezone",
-          "description": "Code of an ECP service zone",
-          "in": "path",
-          "required": true
-        }
-      ],
-      "get": {
-        "summary": "Get resources usage in a service zone",
-        "tags": [
-          "Reports"
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "title": "",
-                  "properties": {
-                    "data": {
-                      "type": "array",
-                      "description": "array of time serialized metric values",
-                      "items": {
-                        "type": "object",
-                        "properties": {
-                          "timestamp": {
-                            "type": "string",
-                            "description": "timestamp"
-                          },
-                          "value": {
-                            "type": "number",
-                            "description": "metric value"
-                          }
-                        }
-                      }
-                    }
-                  },
-                  "type": "object"
-                },
-                "examples": {
-                  "traffic report at 5 minute interval": {
-                    "value": {
-                      "data": [
-                        {
-                          "timestamp": "2019-10-02T15:00:00Z",
-                          "value": 216326
-                        },
-                        {
-                          "timestamp": "2019-10-02T15:05:00Z",
-                          "value": 214326
-                        },
-                        {
-                          "timestamp": "2019-10-02T15:10:00Z",
-                          "value": 216226
-                        },
-                        {
-                          "timestamp": "2019-10-02T15:15:00Z",
-                          "value": 212126
-                        },
-                        {
-                          "timestamp": "2019-10-02T15:20:00Z",
-                          "value": 215326
-                        }
-                      ]
-                    }
-                  }
-                }
-              }
-            },
-            "headers": {
-              "Qtl-Request-Id": {
-                "name": "Qtl-Request-Id",
-                "in": "header",
-                "description": "A string automatically generated by the api server to identify each request.",
-                "required": false,
-                "schema": {
-                  "type": "string"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad Request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "oneOf": [
-                    {
-                      "title": "InvalidDateFormat",
-                      "type": "object",
-                      "properties": {
-                        "error": {
-                          "type": "string",
-                          "description": "InvalidDateFormat"
-                        },
-                        "message": {
-                          "type": "string",
-                          "description": "Invalid parameter {startTime / endTime}. {startTime/endTime} is not a valid RFC3339 timestamp. The timestamp should be in \"yyyy-MM-dd'T'HH:mm:ss'Z'\" format."
-                        }
-                      }
-                    },
-                    {
-                      "title": "InvalidRange",
-                      "type": "object",
-                      "properties": {
-                        "error": {
-                          "type": "string",
-                          "description": "InvalidRange"
-                        },
-                        "message": {
-                          "type": "string",
-                          "description": "One of: \"The max time span of {interval} report must be no more than {xxx days}.\" \"The parameter 'startTime' cannot be a time in the future.\" \"The parameter 'endTime' should be after 'startTime'.\""
-                        }
-                      }
-                    },
-                    {
-                      "title": "InvalidInterval",
-                      "type": "object",
-                      "properties": {
-                        "error": {
-                          "type": "string",
-                          "description": "InvalidInterval"
-                        },
-                        "message": {
-                          "type": "string",
-                          "description": "The interval requested is invalid."
-                        }
-                      }
-                    },
-                    {
-                      "title": "InvalidReportRange",
-                      "type": "object",
-                      "properties": {
-                        "error": {
-                          "type": "string",
-                          "description": "InvalidReportRange"
-                        },
-                        "message": {
-                          "type": "string",
-                          "description": "A valid report range shall be “self-only”, “children-only”, or “self+children”."
-                        }
-                      }
-                    }
-                  ]
-                },
-                "examples": {
-                  "example-1": {
-                    "value": {
-                      "error": "InvalidDateFormat",
-                      "message": "The format of startTime or endTime is invalid."
-                    }
-                  }
-                }
-              }
-            },
-            "headers": {
-              "Qtl-Request-Id": {
-                "name": "Qtl-Request-Id",
-                "in": "header",
-                "description": "A string automatically generated by the api server to identify each request.",
-                "required": false,
-                "schema": {
-                  "type": "string"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not Found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "oneOf": [
-                    {
-                      "title": "InvalidMetric",
-                      "type": "object",
-                      "properties": {
-                        "error": {
-                          "type": "string",
-                          "description": "InvalidMetric"
-                        },
-                        "message": {
-                          "type": "string",
-                          "description": "The metric given is invalid."
-                        }
-                      }
-                    },
-                    {
-                      "title": "ServiceZoneNotExist",
-                      "type": "object",
-                      "properties": {
-                        "error": {
-                          "type": "string",
-                          "description": "ServiceZoneNotExist"
-                        },
-                        "message": {
-                          "type": "string",
-                          "description": "The serviceZone given is invalid or does not exist."
-                        }
-                      }
-                    }
-                  ]
-                },
-                "examples": {
-                  "example-1": {
-                    "value": {
-                      "error": "InvalidMetric",
-                      "message": "The metric given is invalid."
-                    }
-                  }
-                }
-              }
-            },
-            "headers": {
-              "Qtl-Request-Id": {
-                "name": "Qtl-Request-Id",
-                "in": "header",
-                "description": "A string automatically generated by the api server to identify each request.",
-                "required": false,
-                "schema": {
-                  "type": "string"
-                }
-              }
-            }
-          }
-        },
-        "operationId": "get-reports-for-a-service-zone",
-        "description": "Get reports on resources usage in a specific service zone",
-        "parameters": [
-          {
-            "schema": {
-              "type": "string",
-              "default": "self-only",
-              "enum": [
-                "self-only",
-                "children-only",
-                "self+children"
-              ]
-            },
-            "name": "Report-Range",
-            "description": "An optional header that resellers can use to specify whether to include data from children customers.",
-            "in": "header"
-          },
-          {
-            "in": "query",
-            "name": "startTime",
-            "description": "RFC 3339 date indicating the beginning of a time period. Example: <code>startTime=2019-10-30T00:00:00Z</code>. Your startTime may be rounded down to the nearest minute, hour, or day depending on the interval parameter. For example, if you enter <code>startTime=2019-09-05T03:14:01Z&interval=hourly</code>, the response includes data beginning at 2019-09-05T03:00:00Z.",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "schema": {
-              "type": "string"
-            },
-            "in": "query",
-            "name": "endTime",
-            "description": "RFC 3339 date indicating the end of a time period. Example: <code>endTime=2019-11-14T00:00:00Z</code> Your endTime may be rounded up to the nearest minute, hour, or day depending on the interval parameter. For example, if you enter <code>endTime=2019-09-05T03:14:01Z&interval=hourly</code>, the response includes data ending at 2019-09-05T04:00:00Z.",
-            "required": true
-          },
-          {
-            "schema": {
-              "type": "string",
-              "enum": [
-                "oneminute",
-                "fiveminutes",
-                "hourly",
-                "daily",
-                "monthly"
-              ]
-            },
-            "name": "interval",
-            "required": true,
-            "description": "The granularity of returned data. Raw report data is generated per 1 minute. The data is aggregated to give reports of different granularities. The aggregation method is “sum” for the metrics \"inboundTraffic\", \"outboundTraffic\" and \"totalTraffic\". For all other metrics, the aggregation method is \"average\". \n\n\"oneminute\" interval is supported only when the timespan is not longer than 7 days. \"fiveminutes\" interval is supported only when the timespan is not longer than 31 days.",
-            "in": "query"
-          },
-          {
-            "name": "On-Behalf-Of",
-            "in": "header",
-            "description": "If you are a reseller, you can use this header to specify the ID of a child customer and make API call on their behalf.",
-            "required": false,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ]
-      }
-    },
     "/ecp/v1/registry/projects": {
       "get": {
         "summary": "Query list of registry projects",
@@ -9658,7 +9558,7 @@
             "schema": {
               "type": "integer",
               "minimum": 0,
-              "default": "0"
+              "default": 0
             }
           },
           {
@@ -9668,7 +9568,7 @@
             "required": false,
             "schema": {
               "type": "integer",
-              "default": "100",
+              "default": 100,
               "maximum": 200,
               "minimum": 1
             }
@@ -10040,13 +9940,10 @@
             },
             "headers": {
               "Qtl-Request-Id": {
-                "name": "Qtl-Request-Id",
-                "in": "header",
-                "description": "A string automatically generated by the api server to identify each request.",
-                "required": false,
                 "schema": {
                   "type": "string"
-                }
+                },
+                "description": "A string automatically generated by the api server to identify each request."
               }
             }
           }
@@ -10248,10 +10145,7 @@
             },
             "headers": {
               "Qtl-Request-Id": {
-                "name": "Qtl-Request-Id",
-                "in": "header",
                 "description": "A string automatically generated by the api server to identify each request.",
-                "required": false,
                 "schema": {
                   "type": "string"
                 }
@@ -10287,13 +10181,10 @@
             },
             "headers": {
               "Qtl-Request-Id": {
-                "name": "Qtl-Request-Id",
-                "in": "header",
-                "description": "A string automatically generated by the api server to identify each request.",
-                "required": false,
                 "schema": {
                   "type": "string"
-                }
+                },
+                "description": "A string automatically generated by the api server to identify each request."
               }
             }
           }
@@ -10391,10 +10282,7 @@
             },
             "headers": {
               "Qtl-Request-Id": {
-                "name": "Qtl-Request-Id",
-                "in": "header",
                 "description": "A string automatically generated by the api server to identify each request.",
-                "required": false,
                 "schema": {
                   "type": "string"
                 }
@@ -10430,13 +10318,10 @@
             },
             "headers": {
               "Qtl-Request-Id": {
-                "name": "Qtl-Request-Id",
-                "in": "header",
-                "description": "A string automatically generated by the api server to identify each request.",
-                "required": false,
                 "schema": {
                   "type": "string"
-                }
+                },
+                "description": "A string automatically generated by the api server to identify each request."
               }
             }
           }
@@ -10646,13 +10531,10 @@
             },
             "headers": {
               "Qtl-Request-Id": {
-                "name": "Qtl-Request-Id",
-                "in": "header",
-                "description": "A string automatically generated by the api server to identify each request.",
-                "required": false,
                 "schema": {
                   "type": "string"
-                }
+                },
+                "description": "A string automatically generated by the api server to identify each request."
               }
             }
           }
@@ -10710,12 +10592,18 @@
           {
             "in": "query",
             "name": "startTime",
-            "description": "RFC 3339 datetime indicating the start of a time period. Example: startTime=2020-10-20T00:00:00Z."
+            "description": "RFC 3339 datetime indicating the start of a time period. Example: startTime=2020-10-20T00:00:00Z.",
+            "schema": {
+              "type": "string"
+            }
           },
           {
             "in": "query",
             "name": "endTime",
-            "description": "RFC 3339 datetime indicating the end of a time period. Example: endTime=2020-10-30T00:00:00Z."
+            "description": "RFC 3339 datetime indicating the end of a time period. Example: endTime=2020-10-30T00:00:00Z.",
+            "schema": {
+              "type": "string"
+            }
           },
           {
             "name": "offset",
@@ -10941,13 +10829,10 @@
             },
             "headers": {
               "Qtl-Request-Id": {
-                "name": "Qtl-Request-Id",
-                "in": "header",
-                "description": "A string automatically generated by the api server to identify each request.",
-                "required": false,
                 "schema": {
                   "type": "string"
-                }
+                },
+                "description": "A string automatically generated by the api server to identify each request."
               }
             }
           }
@@ -11274,10 +11159,7 @@
             },
             "headers": {
               "Qtl-Request-Id": {
-                "name": "Qtl-Request-Id",
-                "in": "header",
                 "description": "A string automatically generated by the api server to identify each request.",
-                "required": false,
                 "schema": {
                   "type": "string"
                 }
@@ -11405,10 +11287,7 @@
             },
             "headers": {
               "Qtl-Request-Id": {
-                "name": "Qtl-Request-Id",
-                "in": "header",
                 "description": "A string automatically generated by the api server to identify each request.",
-                "required": false,
                 "schema": {
                   "type": "string"
                 }
@@ -11793,7 +11672,7 @@
             "schema": {
               "type": "integer",
               "minimum": 0,
-              "default": "0"
+              "default": 0
             }
           },
           {
@@ -11803,7 +11682,7 @@
             "required": false,
             "schema": {
               "type": "integer",
-              "default": "100",
+              "default": 100,
               "maximum": 200,
               "minimum": 1
             }
@@ -12127,10 +12006,7 @@
             },
             "headers": {
               "Qtl-Request-Id": {
-                "name": "Qtl-Request-Id",
-                "in": "header",
                 "description": "A string automatically generated by the api server to identify each request.",
-                "required": false,
                 "schema": {
                   "type": "string"
                 }
@@ -12454,7 +12330,7 @@
             "schema": {
               "type": "integer",
               "minimum": 0,
-              "default": "0"
+              "default": 0
             }
           },
           {
@@ -12464,7 +12340,7 @@
             "required": false,
             "schema": {
               "type": "integer",
-              "default": "100",
+              "default": 100,
               "maximum": 200,
               "minimum": 1
             }
@@ -12677,7 +12553,7 @@
             "schema": {
               "type": "integer",
               "minimum": 0,
-              "default": "0"
+              "default": 0
             }
           },
           {
@@ -12687,7 +12563,7 @@
             "required": false,
             "schema": {
               "type": "integer",
-              "default": "100",
+              "default": 100,
               "maximum": 200,
               "minimum": 1
             }
@@ -12834,10 +12710,7 @@
             },
             "headers": {
               "Qtl-Request-Id": {
-                "name": "Qtl-Request-Id",
-                "in": "header",
                 "description": "A string automatically generated by the api server to identify each request.",
-                "required": false,
                 "schema": {
                   "type": "string"
                 }
@@ -13374,10 +13247,7 @@
             },
             "headers": {
               "Qtl-Request-Id": {
-                "name": "Qtl-Request-Id",
-                "in": "header",
                 "description": "A string automatically generated by the api server to identify each request.",
-                "required": false,
                 "schema": {
                   "type": "string"
                 }
@@ -13621,10 +13491,7 @@
             },
             "headers": {
               "Qtl-Request-Id": {
-                "name": "Qtl-Request-Id",
-                "in": "header",
                 "description": "A string automatically generated by the api server to identify each request.",
-                "required": false,
                 "schema": {
                   "type": "string"
                 }
@@ -13746,10 +13613,7 @@
             },
             "headers": {
               "Qtl-Request-Id": {
-                "name": "Qtl-Request-Id",
-                "in": "header",
                 "description": "A string automatically generated by the api server to identify each request.",
-                "required": false,
                 "schema": {
                   "type": "string"
                 }
@@ -16771,54 +16635,55 @@
       },
       "report.data": {
         "title": "",
-        "properties": {
-          "data": {
-            "type": "array",
-            "description": "array of time serialized metric values",
-            "items": {
-              "type": "object",
-              "properties": {
-                "timestamp": {
-                  "type": "string",
-                  "description": "timestamp"
-                },
-                "value": {
-                  "type": "number",
-                  "description": "metric value"
-                }
-              }
-            }
-          }
-        },
-        "type": "object"
-      },
-      "report.pod.diskusage": {
-        "title": "Storage report",
         "type": "object",
         "properties": {
           "data": {
             "type": "array",
-            "description": "Array of time serialized metric values. This schema is used when the queried metric is 'diskUsage'",
+            "description": "Array of time serialized metric values",
             "items": {
               "type": "object",
               "properties": {
                 "timestamp": {
                   "type": "string",
-                  "description": "timestamp"
+                  "description": "An RFC 3339 format date representing the beginning of a time interval. It is always in UTC time."
+                },
+                "value": {
+                  "type": "number",
+                  "description": "A value at that timestamp"
+                }
+              }
+            }
+          }
+        }
+      },
+      "report.pod.diskusage": {
+        "title": "Disk utilization report",
+        "type": "object",
+        "description": "",
+        "properties": {
+          "data": {
+            "type": "array",
+            "description": "Array of time serialized metric values. This schema is used when the metric param is of the value 'diskUsage'.",
+            "items": {
+              "type": "object",
+              "properties": {
+                "timestamp": {
+                  "type": "string",
+                  "description": "An RFC 3339 format date representing the beginning of a time interval. It is always in UTC time."
                 },
                 "volumes": {
                   "type": "array",
-                  "description": "metric value",
+                  "description": "Array of volumes for an application instance, including container rootFS and data volumes (if any).",
                   "items": {
                     "type": "object",
                     "properties": {
                       "volume": {
                         "type": "string",
-                        "description": "Could be a container rootFS or a PVC volume attached to a pod"
+                        "description": "Name of a volume. \"Root_{containername}\" means the RootFS of {containername}. \"PVC_{PVCname}\" means a data volume which is backed by a PVC (persistentVolumeClaim)."
                       },
                       "value": {
                         "type": "number",
-                        "description": "Disk usage rate, e.g. \"0.2\" means 20% of disk capacity is used."
+                        "description": "Disk utilization rate, e.g. \"0.2\" means 20% of disk capacity is used."
                       }
                     }
                   }
@@ -16826,31 +16691,30 @@
               }
             }
           }
-        },
-        "description": "If the metric is \"diskUsage\", the response will be in this format."
+        }
       },
       "report.pod.metrics": {
         "title": "CPU/memory/traffic report",
+        "type": "object",
         "properties": {
           "data": {
             "type": "array",
-            "description": "Array of time serialized metric values. This schema is used when the queried metric is a metric other than 'diskUsage'",
+            "description": "Array of time serialized metric values. This schema is used when the metric param is of a value other than 'diskUsage'.",
             "items": {
               "type": "object",
               "properties": {
                 "timestamp": {
                   "type": "string",
-                  "description": "timestamp"
+                  "description": "An RFC 3339 format date representing the beginning of a time interval. It is always in UTC time."
                 },
                 "value": {
                   "type": "number",
-                  "description": "metric value"
+                  "description": "A value at that timestamp"
                 }
               }
             }
           }
-        },
-        "type": "object"
+        }
       },
       "report.servicezone.data": {
         "title": "",
@@ -16858,7 +16722,7 @@
         "properties": {
           "series": {
             "type": "array",
-            "description": "usage reports grouped per service zones",
+            "description": "Summary of resource usage grouped per service zones",
             "items": {
               "type": "object",
               "properties": {
@@ -16868,167 +16732,28 @@
                     "business",
                     "standard",
                     "premium"
-                  ]
+                  ],
+                  "description": "ECP service zone"
                 },
                 "data": {
                   "type": "array",
-                  "description": "array of time serialized metric values",
+                  "description": "Array of time serialized metric values",
                   "items": {
                     "type": "object",
                     "properties": {
                       "timestamp": {
                         "type": "string",
-                        "description": "timestamp"
+                        "description": "An RFC 3339 format date representing the beginning of a time interval. It is always in UTC time."
                       },
                       "value": {
                         "type": "number",
-                        "description": "metric value"
+                        "description": "A value at that timestamp"
                       }
                     }
                   }
                 }
               }
             }
-          }
-        }
-      },
-      "error.report.InvalidMetric": {
-        "title": "InvalidMetric",
-        "type": "object",
-        "properties": {
-          "error": {
-            "type": "string",
-            "description": "InvalidMetric"
-          },
-          "message": {
-            "type": "string",
-            "description": "The metric given is invalid."
-          }
-        }
-      },
-      "error.report.InvalidDateFormat": {
-        "title": "InvalidDateFormat",
-        "type": "object",
-        "properties": {
-          "error": {
-            "type": "string",
-            "description": "InvalidDateFormat"
-          },
-          "message": {
-            "type": "string",
-            "description": "Invalid parameter {startTime / endTime}. {startTime/endTime} is not a valid RFC3339 timestamp. The timestamp should be in \"yyyy-MM-dd'T'HH:mm:ss'Z'\" format."
-          }
-        }
-      },
-      "error.report.InvalidRange": {
-        "title": "InvalidRange",
-        "type": "object",
-        "properties": {
-          "error": {
-            "type": "string",
-            "description": "InvalidRange"
-          },
-          "message": {
-            "type": "string",
-            "description": "One of: \"The max time span of {interval} report must be no more than {xxx days}.\" \"The parameter 'startTime' cannot be a time in the future.\" \"The parameter 'endTime' should be after 'startTime'.\""
-          }
-        }
-      },
-      "error.report.InvalidInterval": {
-        "title": "InvalidInterval",
-        "type": "object",
-        "properties": {
-          "error": {
-            "type": "string",
-            "description": "InvalidInterval"
-          },
-          "message": {
-            "type": "string",
-            "description": "The interval requested is invalid."
-          }
-        }
-      },
-      "error.report.PoPNotExist": {
-        "title": "PoPNotExist",
-        "type": "object",
-        "properties": {
-          "error": {
-            "type": "string",
-            "description": "PoPNotExist"
-          },
-          "message": {
-            "type": "string",
-            "description": "The PoP given is invalid or does not exist."
-          }
-        }
-      },
-      "error.report.ServiceZoneNotExist": {
-        "title": "ServiceZoneNotExist",
-        "type": "object",
-        "properties": {
-          "error": {
-            "type": "string",
-            "description": "ServiceZoneNotExist"
-          },
-          "message": {
-            "type": "string",
-            "description": "The serviceZone given is invalid or does not exist."
-          }
-        }
-      },
-      "error.report.ApplicationNotExist": {
-        "title": "ApplicationNotExist",
-        "type": "object",
-        "properties": {
-          "error": {
-            "type": "string",
-            "description": "ApplicationNotExist"
-          },
-          "message": {
-            "type": "string",
-            "description": "The application ID given does not exist."
-          }
-        }
-      },
-      "error.report.InstanceNotFound": {
-        "title": "InstanceNotFound",
-        "type": "object",
-        "properties": {
-          "error": {
-            "type": "string",
-            "description": "InstanceNotFound"
-          },
-          "message": {
-            "type": "string",
-            "description": "The instance specified does not exist, or is not an instance of the given application."
-          }
-        }
-      },
-      "error.report.InvalidQuota": {
-        "title": "InvalidQuota",
-        "type": "object",
-        "properties": {
-          "error": {
-            "type": "string",
-            "description": "InvalidQuota"
-          },
-          "message": {
-            "type": "string",
-            "description": "The quota name given is invalid."
-          }
-        }
-      },
-      "error.report.InvalidReportRange": {
-        "title": "InvalidReportRange",
-        "type": "object",
-        "properties": {
-          "error": {
-            "type": "string",
-            "description": "InvalidReportRange"
-          },
-          "message": {
-            "type": "string",
-            "description": "A valid report range shall be “self-only”, “children-only”, or “self+children”."
           }
         }
       },
@@ -17275,7 +17000,7 @@
         "schema": {
           "type": "integer",
           "minimum": 0,
-          "default": "0"
+          "default": 0
         }
       },
       "limit": {
@@ -17285,7 +17010,7 @@
         "required": false,
         "schema": {
           "type": "integer",
-          "default": "100",
+          "default": 100,
           "maximum": 200,
           "minimum": 1
         }
@@ -17314,13 +17039,13 @@
         },
         "in": "query",
         "name": "endTime",
-        "description": "RFC 3339 date indicating the end of a time period. Example: <code>endTime=2019-11-14T00:00:00Z</code> Your endTime may be rounded up to the nearest minute, hour, or day depending on the interval parameter. For example, if you enter <code>endTime=2019-09-05T03:14:01Z&interval=hourly</code>, the response includes data ending at 2019-09-05T04:00:00Z.",
+        "description": "RFC 3339 date indicating the end of a time period. Example: <code>endTime=2020-11-14T00:00:00Z</code> The time must be specified using the UTC timezone. Your endTime may be rounded up to the nearest minute, hour, or day depending on the \"interval\" parameter. For example, if you pass <code>endTime=2020-09-05T03:14:01Z&interval=hourly</code>, the response includes data ending at 2020-09-05T04:00:00Z.",
         "required": true
       },
       "startTime": {
         "in": "query",
         "name": "startTime",
-        "description": "RFC 3339 date indicating the beginning of a time period. Example: <code>startTime=2019-10-30T00:00:00Z</code>. Your startTime may be rounded down to the nearest minute, hour, or day depending on the interval parameter. For example, if you enter <code>startTime=2019-09-05T03:14:01Z&interval=hourly</code>, the response includes data beginning at 2019-09-05T03:00:00Z.",
+        "description": "RFC 3339 date indicating the beginning of a time period. Example: <code>startTime=2020-10-30T00:00:00Z</code>. The time must be specified using the UTC timezone. Your startTime may be rounded down to the nearest minute, hour, or day depending on the \"interval\" parameter. For example, if you pass <code>startTime=2020-09-05T03:14:01Z&interval=hourly</code>, the response includes data beginning at 2020-09-05T03:00:00Z.",
         "required": true,
         "schema": {
           "type": "string"
@@ -17339,7 +17064,7 @@
         },
         "name": "interval",
         "required": true,
-        "description": "The granularity of returned data. Raw report data is generated per 1 minute. The data is aggregated to give reports of different granularities. The aggregation method is “sum” for the metrics \"inboundTraffic\", \"outboundTraffic\" and \"totalTraffic\". For all other metrics, the aggregation method is \"average\". \n\n\"oneminute\" interval is supported only when the timespan is not longer than 7 days. \"fiveminutes\" interval is supported only when the timespan is not longer than 31 days.",
+        "description": "The granularity of returned data. In the backend, raw data is reported every minute. The data is then aggregated to give reports of different granularities. The aggregation method is “sum” for those network i/o metrics, and \"average\" for all other metrics. Note that \"oneminute\" interval is available only when the timespan is not longer than 7 days and that \"fiveminutes\" interval is available only when the timespan is not longer than 31 days.",
         "in": "query"
       },
       "Report-Range": {
@@ -17353,7 +17078,7 @@
           ]
         },
         "name": "Report-Range",
-        "description": "An optional header that resellers can use to specify whether to include data from children customers.",
+        "description": "An optional header that resellers can use to specify whether to include report data from children customers.",
         "in": "header"
       },
       "pop": {
@@ -17361,7 +17086,7 @@
           "type": "string"
         },
         "name": "pop",
-        "description": "Code of an ECP PoP",
+        "description": "Code of an ECP location",
         "in": "path",
         "required": true
       },
@@ -17400,7 +17125,7 @@
             "ipCount"
           ]
         },
-        "description": "Usage metric on compute, storage and network resources.\n\nMetric | Description | Measured in\n--- | --- | --- \ninboundTraffic | amount of data transmitted to ECP during a time period | byte\ninboundBandwidth | rate of data transfer to ECP during a time period | bps\noutboundTraffic | amount of data transmitted from ECP during a time period | byte\noutboundBandwidth | rate of data transfer from ECP during a time period | bps\ntotalTraffic | amount of data transmitted to and from ECP during a time period | byte\ntotalBandwidth | rate of data transfer to and from ECP during a time period | bps\nvcpu | amount of CPU cores allocated and available during a time period | core\nmem | amount of memory allocated and available during a time peirod | byte\nlocal-ssd | amount of local storage capacity allocated and available during a time period | byte\npersist-ssd | amount of remote storage capacity allocated and available during a time period | byte\npodCount | number of kubernetes pods existing and maintained for your application(s) during a time period | ea\nipCount | number of public IPv4 addresses allocated and available during a time period | ea\n"
+        "description": "Usage metric on compute, storage and network resources.\n\nMetric | Description | Measured in\n--- | --- | --- \ninboundTraffic | Amount of data transmitted to ECP during a time period | byte\ninboundBandwidth | Rate of data transfer to ECP during a time period | bps\noutboundTraffic | Amount of data transmitted from ECP during a time period | byte\noutboundBandwidth | Rate of data transfer from ECP during a time period | bps\ntotalTraffic | Amount of data transmitted to and from ECP during a time period | byte\ntotalBandwidth | Rate of data transfer to and from ECP during a time period | bps\nvcpu | Amount of CPU cores allocated for your application instances during a time period | core\nmem | Amount of memory allocated for your application instances during a time peirod | byte\nlocal-ssd | Amount of local SSD storage capacity allocated for your application instances during a time period | byte\npersist-ssd | Amount of remote SSD storage capacity allocated for your application instances during a time period | byte\npodCount | Number of your application instances (i.e. Kubernetes pods) existing during a time period | ea\nipCount | Number of public IPv4 addresses allocated for your applications during a time period. This includes addresses allocated for both application instances and ECP LoadBalancer4s, if any. | ea\n"
       },
       "podMetric": {
         "name": "metric",
@@ -17418,7 +17143,7 @@
             "diskUsage"
           ]
         },
-        "description": "Usage metric on compute, storage and network resources.\n\nMetric | Description | Measured in\n--- | --- | ---\ninboundTraffic | amount of data transmitted to a pod during a time period | byte\ninboundBandwidth | rate of data transfer to a pod during a time period | bps\noutboundTraffic | amount of data transmitted from a pod during a time period | byte\noutboundBandwidth | rate of data transfer from a pod during a time period | bps\ncpuUsage | amount of CPU cores consumed by container process(es) in a pod during a time period | core\nmemUsage | amount of memory consumed by container process(es) in a pod during a time period | byte\ndiskUsage | Disk usage rate. Here \"disk\" could be the rootFS of a container in a pod, or a PVC volume attached to a pod. | --\n"
+        "description": "Usage metric on compute, storage and network resources.\n\nMetric | Description | Measured in\n--- | --- | ---\ninboundTraffic | Amount of data transmitted to an application instance during a time period | byte\ninboundBandwidth | Rate of data transfer to an application instance during a time period | bps\noutboundTraffic | Amount of data transmitted from an application instance during a time period | byte\noutboundBandwidth | Rate of data transfer from an application instance during a time period | bps\ncpuUsage | Amount of CPU cores utilized by processes running in an application instance during a time period | core\nmemUsage | Amount of memory utilized by processes running in an application instance during a time period | byte\ndiskUsage | Disk utilization rate. Here \"disk\" could mean the container rootFS and any data volume attached to an application instance. | --\n"
       },
       "applicationID": {
         "name": "applicationID",
@@ -17444,22 +17169,6 @@
         },
         "description": "The deployment status of an ECP application"
       },
-      "podMetric-interval": {
-        "schema": {
-          "type": "string",
-          "enum": [
-            "oneminute",
-            "fiveminutes",
-            "hourly",
-            "daily",
-            "monthly"
-          ]
-        },
-        "name": "interval",
-        "required": true,
-        "description": "The granularity of returned data. Raw report data is generated per 1 minute. The data is aggregated to give reports of different granularities. The aggregation method is “sum” for the metrics \"inboundTraffic\", and \"outboundTraffic\". For all other metrics, the aggregation method is \"average\".",
-        "in": "query"
-      },
       "limit(allows limit=0)": {
         "name": "limit",
         "in": "query",
@@ -17467,7 +17176,7 @@
         "required": false,
         "schema": {
           "type": "integer",
-          "default": "100",
+          "default": 100,
           "maximum": 200,
           "minimum": 0
         }
@@ -17517,7 +17226,7 @@
       "basicAuth": {
         "type": "http",
         "scheme": "Basic",
-        "description": "All requests to ECP platform must be authenticated using an API login name and key assigned to your organization. For security, the API key is not passed directly but is secured as described below. \n\nThe authentication type is HTTP Basic, and the authorization string is specified in the HTTP request header called Authorization.\n```\n#!/bin/bash\n#URL of the ECP API server\nAPI_SERVER=https://ngapi.cdnetworks.com\n\n#You will be given the following information by the sales team\nUSER=\"{API user name}\"\nAPI_KEY=\"{API key (make sure to escape the $ sign if any)}\"\n\n#Date in RFC 1123 format\nDATE=`date \"+%a, %d %b %Y %H:%M:%S %Z\"`\n\n#Generate the password. Raw output from openssl by adding the \"-binary\" flag\npassw=$(echo -n \"$DATE\" | openssl dgst -sha1 -hmac \"$API_KEY\" -binary | base64)\necho \" \"\n\n#Construct the curl command to query list of applications\napiCall =\"curl -i --url '${API_SERVER}/ecp/v1/applications'\n                  -X GET\n                  -u $USER:$passw\n                  -H 'Date: $DATE'\n                  -H 'Accept: application/json'\"\neval $apiCall\necho \" \"\n```\n If you are a reseller, you can also specify a child customer's ID in an On-Behalf-Of HTTP header to make API calls to manage your child customer."
+        "description": "All requests to API server must be authenticated using an API login name and key assigned to your organization. For security, the API key is not passed directly but is secured as described below. \n\nThe authentication type is HTTP Basic, and the authorization string is specified in the HTTP request header called Authorization.\n```\n#!/bin/bash\n#URL of the ECP API server\nAPI_SERVER=https://ngapi.cdnetworks.com\n\n#You will be given the following information by the sales team\nUSER=\"{API user name}\"\nAPI_KEY=\"{API key (make sure to escape the $ sign if any)}\"\n\n#Date in RFC 1123 format\nDATE=`date \"+%a, %d %b %Y %H:%M:%S %Z\"`\n\n#Generate the password. Raw output from openssl by adding the \"-binary\" flag\npassw=$(echo -n \"$DATE\" | openssl dgst -sha1 -hmac \"$API_KEY\" -binary | base64)\necho \" \"\n\n#Construct the curl command to query list of applications\napiCall =\"curl -i --url '${API_SERVER}/ecp/v1/applications'\n                  -X GET\n                  -u $USER:$passw\n                  -H 'Date: $DATE'\n                  -H 'Accept: application/json'\"\neval $apiCall\necho \" \"\n```\n If you are a reseller, you can also specify a child customer's ID in an On-Behalf-Of HTTP header to make API calls on behalf of your child customer."
       }
     },
     "responses": {
@@ -17550,10 +17259,7 @@
         },
         "headers": {
           "Qtl-Request-Id": {
-            "name": "Qtl-Request-Id",
-            "in": "header",
             "description": "A string automatically generated by the api server to identify each request.",
-            "required": false,
             "schema": {
               "type": "string"
             }
@@ -17589,13 +17295,10 @@
         },
         "headers": {
           "Qtl-Request-Id": {
-            "name": "Qtl-Request-Id",
-            "in": "header",
-            "description": "A string automatically generated by the api server to identify each request.",
-            "required": false,
             "schema": {
               "type": "string"
-            }
+            },
+            "description": "A string automatically generated by the api server to identify each request."
           }
         }
       }
@@ -17810,6 +17513,74 @@
           "error": "InstanceNotFound",
           "message": "The instance specified does not exist, or is not an instance of the given application."
         }
+      },
+      "report.InvalidMetric": {
+        "value": {
+          "error": "InvalidMetric",
+          "message": "The metric given is invalid."
+        }
+      },
+      "report.InvalidDateFormat": {
+        "value": {
+          "error": "InvalidDateFormat",
+          "message": "Invalid parameter {startTime | endTime}. {startTime | endTime} is not a valid RFC3339 timestamp. The timestamp should be in \"yyyy-MM-dd'T'HH:mm:ss'Z'\" format."
+        }
+      },
+      "report.InvalidRange": {
+        "value": {
+          "error": "InvalidRange",
+          "message": "The max time span of {interval} report must be no more than {xxx days}."
+        }
+      },
+      "report.InvalidRange(1)": {
+        "value": {
+          "error": "InvalidRange",
+          "message": "The parameter 'startTime' cannot be a time in the future."
+        }
+      },
+      "report.InvalidRange(2)": {
+        "value": {
+          "error": "InvalidRange",
+          "message": "The parameter 'endTime' should be after 'startTime'."
+        }
+      },
+      "report.InvalidInterval": {
+        "value": {
+          "error": "InvalidInterval",
+          "message": "The interval requested is invalid."
+        }
+      },
+      "report.InvalidReportRange": {
+        "value": {
+          "error": "InvalidReportRange",
+          "message": "A valid report range shall be “self-only”, “children-only”, or “self+children”."
+        }
+      },
+      "report.5mintraffic": {
+        "value": {
+          "data": [
+            {
+              "timestamp": "2020-10-02T15:00:00Z",
+              "value": 216326
+            },
+            {
+              "timestamp": "2020-10-02T15:05:00Z",
+              "value": 214326
+            },
+            {
+              "timestamp": "2020-10-02T15:10:00Z",
+              "value": 216226
+            },
+            {
+              "timestamp": "2020-10-02T15:15:00Z",
+              "value": 212126
+            },
+            {
+              "timestamp": "2020-10-02T15:20:00Z",
+              "value": 215326
+            }
+          ]
+        }
       }
     }
   },
@@ -17840,7 +17611,7 @@
     },
     {
       "name": "Reports",
-      "description": "Call our report APIs to get information about your resources consumption on ECP."
+      "description": "Call our report APIs to get information about your resource usage on ECP."
     }
   ]
 }
