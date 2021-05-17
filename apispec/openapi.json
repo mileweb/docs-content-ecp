@@ -1855,7 +1855,7 @@
             },
             "name": "interval",
             "required": true,
-            "description": "The granularity of returned data. In the backend, raw data is reported every minute. The data is then aggregated to give reports of different granularities. The aggregation method is “sum” for those network i/o metrics, and \"average\" for all other metrics. Note that \"oneminute\" interval is available only when the timespan is not longer than 7 days and that \"fiveminutes\" interval is available only when the timespan is not longer than 31 days.",
+            "description": "The granularity of returned data. In the backend, raw data is reported every minute. The data is then aggregated to give reports of different granularities. The aggregation method is “sum” for those traffic metrics, and \"average\" for all other metrics. Note that \"oneminute\" interval is available only when the timespan is not longer than 7 days and that \"fiveminutes\" interval is available only when the timespan is not longer than 31 days.",
             "in": "query"
           },
           {
@@ -2220,7 +2220,7 @@
             },
             "name": "interval",
             "required": true,
-            "description": "The granularity of returned data. In the backend, raw data is reported every minute. The data is then aggregated to give reports of different granularities. The aggregation method is “sum” for those network i/o metrics, and \"average\" for all other metrics. Note that \"oneminute\" interval is available only when the timespan is not longer than 7 days and that \"fiveminutes\" interval is available only when the timespan is not longer than 31 days.",
+            "description": "The granularity of returned data. In the backend, raw data is reported every minute. The data is then aggregated to give reports of different granularities. The aggregation method is “sum” for those traffic metrics, and \"average\" for all other metrics. Note that \"oneminute\" interval is available only when the timespan is not longer than 7 days and that \"fiveminutes\" interval is available only when the timespan is not longer than 31 days.",
             "in": "query"
           },
           {
@@ -2520,7 +2520,685 @@
             },
             "name": "interval",
             "required": true,
-            "description": "The granularity of returned data. In the backend, raw data is reported every minute. The data is then aggregated to give reports of different granularities. The aggregation method is “sum” for those network i/o metrics, and \"average\" for all other metrics. Note that \"oneminute\" interval is available only when the timespan is not longer than 7 days and that \"fiveminutes\" interval is available only when the timespan is not longer than 31 days.",
+            "description": "The granularity of returned data. In the backend, raw data is reported every minute. The data is then aggregated to give reports of different granularities. The aggregation method is “sum” for those traffic metrics, and \"average\" for all other metrics. Note that \"oneminute\" interval is available only when the timespan is not longer than 7 days and that \"fiveminutes\" interval is available only when the timespan is not longer than 31 days.",
+            "in": "query"
+          },
+          {
+            "name": "On-Behalf-Of",
+            "in": "header",
+            "description": "If you are a reseller, you can use this header to specify the ID of a child customer and make API call on their behalf.",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    },
+    "/ecp/v1/metrics/{metric}/servergroups": {
+      "parameters": [
+        {
+          "name": "metric",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "enum": [
+              "inboundTraffic",
+              "inboundBandwidth",
+              "outboundTraffic",
+              "outboundBandwidth",
+              "totalTraffic",
+              "totalBandwidth",
+              "podCount",
+              "vcpu",
+              "mem",
+              "local-ssd",
+              "persist-ssd",
+              "ipCount"
+            ]
+          },
+          "description": "Usage metric on compute, storage and network resources.\n\nMetric | Description | Measured in\n--- | --- | --- \ninboundTraffic | Amount of data transmitted to ECP during a time period | byte\ninboundBandwidth | Rate of data transfer to ECP during a time period | bps\noutboundTraffic | Amount of data transmitted from ECP during a time period | byte\noutboundBandwidth | Rate of data transfer from ECP during a time period | bps\ntotalTraffic | Amount of data transmitted to and from ECP during a time period | byte\ntotalBandwidth | Rate of data transfer to and from ECP during a time period | bps\nvcpu | Amount of CPU cores allocated for your application instances during a time period | core\nmem | Amount of memory allocated for your application instances during a time peirod | byte\nlocal-ssd | Amount of local SSD storage capacity allocated for your application instances during a time period | byte\npersist-ssd | Amount of remote SSD storage capacity allocated for your application instances during a time period | byte\npodCount | Number of your application instances (i.e. Kubernetes pods) existing during a time period | ea\nipCount | Number of public IPv4 addresses allocated for your applications during a time period. This includes addresses allocated for both application instances and ECP LoadBalancer4s, if any. | ea\n"
+        }
+      ],
+      "get": {
+        "summary": "Get summary of resource usage grouped per ECP server groups",
+        "tags": [
+          "Reports"
+        ],
+        "responses": {
+          "200": {
+            "description": "This response returns report data. Note that it is always in UTC time.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "",
+                  "type": "object",
+                  "properties": {
+                    "series": {
+                      "type": "array",
+                      "description": "Summary of resource usage grouped per ECP server groups",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "serverGroup": {
+                            "type": "string",
+                            "enum": [
+                              "standard",
+                              "premium",
+                              "premium+",
+                              "ultra"
+                            ],
+                            "description": "ECP server group"
+                          },
+                          "data": {
+                            "type": "array",
+                            "description": "Array of time serialized metric values",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "timestamp": {
+                                  "type": "string",
+                                  "description": "An RFC 3339 format date representing the beginning of a time interval. It is always in UTC time."
+                                },
+                                "value": {
+                                  "type": "number",
+                                  "description": "A value at that timestamp"
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "traffic report at 5 minute interval": {
+                    "value": {
+                      "series": [
+                        {
+                          "serverGroup": "standard",
+                          "data": [
+                            {
+                              "timestamp": "2020-10-02T15:00:00Z",
+                              "value": 216326
+                            },
+                            {
+                              "timestamp": "2020-10-02T15:05:00Z",
+                              "value": 214326
+                            },
+                            {
+                              "timestamp": "2020-10-02T15:10:00Z",
+                              "value": 216226
+                            },
+                            {
+                              "timestamp": "2020-10-02T15:15:00Z",
+                              "value": 212126
+                            },
+                            {
+                              "timestamp": "2020-10-02T15:20:00Z",
+                              "value": 215326
+                            }
+                          ]
+                        },
+                        {
+                          "serverGroup": "premium",
+                          "data": [
+                            {
+                              "timestamp": "2020-10-02T15:00:00Z",
+                              "value": 115326
+                            },
+                            {
+                              "timestamp": "2020-10-02T15:05:00Z",
+                              "value": 115326
+                            },
+                            {
+                              "timestamp": "2020-10-02T15:10:00Z",
+                              "value": 135326
+                            },
+                            {
+                              "timestamp": "2020-10-02T15:15:00Z",
+                              "value": 145326
+                            },
+                            {
+                              "timestamp": "2020-10-02T15:20:00Z",
+                              "value": 125326
+                            }
+                          ]
+                        },
+                        {
+                          "serverGroup": "premium+",
+                          "data": [
+                            {
+                              "timestamp": "2020-10-02T15:00:00Z",
+                              "value": 0
+                            },
+                            {
+                              "timestamp": "2020-10-02T15:05:00Z",
+                              "value": 0
+                            },
+                            {
+                              "timestamp": "2020-10-02T15:10:00Z",
+                              "value": 0
+                            },
+                            {
+                              "timestamp": "2020-10-02T15:15:00Z",
+                              "value": 0
+                            },
+                            {
+                              "timestamp": "2020-10-02T15:20:00Z",
+                              "value": 0
+                            }
+                          ]
+                        },
+                        {
+                          "serverGroup": "ultra",
+                          "data": [
+                            {
+                              "timestamp": "2020-10-02T15:00:00Z",
+                              "value": 134467
+                            },
+                            {
+                              "timestamp": "2020-10-02T15:05:00Z",
+                              "value": 137467
+                            },
+                            {
+                              "timestamp": "2020-10-02T15:10:00Z",
+                              "value": 124467
+                            },
+                            {
+                              "timestamp": "2020-10-02T15:15:00Z",
+                              "value": 154467
+                            },
+                            {
+                              "timestamp": "2020-10-02T15:20:00Z",
+                              "value": 135467
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            },
+            "headers": {
+              "Qtl-Request-Id": {
+                "name": "Qtl-Request-Id",
+                "in": "header",
+                "description": "A string automatically generated by the api server to identify each request.",
+                "required": false,
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The request is invalid. Refer to response body for details.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "",
+                  "type": "object",
+                  "description": "A standard error object.",
+                  "x-tags": [
+                    "Common"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "examples": {
+                  "InvalidDateFormat": {
+                    "value": {
+                      "error": "InvalidDateFormat",
+                      "message": "Invalid parameter {startTime | endTime}. {startTime | endTime} is not a valid RFC3339 timestamp. The timestamp should be in \"yyyy-MM-dd'T'HH:mm:ss'Z'\" format."
+                    }
+                  },
+                  "InvalidRange": {
+                    "value": {
+                      "error": "InvalidRange",
+                      "message": "The max time span of {interval} report must be no more than {xxx days}."
+                    }
+                  },
+                  "InvalidRange(1)": {
+                    "value": {
+                      "error": "InvalidRange",
+                      "message": "The parameter 'startTime' cannot be a time in the future."
+                    }
+                  },
+                  "InvalidRange(2)": {
+                    "value": {
+                      "error": "InvalidRange",
+                      "message": "The parameter 'endTime' should be after 'startTime'."
+                    }
+                  },
+                  "InvalidInterval": {
+                    "value": {
+                      "error": "InvalidInterval",
+                      "message": "The interval requested is invalid."
+                    }
+                  },
+                  "InvalidReportRange": {
+                    "value": {
+                      "error": "InvalidReportRange",
+                      "message": "A valid report range shall be “self-only”, “children-only”, or “self+children”."
+                    }
+                  }
+                }
+              }
+            },
+            "headers": {
+              "Qtl-Request-Id": {
+                "name": "Qtl-Request-Id",
+                "in": "header",
+                "description": "A string automatically generated by the api server to identify each request.",
+                "required": false,
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "",
+                  "type": "object",
+                  "description": "A standard error object.",
+                  "x-tags": [
+                    "Common"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "examples": {
+                  "example-1": {
+                    "value": {
+                      "error": "InvalidMetric",
+                      "message": "The metric given is invalid."
+                    }
+                  }
+                }
+              }
+            },
+            "headers": {
+              "Qtl-Request-Id": {
+                "name": "Qtl-Request-Id",
+                "in": "header",
+                "description": "A string automatically generated by the api server to identify each request.",
+                "required": false,
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-reports-by-servergroups",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "default": "self-only",
+              "enum": [
+                "self-only",
+                "children-only",
+                "self+children"
+              ]
+            },
+            "name": "Report-Range",
+            "description": "An optional header that resellers can use to specify whether to include report data from children customers.",
+            "in": "header"
+          },
+          {
+            "in": "query",
+            "name": "startTime",
+            "description": "RFC 3339 date indicating the beginning of a time period. Example: <code>startTime=2020-10-30T00:00:00Z</code>. The time must be specified using the UTC timezone. Your startTime may be rounded down to the nearest minute, hour, or day depending on the \"interval\" parameter. For example, if you pass <code>startTime=2020-09-05T03:14:01Z&interval=hourly</code>, the response includes data beginning at 2020-09-05T03:00:00Z.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "endTime",
+            "description": "RFC 3339 date indicating the end of a time period. Example: <code>endTime=2020-11-14T00:00:00Z</code> The time must be specified using the UTC timezone. Your endTime may be rounded up to the nearest minute, hour, or day depending on the \"interval\" parameter. For example, if you pass <code>endTime=2020-09-05T03:14:01Z&interval=hourly</code>, the response includes data ending at 2020-09-05T04:00:00Z.",
+            "required": true
+          },
+          {
+            "schema": {
+              "type": "string",
+              "enum": [
+                "oneminute",
+                "fiveminutes",
+                "hourly",
+                "daily",
+                "monthly"
+              ]
+            },
+            "name": "interval",
+            "required": true,
+            "description": "The granularity of returned data. In the backend, raw data is reported every minute. The data is then aggregated to give reports of different granularities. The aggregation method is “sum” for those traffic metrics, and \"average\" for all other metrics. Note that \"oneminute\" interval is available only when the timespan is not longer than 7 days and that \"fiveminutes\" interval is available only when the timespan is not longer than 31 days.",
+            "in": "query"
+          },
+          {
+            "name": "On-Behalf-Of",
+            "in": "header",
+            "description": "If you are a reseller, you can use this header to specify the ID of a child customer and make API call on their behalf.",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "description": "Get summary of your resource usage grouped per ECP server groups. Use the \"metric\" parameter to specify a metric and retrieve usage reports related to compute, storage or network."
+      }
+    },
+    "/ecp/v1/metrics/{metric}/servergroups/{servergroup}": {
+      "parameters": [
+        {
+          "name": "metric",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "enum": [
+              "inboundTraffic",
+              "inboundBandwidth",
+              "outboundTraffic",
+              "outboundBandwidth",
+              "totalTraffic",
+              "totalBandwidth",
+              "podCount",
+              "vcpu",
+              "mem",
+              "local-ssd",
+              "persist-ssd",
+              "ipCount"
+            ]
+          },
+          "description": "Usage metric on compute, storage and network resources.\n\nMetric | Description | Measured in\n--- | --- | --- \ninboundTraffic | Amount of data transmitted to ECP during a time period | byte\ninboundBandwidth | Rate of data transfer to ECP during a time period | bps\noutboundTraffic | Amount of data transmitted from ECP during a time period | byte\noutboundBandwidth | Rate of data transfer from ECP during a time period | bps\ntotalTraffic | Amount of data transmitted to and from ECP during a time period | byte\ntotalBandwidth | Rate of data transfer to and from ECP during a time period | bps\nvcpu | Amount of CPU cores allocated for your application instances during a time period | core\nmem | Amount of memory allocated for your application instances during a time peirod | byte\nlocal-ssd | Amount of local SSD storage capacity allocated for your application instances during a time period | byte\npersist-ssd | Amount of remote SSD storage capacity allocated for your application instances during a time period | byte\npodCount | Number of your application instances (i.e. Kubernetes pods) existing during a time period | ea\nipCount | Number of public IPv4 addresses allocated for your applications during a time period. This includes addresses allocated for both application instances and ECP LoadBalancer4s, if any. | ea\n"
+        },
+        {
+          "schema": {
+            "type": "string",
+            "enum": [
+              "standard",
+              "premium",
+              "premium+",
+              "ultra"
+            ]
+          },
+          "name": "servergroup",
+          "description": "Code of an ECP server group",
+          "in": "path",
+          "required": true
+        }
+      ],
+      "get": {
+        "summary": "Get summary of resource usage in a specific ECP server group",
+        "tags": [
+          "Reports"
+        ],
+        "responses": {
+          "200": {
+            "description": "This response returns report data. Note that it is always in UTC time.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "",
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "description": "Array of time serialized metric values",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "timestamp": {
+                            "type": "string",
+                            "description": "An RFC 3339 format date representing the beginning of a time interval. It is always in UTC time."
+                          },
+                          "value": {
+                            "type": "number",
+                            "description": "A value at that timestamp"
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "traffic report at 5 minute interval": {
+                    "value": {
+                      "data": [
+                        {
+                          "timestamp": "2020-10-02T15:00:00Z",
+                          "value": 216326
+                        },
+                        {
+                          "timestamp": "2020-10-02T15:05:00Z",
+                          "value": 214326
+                        },
+                        {
+                          "timestamp": "2020-10-02T15:10:00Z",
+                          "value": 216226
+                        },
+                        {
+                          "timestamp": "2020-10-02T15:15:00Z",
+                          "value": 212126
+                        },
+                        {
+                          "timestamp": "2020-10-02T15:20:00Z",
+                          "value": 215326
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            },
+            "headers": {
+              "Qtl-Request-Id": {
+                "name": "Qtl-Request-Id",
+                "in": "header",
+                "description": "A string automatically generated by the api server to identify each request.",
+                "required": false,
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The request is invalid. Refer to response body for details.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "",
+                  "type": "object",
+                  "description": "A standard error object.",
+                  "x-tags": [
+                    "Common"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "examples": {
+                  "InvalidDateFormat": {
+                    "value": {
+                      "error": "InvalidDateFormat",
+                      "message": "Invalid parameter {startTime | endTime}. {startTime | endTime} is not a valid RFC3339 timestamp. The timestamp should be in \"yyyy-MM-dd'T'HH:mm:ss'Z'\" format."
+                    }
+                  },
+                  "InvalidRange": {
+                    "value": {
+                      "error": "InvalidRange",
+                      "message": "The max time span of {interval} report must be no more than {xxx days}."
+                    }
+                  },
+                  "InvalidRange(1)": {
+                    "value": {
+                      "error": "InvalidRange",
+                      "message": "The parameter 'startTime' cannot be a time in the future."
+                    }
+                  },
+                  "InvalidRange(2)": {
+                    "value": {
+                      "error": "InvalidRange",
+                      "message": "The parameter 'endTime' should be after 'startTime'."
+                    }
+                  },
+                  "InvalidInterval": {
+                    "value": {
+                      "error": "InvalidInterval",
+                      "message": "The interval requested is invalid."
+                    }
+                  },
+                  "InvalidReportRange": {
+                    "value": {
+                      "error": "InvalidReportRange",
+                      "message": "A valid report range shall be “self-only”, “children-only”, or “self+children”."
+                    }
+                  }
+                }
+              }
+            },
+            "headers": {
+              "Qtl-Request-Id": {
+                "name": "Qtl-Request-Id",
+                "in": "header",
+                "description": "A string automatically generated by the api server to identify each request.",
+                "required": false,
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "",
+                  "type": "object",
+                  "description": "A standard error object.",
+                  "x-tags": [
+                    "Common"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "examples": {
+                  "InvalidMetric": {
+                    "value": {
+                      "error": "InvalidMetric",
+                      "message": "The metric given is invalid."
+                    }
+                  },
+                  "ServerGroupNotExist": {
+                    "value": {
+                      "error": "ServerGroupNotExist",
+                      "message": "The serverGroup given is invalid or does not exist."
+                    }
+                  }
+                }
+              }
+            },
+            "headers": {
+              "Qtl-Request-Id": {
+                "name": "Qtl-Request-Id",
+                "in": "header",
+                "description": "A string automatically generated by the api server to identify each request.",
+                "required": false,
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-reports-for-a-server-group",
+        "description": "Get summary of resource usage in a specific ECP server group. Use the \"metric\" parameter to specify a metric and retrieve usage reports related to compute, storage or network.",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "default": "self-only",
+              "enum": [
+                "self-only",
+                "children-only",
+                "self+children"
+              ]
+            },
+            "name": "Report-Range",
+            "description": "An optional header that resellers can use to specify whether to include report data from children customers.",
+            "in": "header"
+          },
+          {
+            "in": "query",
+            "name": "startTime",
+            "description": "RFC 3339 date indicating the beginning of a time period. Example: <code>startTime=2020-10-30T00:00:00Z</code>. The time must be specified using the UTC timezone. Your startTime may be rounded down to the nearest minute, hour, or day depending on the \"interval\" parameter. For example, if you pass <code>startTime=2020-09-05T03:14:01Z&interval=hourly</code>, the response includes data beginning at 2020-09-05T03:00:00Z.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "endTime",
+            "description": "RFC 3339 date indicating the end of a time period. Example: <code>endTime=2020-11-14T00:00:00Z</code> The time must be specified using the UTC timezone. Your endTime may be rounded up to the nearest minute, hour, or day depending on the \"interval\" parameter. For example, if you pass <code>endTime=2020-09-05T03:14:01Z&interval=hourly</code>, the response includes data ending at 2020-09-05T04:00:00Z.",
+            "required": true
+          },
+          {
+            "schema": {
+              "type": "string",
+              "enum": [
+                "oneminute",
+                "fiveminutes",
+                "hourly",
+                "daily",
+                "monthly"
+              ]
+            },
+            "name": "interval",
+            "required": true,
+            "description": "The granularity of returned data. In the backend, raw data is reported every minute. The data is then aggregated to give reports of different granularities. The aggregation method is “sum” for those traffic metrics, and \"average\" for all other metrics. Note that \"oneminute\" interval is available only when the timespan is not longer than 7 days and that \"fiveminutes\" interval is available only when the timespan is not longer than 31 days.",
             "in": "query"
           },
           {
@@ -2814,7 +3492,7 @@
             },
             "name": "interval",
             "required": true,
-            "description": "The granularity of returned data. In the backend, raw data is reported every minute. The data is then aggregated to give reports of different granularities. The aggregation method is “sum” for those network i/o metrics, and \"average\" for all other metrics. Note that \"oneminute\" interval is available only when the timespan is not longer than 7 days and that \"fiveminutes\" interval is available only when the timespan is not longer than 31 days.",
+            "description": "The granularity of returned data. In the backend, raw data is reported every minute. The data is then aggregated to give reports of different granularities. The aggregation method is “sum” for those traffic metrics, and \"average\" for all other metrics. Note that \"oneminute\" interval is available only when the timespan is not longer than 7 days and that \"fiveminutes\" interval is available only when the timespan is not longer than 31 days.",
             "in": "query"
           },
           {
@@ -3237,7 +3915,7 @@
             },
             "name": "interval",
             "required": true,
-            "description": "The granularity of returned data. In the backend, raw data is reported every minute. The data is then aggregated to give reports of different granularities. The aggregation method is “sum” for those network i/o metrics, and \"average\" for all other metrics. Note that \"oneminute\" interval is available only when the timespan is not longer than 7 days and that \"fiveminutes\" interval is available only when the timespan is not longer than 31 days.",
+            "description": "The granularity of returned data. In the backend, raw data is reported every minute. The data is then aggregated to give reports of different granularities. The aggregation method is “sum” for those traffic metrics, and \"average\" for all other metrics. Note that \"oneminute\" interval is available only when the timespan is not longer than 7 days and that \"fiveminutes\" interval is available only when the timespan is not longer than 31 days.",
             "in": "query"
           },
           {
@@ -16757,6 +17435,48 @@
           }
         }
       },
+      "report.servergroup.data": {
+        "title": "",
+        "type": "object",
+        "properties": {
+          "series": {
+            "type": "array",
+            "description": "Summary of resource usage grouped per ECP server groups",
+            "items": {
+              "type": "object",
+              "properties": {
+                "serverGroup": {
+                  "type": "string",
+                  "enum": [
+                    "standard",
+                    "premium",
+                    "premium+",
+                    "ultra"
+                  ],
+                  "description": "ECP server group"
+                },
+                "data": {
+                  "type": "array",
+                  "description": "Array of time serialized metric values",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "timestamp": {
+                        "type": "string",
+                        "description": "An RFC 3339 format date representing the beginning of a time interval. It is always in UTC time."
+                      },
+                      "value": {
+                        "type": "number",
+                        "description": "A value at that timestamp"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
       "application.message": {
         "title": "",
         "type": "string",
@@ -17064,7 +17784,7 @@
         },
         "name": "interval",
         "required": true,
-        "description": "The granularity of returned data. In the backend, raw data is reported every minute. The data is then aggregated to give reports of different granularities. The aggregation method is “sum” for those network i/o metrics, and \"average\" for all other metrics. Note that \"oneminute\" interval is available only when the timespan is not longer than 7 days and that \"fiveminutes\" interval is available only when the timespan is not longer than 31 days.",
+        "description": "The granularity of returned data. In the backend, raw data is reported every minute. The data is then aggregated to give reports of different granularities. The aggregation method is “sum” for those traffic metrics, and \"average\" for all other metrics. Note that \"oneminute\" interval is available only when the timespan is not longer than 7 days and that \"fiveminutes\" interval is available only when the timespan is not longer than 31 days.",
         "in": "query"
       },
       "Report-Range": {
@@ -17101,6 +17821,21 @@
         },
         "name": "servicezone",
         "description": "Code of an ECP service zone",
+        "in": "path",
+        "required": true
+      },
+      "servergroup": {
+        "schema": {
+          "type": "string",
+          "enum": [
+            "standard",
+            "premium",
+            "premium+",
+            "ultra"
+          ]
+        },
+        "name": "servergroup",
+        "description": "Code of an ECP server group",
         "in": "path",
         "required": true
       },
