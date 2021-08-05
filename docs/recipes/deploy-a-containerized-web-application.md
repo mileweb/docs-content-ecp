@@ -104,6 +104,7 @@ The generated app will have the following directory structure.
 **Build the sample web application into a Docker image**
 
 Now that we finished “writing” the application and have the source code, let’s containerize the application, where we will build the application into a Docker image, and then run the application as container(s).
+
 1. Write a Dockerfile.
 
 According to the [official Docker documentation](https://docs.docker.com/engine/reference/builder/), “*Docker can build images automatically by reading the instructions from a Dockerfile. A Dockerfile is a text document that contains all the commands a user could call on the command line to assemble an image.*” Therefore, to build our application into a Docker image, we first need to write a Dockerfile. 
