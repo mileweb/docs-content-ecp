@@ -3,18 +3,17 @@ This demo describes how to build and upload a containerized web application, and
 
 ### Objectives
 In this demo, you will learn how to:
--   Package a sample web application into a Docker container image.    
--   Upload the image to ECP’s built-in container registry.    
--   Run the image in multiple edge locations on the ECP platform.    
--   Manage global traffic for the application.    
+- Package a sample web application into a Docker container image.    
+- Upload the image to ECP’s built-in container registry.    
+- Run the image in multiple edge locations on the ECP platform.    
+- Manage global traffic for the application.    
 
 ### Prerequisites
 Before you get started, make sure you have: 
 
- - Subscribed to ECP service and have a master portal user account to
-   use the console.    
- - Docker installed on your computer.    
- - NodeJS and NPM installed.
+- Subscribed to ECP service and have a master portal user account to use the console.    
+- Docker installed on your computer.    
+- NodeJS and NPM installed.
 
 ### Create an ECP registry project and registry user
 In this demo, we’ll upload a Docker image to the ECP registry, and then deploy it from the registry. Before the image can be uploaded, we will need to create an ECP registry project and a registry user.
@@ -178,7 +177,7 @@ Retag the Docker image and allow it to be pushed to your ECP registry project. T
 
 Now there should be 2 images on your local machine.
 ```
-docker images
+>docker images
 REPOSITORY TAG IMAGE ID CREATED SIZE
 myapp v1 00ec08c1dfcb 30 seconds ago 125MB
 registry-qcc.quantil.com/myproject1/myapp v1 00ec08c1dfcb 6 seconds ago 125MB
@@ -235,7 +234,7 @@ On the **Applications** page, click the name of the newly deployed application t
 The **VIPs** section lists VIPs that expose the application in different ECP locations.
 <p align=center><img src="/docs/resources/images/recipes/recipe1/VIPs-list.png" alt="VIPs list" width="720"></p>
 
-Select any VIP and open `{VIP}:3000` in your browser. For example, go to http://163.171.243.88:3000 in your browser. You’ll see the familiar Express demo page. This means the application is now running in multiple ECP locations and that all of its instances are serving traffic from different locations.
+Select any VIP and open `{VIP}:3000` in your browser. For example, go to http://163.171.243.176:3000 in your browser. You’ll see the familiar Express demo page. This means the application is now running in multiple ECP locations and that all of its instances are serving traffic from different locations.
   
 On the **Applications** page, click the **Instances** column of the newly deployed application to check the instances of the application.
 <p align=center><img src="/docs/resources/images/recipes/recipe1/instances-list.png" alt="instances list" width="720"></p>
