@@ -193,8 +193,11 @@ When the push succeeds, go to the ECP management console and open the detail pag
 Now it’s time to deploy the web application at scale to global ECP locations.
 
 **Deploy the application**
+
 1. Open the **Applications** page on the console, and then click the top-right **Add New Application** button.
+
 2. Click the **Use a Wizard** option to have a wizard guide you through the steps of adding an application.
+
 3. At step 1 of the wizard, configure the new application.
 <p align=center><img src="/docs/resources/images/recipes/recipe1/wizard-step-1-pod-template.png" alt="wizard step 1 pod template" width="720"></p>
 
