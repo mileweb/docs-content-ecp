@@ -11,7 +11,7 @@ In this demo, you will learn how to:
 ### Prerequisites
 Before you get started, make sure you have: 
 
-- Subscribed to ECP service and have a master portal user account to use the console.    
+- Subscribed to the ECP service and have a master portal user account to use the console.    
 - Docker installed on your computer.    
 - NodeJS and NPM installed.
 
@@ -38,10 +38,10 @@ Log in to the [ECP management console](https://console.cdnetworks.com/ecp).
 4.  Give the new registry user read-write access to existing registry projects. This demo has one “existing project” called “myproject1”. Read-write permission is required so the new registry user can upload images to and download images from the registry project.    
 5.  Click the **Submit** button to create this registry user.   
   
-To avoid naming collisions, ECP appends a random string to the username when a registry user is created. The following screenshot shows the new registry user which has a random string appended as part of its username.
+To avoid naming collisions, ECP appends a random string to the username when a registry user is created. The following screenshot shows the new registry user with a random string appended to the end of its username.
 <p align=center><img src="/docs/resources/images/recipes/recipe1/registry-user-list.png" alt="registry user list" width="720"></p>
 
-Remember this full username as well as the password you provided. You’ll need the credentials when you log into the ECP registry and upload images to the registry using the docker CLI.
+Remember this full username as well as the password you provided. You’ll need the credentials when you log into the ECP registry and upload images to the registry using the Docker CLI.
   
 An imagePullSecret is created automatically for the new registry user, as shown on the imagePullSecrets page. You’ll need to select this imagePullSecret when deploying the sample web application to ECP locations.
 <p align=center><img src="/docs/resources/images/recipes/recipe1/imagePullSecret-list.png" alt="imagePullSecret list" width="720"></p>
@@ -103,7 +103,7 @@ The generated app will have the following directory structure.
 ```
 **Build the sample web application into a Docker image**
 
-Now that we finished “writing” the application and have the source code, let’s containerize the application, where we will build the application into a Docker image, and then run the application as container(s).
+Now that we finished “writing” the application and have the source code, let’s containerize the application, where we will build the application into a Docker image, and then run the application as containers.
 
 1. Write a Dockerfile.
 
@@ -128,7 +128,7 @@ Dockerfile
 ```
 3. Build a Docker image.
 
-Build an image with the Dockerfile written in step 1. Run the `docker build` command on the `myapp` directory, and pass the `-t` flag to tag the image. Remember that you should have Docker installed on your computer.
+Build an image with the Dockerfile written in step 1. Run the `docker build` command on the `myapp` directory, and pass the `-t` flag to tag the image. Remember that you must have Docker installed on your computer.
 ```
 >docker build -t myapp:v1 .
 ```
@@ -156,10 +156,10 @@ Then stop the container.
 ```
 >docker stop a5b5d36594fc
 ```
-### Push Docker image to ECP registry
+### Push Docker image to the ECP registry
 Now that the Docker image is built and verified, let’s push the image to the ECP registry, and then deploy the image from there.  
 
- 1. Docker login ECP registry
+ 1. Log in to the ECP registry from your Docker environment.
 ```
 >docker login registry-qcc.quantil.com
 Username: myreguser1-xxxx
@@ -168,7 +168,7 @@ Login Succeeded
 ```
 The ECP registry service is available at [https://registry-qcc.quantil.com](https://registry-qcc.quantil.com). Use the credentials created [above](#create-an-ecp-registry-project-and-registry-user) to authenticate with the registry.
   
-When you create an ECP registry user by yourself, you’ll get a unique full username because it contains a randomly generated string. So you’ll need to authenticate with the registry using the full username created for you.
+When you create an ECP registry user yourself, you’ll get a unique full username because the username contains a randomly generated string. So you’ll need to authenticate with the registry using the full username created for you.
 
  2. Retag the Docker image.
 ```
@@ -183,7 +183,7 @@ REPOSITORY TAG IMAGE ID CREATED SIZE
 myapp v1 00ec08c1dfcb 30 seconds ago 125MB
 registry-qcc.quantil.com/myproject1/myapp v1 00ec08c1dfcb 6 seconds ago 125MB
 ```
-3. Push the Docker image to ECP registry.
+3. Push the Docker image to the ECP registry.
 ```
 >docker push registry-qcc.quantil.com/myproject1/myapp:v1
 ```
@@ -207,7 +207,7 @@ Under **Pod Template**, enter “myapp” for **Application Name**, select “De
 
 Under **Container**, enter “myapp” for **Container Name**, use the image picker to pick the Docker image that was pushed to the ECP registry, and request resources of 200m cpu and 300MB memory for the container.
   
-Then click the top right **Next** button to go to the next step.
+Then click the top-right **Next** button to go to the next step.
 
 4. At step 2 of the wizard, expose the application.
 <p align=center><img src="/docs/resources/images/recipes/recipe1/wizard-step-2-select-exposure-method.png" alt="wizard step 2 select exposure method" width="720"></p>
@@ -251,14 +251,14 @@ Now that the application is running at multiple ECP locations, let’s turn our 
 <p align=center><img src="/docs/resources/images/recipes/recipe1/create-CNAME.png" alt="create CNAME" width="720"></p>
 
 1. Open the **CNAMEs** page on the console and click the top-right **Add New CNAME** button to open a dialog box.
-2. Click the **Auto Generate** button to generate a CNAME prefix.
+2. Click the **Auto Generate** button to generate a CNAME prefix automatically.
 3. Select the newly deployed application “myapp” for **Application**.
 4. Click the **Submit** button to create the CNAME.
   
 A new CNAME is created, as shown on the **CNAMEs** page.
 <p align=center><img src="/docs/resources/images/recipes/recipe1/CNAMEs-list.png" alt="CNAMEs list" width="720"></p>
 
-Open `{CNAME}:3000` in your browser. You’ll see the Express demo page. This page indicates that access to the application can now be routed to its instances at different locations via the CNAME. Note that the newly created CNAME might take a few minutes to work. Also note that using `{CNAME}:3000` to access a deployed ECP application works only for the Express web application in this demo. In practice, your own web application will probably process incoming requests by different hostname(s) and port(s). Therefore, you’ll need to change or create a CNAME record for the hostnames of your web application, point the hostnames to the ECP CNAME, and then access your application via your hostnames and ports instead of directly using the ECP CNAME.
+Open `{CNAME}:3000` in your browser. You’ll see the Express demo page. This page indicates that access to the application can now be routed to its instances at different locations via the CNAME. Note that the newly created CNAME might take a few minutes to work. Also, note that using `{CNAME}:3000` to access a deployed ECP application works only for the Express web application in this demo. In practice, your own web application will probably process incoming requests by different hostname(s) and port(s). Therefore, you’ll need to change or create a CNAME record for the hostnames of your web application, point the hostnames to the ECP CNAME, and then access your application via your hostnames and ports instead of directly using the ECP CNAME.
   
 To further verify how requests will be routed to different instances at the edge, use the [DNS checker](https://dnschecker.org/) to check what IP address the CNAME will resolve to in various parts of the world.
 <!--stackedit_data:
