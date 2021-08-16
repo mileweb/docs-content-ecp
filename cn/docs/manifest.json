@@ -22,6 +22,12 @@
         "caption": "ECP API reference",
         "icon": "gear",
         "path": "apidocs"
+      },
+      {
+        "title": "Release Notes",
+        "caption": "Learn About Our Releases",
+        "icon": "notes",
+        "path": "docs/release-notes"
       }
     ]
   },
@@ -209,6 +215,11 @@
         }
       ]
     },
-    { "title": "Global Presence", "path": "/docs/portal/global-presence.md" }
+    { "title": "Global Presence",
+      "path": "/docs/portal/global-presence.md"
+    },
+    { "title": "Release Notes",
+    "path": "/docs/release-notes.md"
+    }
   ]
 }
