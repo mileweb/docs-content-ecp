@@ -207,15 +207,9 @@
             }
           ]
         },
-        {"title": "Global Presence", "path": "/docs/portal/global-presence.md"        }
+        {"title": "Global Presence",
+          "path": "/docs/portal/global-presence.md"        }
       ]
-    },
-    { 
-      "title": "Recipes",
-      "heading": true,
-      "routes": [
-      	{"title": "Deploy a Containerized Web Application", "path": "/docs/recipes/deploy-a-containerized-web-application.md"}
-      ] 
     }
   ]
 }
