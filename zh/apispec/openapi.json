@@ -8047,7 +8047,7 @@
                           },
                           "PoP": {
                             "type": "string",
-                            "description": "Full name of an ECP location where the VIP and/or VIP-v6 are exposing application instances"
+                            "description": "Code of an ECP location where the VIP and/or VIP-v6 are exposing application instances"
                           },
                           "podCount": {
                             "type": "integer",
@@ -8076,14 +8076,14 @@
                           "VIP": "163.171.228.23",
                           "VIP-v6": "",
                           "isLoadBalanced": true,
-                          "PoP": "Ashburn US",
+                          "PoP": "iad",
                           "podCount": 2
                         },
                         {
                           "VIP": "163.171.235.53",
                           "VIP-v6": "",
                           "isLoadBalanced": true,
-                          "PoP": "Warsaw PL",
+                          "PoP": "waw",
                           "podCount": 1
                         }
                       ]
@@ -16292,7 +16292,7 @@
             },
             "PoP": {
               "type": "string",
-              "description": "Full name of an ECP location where the VIP and/or VIP-v6 are exposing application instances"
+              "description": "Code of an ECP location where the VIP and/or VIP-v6 are exposing application instances"
             },
             "podCount": {
               "type": "integer",
