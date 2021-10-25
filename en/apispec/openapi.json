@@ -6,7 +6,7 @@
     "contact": {
       "url": "https://www.cdnetworks.com"
     },
-    "description": "The ECP API is a RESTful API that allows you to manage ECP services."
+    "description": "The ECP API is a RESTful API that allows you to interact with ECP platform to manage your ECP resources."
   },
   "servers": [
     {
@@ -18,7 +18,7 @@
       "post": {
         "summary": "Create an imagePullSecret",
         "operationId": "post-imagepullsecrets",
-        "description": "This interface enables you to create imagePullSecrets to be used by Kubernetes when pulling private images for your applications. \n\nNote that ECP apiserver itself will not attempt to use the username and password passed to authenticate against the image registry. Please make sure that the credentials are valid. Invalid credentials will cause failure in image pulling when deploying an application using that imagePullSecret.",
+        "description": "This interface enables you to create imagePullSecrets to be used by Kubernetes when pulling private images for your applications. \n\nECP apiserver itself will not attempt to use the username and password passed to authenticate against the image registry. So make sure that the credentials are valid. Invalid credentials will cause failure in image pulling when deploying an application using that imagePullSecret.\n\nWhen an ECP registry user gets created, a corresponding imagePullSecret is created automatically. Manually creating an imagePullSecret for your ECP registry user is not allowed.",
         "requestBody": {
           "content": {
             "application/json": {
@@ -29,11 +29,6 @@
                     "title": "",
                     "type": "string",
                     "description": "Name of the imagePullSecret. Shall be unique within a namespace. Allows lower case alphanumeric characters, ‘-’ and ‘.’ only, must start and end with an alphanumeric character, and must be no more than 63 characters."
-                  },
-                  "namespace": {
-                    "title": "",
-                    "type": "string",
-                    "description": "Kubenetes namespace created for your ECP account"
                   },
                   "description": {
                     "title": "",
@@ -59,7 +54,6 @@
                 },
                 "required": [
                   "name",
-                  "namespace",
                   "registry",
                   "username",
                   "password"
@@ -135,16 +129,16 @@
                       "message": "Invalid secret name. A valid secret name must consist of lower-case alphanumeric characters, ‘-', or '.’, must start and end with a lower-case alphanumeric character, and must be no more than 63 characters."
                     }
                   },
-                  "NamespaceNotExist": {
-                    "value": {
-                      "error": "NamespaceNotExist",
-                      "message": "The namespace given does not exist."
-                    }
-                  },
                   "RequiredFieldMissing": {
                     "value": {
                       "error": "RequiredFieldMissing",
                       "message": "The field {field} is required."
+                    }
+                  },
+                  "RegistryNotAllowed": {
+                    "value": {
+                      "error": "RegistryNotAllowed",
+                      "message": "Creating secret for an ECP registry user is not allowed. This is handled by ECP automatically."
                     }
                   }
                 }
@@ -231,11 +225,6 @@
                             "type": "string",
                             "description": "Name of the imagePullSecret. Shall be unique within a namespace. Allows lower case alphanumeric characters, ‘-’ and ‘.’ only, must start and end with an alphanumeric character, and must be no more than 63 characters."
                           },
-                          "namespace": {
-                            "title": "",
-                            "type": "string",
-                            "description": "Kubenetes namespace created for your ECP account"
-                          },
                           "description": {
                             "title": "",
                             "type": "string",
@@ -270,7 +259,6 @@
                         {
                           "imagepullsecretID": "123456",
                           "name": "mysecret1",
-                          "namespace": "demo",
                           "description": "image pull secret for qcc registry",
                           "creationTime": "2020-10-02T15:00:00Z",
                           "lastUpdateTime": "2020-10-02T15:00:00Z"
@@ -278,7 +266,6 @@
                         {
                           "imagepullsecretID": "123456",
                           "name": "mysecret2",
-                          "namespace": "demo",
                           "description": "image pull secret for qcc registry",
                           "creationTime": "2020-10-02T15:00:00Z",
                           "lastUpdateTime": "2020-10-02T15:00:00Z"
@@ -286,7 +273,6 @@
                         {
                           "imagepullsecretID": "123456",
                           "name": "mysecret3",
-                          "namespace": "demo",
                           "description": "image pull secret for qcc registry",
                           "creationTime": "2020-10-02T15:00:00Z",
                           "lastUpdateTime": "2020-10-02T15:00:00Z"
@@ -443,11 +429,6 @@
                       "type": "string",
                       "description": "Name of the imagePullSecret. Shall be unique within a namespace. Allows lower case alphanumeric characters, ‘-’ and ‘.’ only, must start and end with an alphanumeric character, and must be no more than 63 characters."
                     },
-                    "namespace": {
-                      "title": "",
-                      "type": "string",
-                      "description": "Kubenetes namespace created for your ECP account"
-                    },
                     "description": {
                       "title": "",
                       "type": "string",
@@ -488,7 +469,6 @@
                     "value": {
                       "imagepullsecretID": "32bd86d6312211eaae6398wc35ded775",
                       "name": "mysecret1",
-                      "namespace": "demo",
                       "description": "image pull secret for qcc registry",
                       "registry": "docker.io",
                       "username": "demo",
@@ -589,11 +569,6 @@
                       "type": "string",
                       "description": "Name of the imagePullSecret. Shall be unique within a namespace. Allows lower case alphanumeric characters, ‘-’ and ‘.’ only, must start and end with an alphanumeric character, and must be no more than 63 characters."
                     },
-                    "namespace": {
-                      "title": "",
-                      "type": "string",
-                      "description": "Kubenetes namespace created for your ECP account"
-                    },
                     "description": {
                       "title": "",
                       "type": "string",
@@ -634,7 +609,6 @@
                     "value": {
                       "imagepullsecretID": "32bd86d6312211eaae6398wc35ded775",
                       "name": "mysecret1",
-                      "namespace": "demo",
                       "description": "image pull secret for qcc registry",
                       "registry": "docker.io",
                       "username": "demo",
@@ -654,6 +628,48 @@
                 "required": false,
                 "schema": {
                   "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The request is invalid. Refer to response body for details.",
+            "headers": {
+              "Qtl-Request-Id": {
+                "name": "Qtl-Request-Id",
+                "in": "header",
+                "description": "A string automatically generated by the api server to identify each request.",
+                "required": false,
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "",
+                  "type": "object",
+                  "description": "A standard error object.",
+                  "x-tags": [
+                    "Common"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "examples": {
+                  "example-1": {
+                    "value": {
+                      "error": "UpdateManagedSecretNotAllowed",
+                      "message": "The secret is manged by ECP and cannot be updated."
+                    }
+                  }
                 }
               }
             }
@@ -704,7 +720,7 @@
         "tags": [
           "imagePullSecrets"
         ],
-        "description": "Update an existing imagePullSecret. The fields “name”, “namespace” and “registry” cannot be updated. If a request body includes any of these fields, they will simply be ignored.\n\nNote that updating an imagePullSecret in use might cause temporary failure in image pulling.",
+        "description": "Update an existing imagePullSecret. The fields “name” and “registry” cannot be updated. If a request body includes any of these fields, they will simply be ignored.\n\nNote that updating an imagePullSecret in use might cause temporary failure in image pulling.\n\nWhen an ECP registry user is created, a corresponding imagePullSecret is created automatically. Such an imagePullSecret is managed by ECP and cannot be updated. ",
         "requestBody": {
           "content": {
             "application/json": {
@@ -781,10 +797,16 @@
                   }
                 },
                 "examples": {
-                  "example-1": {
+                  "SecretBeingUsed": {
                     "value": {
                       "error": "SecretBeingUsed",
                       "message": "The secret is being used by applications and cannot be deleted."
+                    }
+                  },
+                  "DeleteManagedSecretNotAllowed": {
+                    "value": {
+                      "error": "DeleteManagedSecretNotAllowed",
+                      "message": "The secret is manged by ECP and cannot be deleted."
                     }
                   }
                 }
@@ -848,7 +870,7 @@
         "tags": [
           "imagePullSecrets"
         ],
-        "description": "Delete an existing imagePullSecret.\n\nNote that an imagePullSecret being referenced by an application cannot be deleted."
+        "description": "Delete an existing imagePullSecret.\n\nNote that an imagePullSecret being referenced by an application cannot be deleted.\n\nWhen an ECP registry user is created, a corresponding imagePullSecret is created automatically. Such an imagePullSecret is managed by ECP and cannot be deleted."
       }
     },
     "/ecp/v1/cnames": {
@@ -4132,7 +4154,7 @@
                   "InvalidResourceRequirement": {
                     "value": {
                       "error": "InvalidResourceRequirement",
-                      "message": "The resource requirement is invalid. Can be: The requests.cpu of a container should not be lower than 0.05 core. The sum of limits.cpu of a pod should not be higher than 24 cores. The requests.cpu should be less than or equal to limits.cpu. The CPU requirement (measured in cores) should be expressed in plain numbers or with m suffix. The requests.mem of a container should not be lower than 50MB. The sum of limits.mem of a pod should not be higher than 128GB. The requests.mem should be less than or equal to limits.mem. The memory requirement (measured in bytes) should be expressed in plain numbers or with these suffixes: E, P, T, G, M, K, Ei, Pi, Ti, Gi, Mi, Ki. The requests.storage of a PVC should be not lower than 500MB and not higher than 100GB. The storage requirement (measured in bytes) should be expressed in plain numbers or with these suffixes: E, P, T, G, M, K, Ei, Pi, Ti, Gi, Mi, Ki."
+                      "message": "The resource requirement is invalid. Can be: The limits.cpu of a container should not be lower than 0.05 core. The sum of limits.cpu of a pod should not be higher than 24 cores. The requests.cpu should be equal to limits.cpu. The limits.mem of a container should not be lower than 50MB. The sum of limits.mem of a pod should not be higher than 128GB. The requests.mem should be equal to limits.mem. The requests.storage of a PVC should be not lower than 500MB and not higher than 100GB."
                     }
                   },
                   "PoPDoesNotExist": {
@@ -4333,17 +4355,10 @@
                             },
                             "metadata": {
                               "type": "object",
-                              "required": [
-                                "namespace"
-                              ],
                               "properties": {
                                 "name": {
                                   "type": "string",
                                   "description": "Name of a \"Deployment\" resource. Must be the same as the query param \"appName\"."
-                                },
-                                "namespace": {
-                                  "type": "string",
-                                  "description": "The Kubernetes namespace created for your ECP account"
                                 }
                               }
                             },
@@ -4497,17 +4512,10 @@
                             },
                             "metadata": {
                               "type": "object",
-                              "required": [
-                                "namespace"
-                              ],
                               "properties": {
                                 "name": {
                                   "type": "string",
                                   "description": "Name of a \"ReplicaSet\" resource. Must be the same as the query param \"appName\"."
-                                },
-                                "namespace": {
-                                  "type": "string",
-                                  "description": "The Kubernetes namespace created for your ECP account"
                                 }
                               }
                             },
@@ -4661,17 +4669,10 @@
                             },
                             "metadata": {
                               "type": "object",
-                              "required": [
-                                "namespace"
-                              ],
                               "properties": {
                                 "name": {
                                   "type": "string",
                                   "description": "Name of a \"StatefulSet\" resource. Must be the same as the query param \"appName\"."
-                                },
-                                "namespace": {
-                                  "type": "string",
-                                  "description": "The Kubernetes namespace created for your ECP account"
                                 }
                               }
                             },
@@ -4902,17 +4903,10 @@
                         },
                         "metadata": {
                           "type": "object",
-                          "required": [
-                            "namespace"
-                          ],
                           "properties": {
                             "name": {
                               "type": "string",
                               "description": "Name of a \"LoadBalancer4\" object. Must be the same as the query param \"appName\"."
-                            },
-                            "namespace": {
-                              "type": "string",
-                              "description": "The Kubernetes namespace created for your ECP account"
                             }
                           }
                         },
@@ -5064,17 +5058,10 @@
                             },
                             "metadata": {
                               "type": "object",
-                              "required": [
-                                "namespace"
-                              ],
                               "properties": {
                                 "name": {
                                   "type": "string",
                                   "description": "Name of a \"RegionPreference\" resource. Must be the same as the query param \"appName\"."
-                                },
-                                "namespace": {
-                                  "type": "string",
-                                  "description": "The Kubernetes namespace created for your ECP account"
                                 }
                               }
                             },
@@ -5158,17 +5145,10 @@
                             },
                             "metadata": {
                               "type": "object",
-                              "required": [
-                                "namespace"
-                              ],
                               "properties": {
                                 "name": {
                                   "type": "string",
                                   "description": "Name of a \"Location\" resource. Must be the same as the query param \"appName\"."
-                                },
-                                "namespace": {
-                                  "type": "string",
-                                  "description": "The Kubernetes namespace created for your ECP account"
                                 }
                               }
                             },
@@ -5701,7 +5681,7 @@
                   "InvalidResourceRequirement": {
                     "value": {
                       "error": "InvalidResourceRequirement",
-                      "message": "The resource requirement is invalid. Can be: The requests.cpu of a container should not be lower than 0.05 core. The sum of limits.cpu of a pod should not be higher than 24 cores. The requests.cpu should be less than or equal to limits.cpu. The CPU requirement (measured in cores) should be expressed in plain numbers or with m suffix. The requests.mem of a container should not be lower than 50MB. The sum of limits.mem of a pod should not be higher than 128GB. The requests.mem should be less than or equal to limits.mem. The memory requirement (measured in bytes) should be expressed in plain numbers or with these suffixes: E, P, T, G, M, K, Ei, Pi, Ti, Gi, Mi, Ki. The requests.storage of a PVC should be not lower than 500MB and not higher than 100GB. The storage requirement (measured in bytes) should be expressed in plain numbers or with these suffixes: E, P, T, G, M, K, Ei, Pi, Ti, Gi, Mi, Ki."
+                      "message": "The resource requirement is invalid. Can be: The limits.cpu of a container should not be lower than 0.05 core. The sum of limits.cpu of a pod should not be higher than 24 cores. The requests.cpu should be equal to limits.cpu. The limits.mem of a container should not be lower than 50MB. The sum of limits.mem of a pod should not be higher than 128GB. The requests.mem should be equal to limits.mem. The requests.storage of a PVC should be not lower than 500MB and not higher than 100GB."
                     }
                   },
                   "PoPDoesNotExist": {
@@ -5909,17 +5889,10 @@
                             },
                             "metadata": {
                               "type": "object",
-                              "required": [
-                                "namespace"
-                              ],
                               "properties": {
                                 "name": {
                                   "type": "string",
                                   "description": "Name of a \"Deployment\" resource. Must be the same as the query param \"appName\"."
-                                },
-                                "namespace": {
-                                  "type": "string",
-                                  "description": "The Kubernetes namespace created for your ECP account"
                                 }
                               }
                             },
@@ -6073,17 +6046,10 @@
                             },
                             "metadata": {
                               "type": "object",
-                              "required": [
-                                "namespace"
-                              ],
                               "properties": {
                                 "name": {
                                   "type": "string",
                                   "description": "Name of a \"ReplicaSet\" resource. Must be the same as the query param \"appName\"."
-                                },
-                                "namespace": {
-                                  "type": "string",
-                                  "description": "The Kubernetes namespace created for your ECP account"
                                 }
                               }
                             },
@@ -6237,17 +6203,10 @@
                             },
                             "metadata": {
                               "type": "object",
-                              "required": [
-                                "namespace"
-                              ],
                               "properties": {
                                 "name": {
                                   "type": "string",
                                   "description": "Name of a \"StatefulSet\" resource. Must be the same as the query param \"appName\"."
-                                },
-                                "namespace": {
-                                  "type": "string",
-                                  "description": "The Kubernetes namespace created for your ECP account"
                                 }
                               }
                             },
@@ -6478,17 +6437,10 @@
                         },
                         "metadata": {
                           "type": "object",
-                          "required": [
-                            "namespace"
-                          ],
                           "properties": {
                             "name": {
                               "type": "string",
                               "description": "Name of a \"LoadBalancer4\" object. Must be the same as the query param \"appName\"."
-                            },
-                            "namespace": {
-                              "type": "string",
-                              "description": "The Kubernetes namespace created for your ECP account"
                             }
                           }
                         },
@@ -6640,17 +6592,10 @@
                             },
                             "metadata": {
                               "type": "object",
-                              "required": [
-                                "namespace"
-                              ],
                               "properties": {
                                 "name": {
                                   "type": "string",
                                   "description": "Name of a \"RegionPreference\" resource. Must be the same as the query param \"appName\"."
-                                },
-                                "namespace": {
-                                  "type": "string",
-                                  "description": "The Kubernetes namespace created for your ECP account"
                                 }
                               }
                             },
@@ -6734,17 +6679,10 @@
                             },
                             "metadata": {
                               "type": "object",
-                              "required": [
-                                "namespace"
-                              ],
                               "properties": {
                                 "name": {
                                   "type": "string",
                                   "description": "Name of a \"Location\" resource. Must be the same as the query param \"appName\"."
-                                },
-                                "namespace": {
-                                  "type": "string",
-                                  "description": "The Kubernetes namespace created for your ECP account"
                                 }
                               }
                             },
@@ -6879,7 +6817,7 @@
                   "InvalidResourceRequirement": {
                     "value": {
                       "error": "InvalidResourceRequirement",
-                      "message": "The resource requirement is invalid. Can be: The requests.cpu of a container should not be lower than 0.05 core. The sum of limits.cpu of a pod should not be higher than 24 cores. The requests.cpu should be less than or equal to limits.cpu. The CPU requirement (measured in cores) should be expressed in plain numbers or with m suffix. The requests.mem of a container should not be lower than 50MB. The sum of limits.mem of a pod should not be higher than 128GB. The requests.mem should be less than or equal to limits.mem. The memory requirement (measured in bytes) should be expressed in plain numbers or with these suffixes: E, P, T, G, M, K, Ei, Pi, Ti, Gi, Mi, Ki. The requests.storage of a PVC should be not lower than 500MB and not higher than 100GB. The storage requirement (measured in bytes) should be expressed in plain numbers or with these suffixes: E, P, T, G, M, K, Ei, Pi, Ti, Gi, Mi, Ki."
+                      "message": "The resource requirement is invalid. Can be: The limits.cpu of a container should not be lower than 0.05 core. The sum of limits.cpu of a pod should not be higher than 24 cores. The requests.cpu should be equal to limits.cpu. The limits.mem of a container should not be lower than 50MB. The sum of limits.mem of a pod should not be higher than 128GB. The requests.mem should be equal to limits.mem. The requests.storage of a PVC should be not lower than 500MB and not higher than 100GB."
                     }
                   },
                   "PoPDoesNotExist": {
@@ -7087,17 +7025,10 @@
                             },
                             "metadata": {
                               "type": "object",
-                              "required": [
-                                "namespace"
-                              ],
                               "properties": {
                                 "name": {
                                   "type": "string",
                                   "description": "Name of a \"Deployment\" resource. Must be the same as the query param \"appName\"."
-                                },
-                                "namespace": {
-                                  "type": "string",
-                                  "description": "The Kubernetes namespace created for your ECP account"
                                 }
                               }
                             },
@@ -7251,17 +7182,10 @@
                             },
                             "metadata": {
                               "type": "object",
-                              "required": [
-                                "namespace"
-                              ],
                               "properties": {
                                 "name": {
                                   "type": "string",
                                   "description": "Name of a \"ReplicaSet\" resource. Must be the same as the query param \"appName\"."
-                                },
-                                "namespace": {
-                                  "type": "string",
-                                  "description": "The Kubernetes namespace created for your ECP account"
                                 }
                               }
                             },
@@ -7415,17 +7339,10 @@
                             },
                             "metadata": {
                               "type": "object",
-                              "required": [
-                                "namespace"
-                              ],
                               "properties": {
                                 "name": {
                                   "type": "string",
                                   "description": "Name of a \"StatefulSet\" resource. Must be the same as the query param \"appName\"."
-                                },
-                                "namespace": {
-                                  "type": "string",
-                                  "description": "The Kubernetes namespace created for your ECP account"
                                 }
                               }
                             },
@@ -7656,17 +7573,10 @@
                         },
                         "metadata": {
                           "type": "object",
-                          "required": [
-                            "namespace"
-                          ],
                           "properties": {
                             "name": {
                               "type": "string",
                               "description": "Name of a \"LoadBalancer4\" object. Must be the same as the query param \"appName\"."
-                            },
-                            "namespace": {
-                              "type": "string",
-                              "description": "The Kubernetes namespace created for your ECP account"
                             }
                           }
                         },
@@ -7818,17 +7728,10 @@
                             },
                             "metadata": {
                               "type": "object",
-                              "required": [
-                                "namespace"
-                              ],
                               "properties": {
                                 "name": {
                                   "type": "string",
                                   "description": "Name of a \"RegionPreference\" resource. Must be the same as the query param \"appName\"."
-                                },
-                                "namespace": {
-                                  "type": "string",
-                                  "description": "The Kubernetes namespace created for your ECP account"
                                 }
                               }
                             },
@@ -7912,17 +7815,10 @@
                             },
                             "metadata": {
                               "type": "object",
-                              "required": [
-                                "namespace"
-                              ],
                               "properties": {
                                 "name": {
                                   "type": "string",
                                   "description": "Name of a \"Location\" resource. Must be the same as the query param \"appName\"."
-                                },
-                                "namespace": {
-                                  "type": "string",
-                                  "description": "The Kubernetes namespace created for your ECP account"
                                 }
                               }
                             },
@@ -12506,7 +12402,7 @@
                   "InvalidUsernamePrefix": {
                     "value": {
                       "error": "InvalidUsernamePrefix",
-                      "message": "The usernamePrefix given is invalid. A valid value must be not more than 15 characters and must not contain such special characters as “, ~, #, $, %."
+                      "message": "The usernamePrefix given is invalid. A valid value must contain lower case alphanumeric characters, ‘-’ and ‘.’ only, must start and end with an alphanumeric character, and must be no more than 15 characters."
                     }
                   },
                   "InvalidPassword": {
@@ -12643,7 +12539,7 @@
         "tags": [
           "Registry Users"
         ],
-        "description": "This interface enables you to create a registry user. Note that only your \"admin\" apiAccount is allowed to make this call.",
+        "description": "This interface enables you to create an ECP registry user. Note that only your \"admin\" apiAccount is allowed to make this call.\n\nWhen you create an ECP registry user, a corresponding imagePullSecret gets created automatically. ",
         "requestBody": {
           "content": {
             "application/json": {
@@ -13418,7 +13314,7 @@
         "tags": [
           "Registry Users"
         ],
-        "description": "Change the password of a registry user. Note that only your \"admin\" apiAccount is allowed to make this call.",
+        "description": "Change the password of a registry user. Note that only your \"admin\" apiAccount is allowed to make this call.\n\nThis operation will also trigger update to the imagePullSecret that is created automatically along with the registry user.",
         "requestBody": {
           "content": {
             "application/json": {
@@ -13454,6 +13350,48 @@
                 "required": false,
                 "schema": {
                   "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The request is invalid. Refer to response body for details.",
+            "headers": {
+              "Qtl-Request-Id": {
+                "name": "Qtl-Request-Id",
+                "in": "header",
+                "description": "A string automatically generated by the api server to identify each request.",
+                "required": false,
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "",
+                  "type": "object",
+                  "description": "A standard error object.",
+                  "x-tags": [
+                    "Common"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "examples": {
+                  "example-1": {
+                    "value": {
+                      "error": "CredentialsBeingUsed",
+                      "message": "The credentials of this registry user are being used by applications and cannot be deleted."
+                    }
+                  }
                 }
               }
             }
@@ -13540,7 +13478,7 @@
         "tags": [
           "Registry Users"
         ],
-        "description": "Delete an existing registry user. Note that only your \"admin\" apiAccount is allowed to make this call."
+        "description": "Delete an existing ECP registry user. Note that only your \"admin\" apiAccount is allowed to make this call.\n\nThis operation will also trigger deletion of the imagePullSecret that is created automatically along with the registry user. A registry user cannot be deleted when the corresponding imagePullSecret is being used by applications."
       }
     },
     "/ecp/v1/servicequotas": {
@@ -13592,23 +13530,48 @@
                           "status": {
                             "type": "string",
                             "title": "quota.status",
-                            "description": "Status of a serviceQuota, which represents the status of ECP service subscription by a customer. If the status is set to \"suspended\", any requests from the customer will be rejected by ECP API server. Note that this status is related to ECP service only. It doesn’t affect other products subscribed by the customer.",
+                            "description": "Status of a serviceQuota, which represents the status of ECP service subscription by a customer. The “trial” status means the customer is using ECP service as a free trial. When the status is set to \"suspended\", any requests from the customer will be rejected by ECP API server. \n\nThis status is related to ECP service only. It doesn’t affect other products subscribed by the customer.",
                             "enum": [
                               "active",
-                              "suspended"
+                              "suspended",
+                              "trial"
                             ],
                             "default": "suspended"
+                          },
+                          "trialDeadline": {
+                            "type": "string",
+                            "title": "quota.trialDeadline",
+                            "description": "Date-time in RFC 3339 format indicating when the trial expires, e.g. 2021-07-01T15:00:00Z. Required only when the status is set to “trial”. Ignored otherwise. Must not be a date-time in the past. The trial must not last longer than 90 days after the trial starts.\n\nWhen trialDeadline expires, the status will be set to “suspended” and all existing ECP resources for the customer will be deleted.",
+                            "format": "date-time"
+                          },
+                          "billUsingStripe": {
+                            "type": "boolean",
+                            "title": "quota.billUsingStripe",
+                            "description": "A flag indicating whether this customer will be invoiced using Stripe.",
+                            "default": false
                           },
                           "contractID": {
                             "title": "quota.contractID",
                             "type": "string",
-                            "description": "ID representing the ECP service contract, used for billing."
+                            "description": "ID representing the ECP service contract, used for billing. Required when “billUsingStripe” set to true."
+                          },
+                          "contractStartDate": {
+                            "type": "string",
+                            "title": "quota.contractStartDate",
+                            "description": "The start date of an ECP service contract. Must be a UTC date in “yyyy-MM-dd” format. Required when “contractID” is provided.",
+                            "format": "date"
                           },
                           "allowDeploymentInChina": {
                             "type": "boolean",
                             "title": "quota.allowDeploymentInChina",
                             "description": "Whether a customer is allowed to deploy their applications to ECP locations in mainland China. When this is set to false, the customer will not be allowed to pick mainland China locations or the \"CN\" region to deploy their applications.",
                             "default": false
+                          },
+                          "accountManagerEmail": {
+                            "type": "string",
+                            "title": "quota.accountManagerEmail",
+                            "description": "Email address of the account manager who manages the customer. The email address specified can be used by the account manager to receive system notifications related to the customer, e.g. in the event of trial expiration, excessive usage and service suspension.",
+                            "format": "email"
                           },
                           "description": {
                             "title": "quota.description",
@@ -13626,6 +13589,18 @@
                             "title": "",
                             "format": "date-time",
                             "description": "Datetime when the resource is last updated"
+                          },
+                          "suspensionDate": {
+                            "type": "string",
+                            "title": "quota.suspensionDate",
+                            "description": "Datetime indicating when the status is changed from “trial” or “active” to “suspended‘. This field is updated by API server when ECP service is suspended for the customer. It cannot be set via API calls.",
+                            "format": "date-time"
+                          },
+                          "upgradeDate": {
+                            "type": "string",
+                            "title": "quota.upgradeDate",
+                            "description": "Datetime indicating when the status is changed from “trial” to “active”. This field is updated by API server when the customer as a free trial upgrades to a paid customer. It cannot be set via API calls.",
+                            "format": "date-time"
                           }
                         }
                       }
@@ -13646,8 +13621,11 @@
                           "customerID": "123456",
                           "namespace ": "demo ",
                           "status": "active",
+                          "billUsingStripe": true,
                           "contractID": "abcdefg",
+                          "contractStartDate": "2020-10-02",
                           "allowDeploymentInChina": false,
+                          "accountManagerEmail": "abc@123.com",
                           "description": "this is a demo service quota",
                           "creationTime": "2020-10-02T15:00:00Z",
                           "lastUpdateTime": "2020-10-02T15:00:00Z"
@@ -13695,7 +13673,7 @@
                   "example-1": {
                     "value": {
                       "error": "InvalidStatus",
-                      "message": "The status specified is invalid. Must be one of 'suspended' and 'active'"
+                      "message": "The status specified is invalid. Must be one of \"trial\", 'suspended' and 'active'"
                     }
                   }
                 }
@@ -13746,7 +13724,7 @@
           }
         },
         "operationId": "get-servicequotas",
-        "description": "If you are a reseller, you can use this API to list serviceQuotas of your child customers. Optional query parameters let you filter the results. \n\nNote that both \"servicequotas\" and \"serviceQuotas\" are acceptable on the path. This also applies to other APIs related to serviceQuotas.",
+        "description": "If you are a reseller, you can use this API to list serviceQuotas of your child customers. Optional query parameters let you filter the results. \n\nBoth \"servicequotas\" and \"serviceQuotas\" are acceptable on the path. This also applies to other APIs related to serviceQuotas.",
         "parameters": [
           {
             "schema": {
@@ -13775,6 +13753,22 @@
             "in": "query",
             "name": "allowDeploymentInChina",
             "description": "Whether a customer is allowed to deploy their applications to ECP locations in mainland China"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "contractID",
+            "description": "ID of the contract signed with the customer related to ECP service subscription"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "accountManagerEmail",
+            "description": "Email address of a specific account manager. This filter can be used to filter customers managed by a given account manager."
           },
           {
             "name": "offset",
@@ -13887,7 +13881,7 @@
                   "InvalidStatus": {
                     "value": {
                       "error": "InvalidStatus",
-                      "message": "The status specified is invalid. Must be one of 'suspended' and 'active'"
+                      "message": "The status specified is invalid. Must be one of \"trial\", 'suspended' and 'active'"
                     }
                   },
                   "InvalidAllowDeploymentInChina": {
@@ -13912,6 +13906,60 @@
                     "value": {
                       "error": "RequiredFieldMissing",
                       "message": "The field {field} is required."
+                    }
+                  },
+                  "InvalidTrialDeadline": {
+                    "value": {
+                      "error": "InvalidTrialDeadline",
+                      "message": "Invalid parameter trialDeadline. {trialDeadline} is not a valid RFC3339 timestamp. The timestamp should be in \"yyyy-MM-dd'T'HH:mm:ss'Z'\" format."
+                    }
+                  },
+                  "InvalidTrialDeadline1": {
+                    "value": {
+                      "error": "InvalidTrialDeadline",
+                      "message": "The trialDeadline specified cannot be a time in the past."
+                    }
+                  },
+                  "InvalidTrialDeadline2": {
+                    "value": {
+                      "error": "InvalidTrialDeadline",
+                      "message": "The trial period cannot be longer than 90 days."
+                    }
+                  },
+                  "TrialDeadlineNotSpecified": {
+                    "value": {
+                      "error": "TrialDeadlineNotSpecified",
+                      "message": "The field trialDeadline is required when customer status is set to “trial”."
+                    }
+                  },
+                  "InvalidBillUsingStripe": {
+                    "value": {
+                      "error": "InvalidBillUsingStripe",
+                      "message": "The billUsingStripe specified is invalid, must be true or false."
+                    }
+                  },
+                  "ContractIDNotSpecified": {
+                    "value": {
+                      "error": "ContractIDNotSpecified",
+                      "message": "The field contractID is required when billUsingStripe is set to true."
+                    }
+                  },
+                  "ContractStartDateNotSpecified": {
+                    "value": {
+                      "error": "ContractStartDateNotSpecified",
+                      "message": "The field contractStartDate is required when contractID is specified."
+                    }
+                  },
+                  "InvalidContractStartDate": {
+                    "value": {
+                      "error": "InvalidContractStartDate",
+                      "message": "The date must be in “yyyy-MM-dd” format."
+                    }
+                  },
+                  "InvalidAccountManagerEmail": {
+                    "value": {
+                      "error": "InvalidAccountManagerEmail",
+                      "message": "The accountManagerEmail specified is not a valid email address."
                     }
                   }
                 }
@@ -14031,17 +14079,42 @@
                   "status": {
                     "type": "string",
                     "title": "quota.status",
-                    "description": "Status of a serviceQuota, which represents the status of ECP service subscription by a customer. If the status is set to \"suspended\", any requests from the customer will be rejected by ECP API server. Note that this status is related to ECP service only. It doesn’t affect other products subscribed by the customer.",
+                    "description": "Status of a serviceQuota, which represents the status of ECP service subscription by a customer. The “trial” status means the customer is using ECP service as a free trial. When the status is set to \"suspended\", any requests from the customer will be rejected by ECP API server. \n\nThis status is related to ECP service only. It doesn’t affect other products subscribed by the customer.",
                     "enum": [
                       "active",
-                      "suspended"
+                      "suspended",
+                      "trial"
                     ],
                     "default": "suspended"
+                  },
+                  "trialDeadline": {
+                    "type": "string",
+                    "title": "quota.trialDeadline",
+                    "description": "Date-time in RFC 3339 format indicating when the trial expires, e.g. 2021-07-01T15:00:00Z. Required only when the status is set to “trial”. Ignored otherwise. Must not be a date-time in the past. The trial must not last longer than 90 days after the trial starts.\n\nWhen trialDeadline expires, the status will be set to “suspended” and all existing ECP resources for the customer will be deleted.",
+                    "format": "date-time"
+                  },
+                  "billUsingStripe": {
+                    "type": "boolean",
+                    "title": "quota.billUsingStripe",
+                    "description": "A flag indicating whether this customer will be invoiced using Stripe.",
+                    "default": false
                   },
                   "contractID": {
                     "title": "quota.contractID",
                     "type": "string",
-                    "description": "ID representing the ECP service contract, used for billing."
+                    "description": "ID representing the ECP service contract, used for billing. Required when “billUsingStripe” set to true."
+                  },
+                  "contractStartDate": {
+                    "type": "string",
+                    "title": "quota.contractStartDate",
+                    "description": "The start date of an ECP service contract. Must be a UTC date in “yyyy-MM-dd” format. Required when “contractID” is provided.",
+                    "format": "date"
+                  },
+                  "accountManagerEmail": {
+                    "type": "string",
+                    "title": "quota.accountManagerEmail",
+                    "description": "Email address of the account manager who manages the customer. The email address specified can be used by the account manager to receive system notifications related to the customer, e.g. in the event of trial expiration, excessive usage and service suspension.",
+                    "format": "email"
                   },
                   "allowDeploymentInChina": {
                     "type": "boolean",
@@ -14140,6 +14213,9 @@
                     "namespace": "demo",
                     "status": "suspended",
                     "contractID": "abcdef",
+                    "contractStartDate": "2021-01-01",
+                    "billUsingStripe": true,
+                    "accountManagerEmail": "abc@123.com",
                     "allowDeploymentInChina": false,
                     "description": "this is a demo",
                     "resourceQuotas": {
@@ -14215,23 +14291,48 @@
                     "status": {
                       "type": "string",
                       "title": "quota.status",
-                      "description": "Status of a serviceQuota, which represents the status of ECP service subscription by a customer. If the status is set to \"suspended\", any requests from the customer will be rejected by ECP API server. Note that this status is related to ECP service only. It doesn’t affect other products subscribed by the customer.",
+                      "description": "Status of a serviceQuota, which represents the status of ECP service subscription by a customer. The “trial” status means the customer is using ECP service as a free trial. When the status is set to \"suspended\", any requests from the customer will be rejected by ECP API server. \n\nThis status is related to ECP service only. It doesn’t affect other products subscribed by the customer.",
                       "enum": [
                         "active",
-                        "suspended"
+                        "suspended",
+                        "trial"
                       ],
                       "default": "suspended"
+                    },
+                    "trialDeadline": {
+                      "type": "string",
+                      "title": "quota.trialDeadline",
+                      "description": "Date-time in RFC 3339 format indicating when the trial expires, e.g. 2021-07-01T15:00:00Z. Required only when the status is set to “trial”. Ignored otherwise. Must not be a date-time in the past. The trial must not last longer than 90 days after the trial starts.\n\nWhen trialDeadline expires, the status will be set to “suspended” and all existing ECP resources for the customer will be deleted.",
+                      "format": "date-time"
+                    },
+                    "billUsingStripe": {
+                      "type": "boolean",
+                      "title": "quota.billUsingStripe",
+                      "description": "A flag indicating whether this customer will be invoiced using Stripe.",
+                      "default": false
                     },
                     "contractID": {
                       "title": "quota.contractID",
                       "type": "string",
-                      "description": "ID representing the ECP service contract, used for billing."
+                      "description": "ID representing the ECP service contract, used for billing. Required when “billUsingStripe” set to true."
+                    },
+                    "contractStartDate": {
+                      "type": "string",
+                      "title": "quota.contractStartDate",
+                      "description": "The start date of an ECP service contract. Must be a UTC date in “yyyy-MM-dd” format. Required when “contractID” is provided.",
+                      "format": "date"
                     },
                     "allowDeploymentInChina": {
                       "type": "boolean",
                       "title": "quota.allowDeploymentInChina",
                       "description": "Whether a customer is allowed to deploy their applications to ECP locations in mainland China. When this is set to false, the customer will not be allowed to pick mainland China locations or the \"CN\" region to deploy their applications.",
                       "default": false
+                    },
+                    "accountManagerEmail": {
+                      "type": "string",
+                      "title": "quota.accountManagerEmail",
+                      "description": "Email address of the account manager who manages the customer. The email address specified can be used by the account manager to receive system notifications related to the customer, e.g. in the event of trial expiration, excessive usage and service suspension.",
+                      "format": "email"
                     },
                     "description": {
                       "title": "quota.description",
@@ -14305,11 +14406,29 @@
                         }
                       }
                     },
+                    "creationTime": {
+                      "title": "",
+                      "format": "date-time",
+                      "type": "string",
+                      "description": "Datetime when the resource is created"
+                    },
                     "lastUpdateTime": {
                       "type": "string",
                       "title": "",
                       "format": "date-time",
                       "description": "Datetime when the resource is last updated"
+                    },
+                    "suspensionDate": {
+                      "type": "string",
+                      "title": "quota.suspensionDate",
+                      "description": "Datetime indicating when the status is changed from “trial” or “active” to “suspended‘. This field is updated by API server when ECP service is suspended for the customer. It cannot be set via API calls.",
+                      "format": "date-time"
+                    },
+                    "upgradeDate": {
+                      "type": "string",
+                      "title": "quota.upgradeDate",
+                      "description": "Datetime indicating when the status is changed from “trial” to “active”. This field is updated by API server when the customer as a free trial upgrades to a paid customer. It cannot be set via API calls.",
+                      "format": "date-time"
                     }
                   }
                 },
@@ -14320,6 +14439,9 @@
                       "customerID": "10003693",
                       "namespace": "demo",
                       "status": "active",
+                      "contractID": "12345",
+                      "contractStartDate": "2020-10-16",
+                      "billUsingStripe": true,
                       "description": "this is a demo",
                       "resourceQuotas": {
                         "cpu": 30,
@@ -14332,8 +14454,10 @@
                         "tagsInRegistry": 50,
                         "storageInRegistry": 10
                       },
+                      "creationTime": "2020-10-16T07:04:43Z",
                       "lastUpdateTime": "2020-10-16T07:04:43Z",
-                      "allowDeploymentInChina": false
+                      "allowDeploymentInChina": false,
+                      "accountManagerEmail": "abc@123.com"
                     }
                   }
                 }
@@ -14426,23 +14550,48 @@
                     "status": {
                       "type": "string",
                       "title": "quota.status",
-                      "description": "Status of a serviceQuota, which represents the status of ECP service subscription by a customer. If the status is set to \"suspended\", any requests from the customer will be rejected by ECP API server. Note that this status is related to ECP service only. It doesn’t affect other products subscribed by the customer.",
+                      "description": "Status of a serviceQuota, which represents the status of ECP service subscription by a customer. The “trial” status means the customer is using ECP service as a free trial. When the status is set to \"suspended\", any requests from the customer will be rejected by ECP API server. \n\nThis status is related to ECP service only. It doesn’t affect other products subscribed by the customer.",
                       "enum": [
                         "active",
-                        "suspended"
+                        "suspended",
+                        "trial"
                       ],
                       "default": "suspended"
+                    },
+                    "trialDeadline": {
+                      "type": "string",
+                      "title": "quota.trialDeadline",
+                      "description": "Date-time in RFC 3339 format indicating when the trial expires, e.g. 2021-07-01T15:00:00Z. Required only when the status is set to “trial”. Ignored otherwise. Must not be a date-time in the past. The trial must not last longer than 90 days after the trial starts.\n\nWhen trialDeadline expires, the status will be set to “suspended” and all existing ECP resources for the customer will be deleted.",
+                      "format": "date-time"
+                    },
+                    "billUsingStripe": {
+                      "type": "boolean",
+                      "title": "quota.billUsingStripe",
+                      "description": "A flag indicating whether this customer will be invoiced using Stripe.",
+                      "default": false
                     },
                     "contractID": {
                       "title": "quota.contractID",
                       "type": "string",
-                      "description": "ID representing the ECP service contract, used for billing."
+                      "description": "ID representing the ECP service contract, used for billing. Required when “billUsingStripe” set to true."
+                    },
+                    "contractStartDate": {
+                      "type": "string",
+                      "title": "quota.contractStartDate",
+                      "description": "The start date of an ECP service contract. Must be a UTC date in “yyyy-MM-dd” format. Required when “contractID” is provided.",
+                      "format": "date"
                     },
                     "allowDeploymentInChina": {
                       "type": "boolean",
                       "title": "quota.allowDeploymentInChina",
                       "description": "Whether a customer is allowed to deploy their applications to ECP locations in mainland China. When this is set to false, the customer will not be allowed to pick mainland China locations or the \"CN\" region to deploy their applications.",
                       "default": false
+                    },
+                    "accountManagerEmail": {
+                      "type": "string",
+                      "title": "quota.accountManagerEmail",
+                      "description": "Email address of the account manager who manages the customer. The email address specified can be used by the account manager to receive system notifications related to the customer, e.g. in the event of trial expiration, excessive usage and service suspension.",
+                      "format": "email"
                     },
                     "description": {
                       "title": "quota.description",
@@ -14516,11 +14665,29 @@
                         }
                       }
                     },
+                    "creationTime": {
+                      "title": "",
+                      "format": "date-time",
+                      "type": "string",
+                      "description": "Datetime when the resource is created"
+                    },
                     "lastUpdateTime": {
                       "type": "string",
                       "title": "",
                       "format": "date-time",
                       "description": "Datetime when the resource is last updated"
+                    },
+                    "suspensionDate": {
+                      "type": "string",
+                      "title": "quota.suspensionDate",
+                      "description": "Datetime indicating when the status is changed from “trial” or “active” to “suspended‘. This field is updated by API server when ECP service is suspended for the customer. It cannot be set via API calls.",
+                      "format": "date-time"
+                    },
+                    "upgradeDate": {
+                      "type": "string",
+                      "title": "quota.upgradeDate",
+                      "description": "Datetime indicating when the status is changed from “trial” to “active”. This field is updated by API server when the customer as a free trial upgrades to a paid customer. It cannot be set via API calls.",
+                      "format": "date-time"
                     }
                   }
                 },
@@ -14531,6 +14698,9 @@
                       "customerID": "10003693",
                       "namespace": "demo",
                       "status": "active",
+                      "contractID": "12345",
+                      "contractStartDate": "2020-10-16",
+                      "billUsingStripe": true,
                       "description": "this is a demo",
                       "resourceQuotas": {
                         "cpu": 30,
@@ -14543,8 +14713,10 @@
                         "tagsInRegistry": 50,
                         "storageInRegistry": 10
                       },
+                      "creationTime": "2020-10-16T07:04:43Z",
                       "lastUpdateTime": "2020-10-16T07:04:43Z",
-                      "allowDeploymentInChina": false
+                      "allowDeploymentInChina": false,
+                      "accountManagerEmail": "abc@123.com"
                     }
                   }
                 }
@@ -14586,7 +14758,7 @@
                   "InvalidStatus": {
                     "value": {
                       "error": "InvalidStatus",
-                      "message": "The status specified is invalid. Must be one of 'suspended' and 'active'"
+                      "message": "The status specified is invalid. Must be one of \"trial\", 'suspended' and 'active'"
                     }
                   },
                   "InvalidAllowDeploymentInChina": {
@@ -14623,6 +14795,60 @@
                     "value": {
                       "error": "UpdateNamespaceNotAllowed",
                       "message": "The namespace cannot be updated."
+                    }
+                  },
+                  "InvalidTrialDeadline": {
+                    "value": {
+                      "error": "InvalidTrialDeadline",
+                      "message": "Invalid parameter trialDeadline. {trialDeadline} is not a valid RFC3339 timestamp. The timestamp should be in \"yyyy-MM-dd'T'HH:mm:ss'Z'\" format."
+                    }
+                  },
+                  "InvalidTrialDeadline1": {
+                    "value": {
+                      "error": "InvalidTrialDeadline",
+                      "message": "The trialDeadline specified cannot be a time in the past."
+                    }
+                  },
+                  "InvalidTrialDeadline2": {
+                    "value": {
+                      "error": "InvalidTrialDeadline",
+                      "message": "The trial period cannot be longer than 90 days."
+                    }
+                  },
+                  "TrialDeadlineNotSpecified": {
+                    "value": {
+                      "error": "TrialDeadlineNotSpecified",
+                      "message": "The field trialDeadline is required when customer status is set to “trial”."
+                    }
+                  },
+                  "InvalidBillUsingStripe": {
+                    "value": {
+                      "error": "InvalidBillUsingStripe",
+                      "message": "The billUsingStripe specified is invalid, must be true or false."
+                    }
+                  },
+                  "ContractIDNotSpecified": {
+                    "value": {
+                      "error": "ContractIDNotSpecified",
+                      "message": "The field contractID is required when billUsingStripe is set to true."
+                    }
+                  },
+                  "ContractStartDateNotSpecified": {
+                    "value": {
+                      "error": "ContractStartDateNotSpecified",
+                      "message": "The field contractStartDate is required when contractID is specified."
+                    }
+                  },
+                  "InvalidContractStartDate": {
+                    "value": {
+                      "error": "InvalidContractStartDate",
+                      "message": "The date must be in “yyyy-MM-dd” format."
+                    }
+                  },
+                  "InvalidAccountManagerEmail": {
+                    "value": {
+                      "error": "InvalidAccountManagerEmail",
+                      "message": "The accountManagerEmail specified is not a valid email address."
                     }
                   }
                 }
@@ -14727,17 +14953,42 @@
                   "status": {
                     "type": "string",
                     "title": "quota.status",
-                    "description": "Status of a serviceQuota, which represents the status of ECP service subscription by a customer. If the status is set to \"suspended\", any requests from the customer will be rejected by ECP API server. Note that this status is related to ECP service only. It doesn’t affect other products subscribed by the customer.",
+                    "description": "Status of a serviceQuota, which represents the status of ECP service subscription by a customer. The “trial” status means the customer is using ECP service as a free trial. When the status is set to \"suspended\", any requests from the customer will be rejected by ECP API server. \n\nThis status is related to ECP service only. It doesn’t affect other products subscribed by the customer.",
                     "enum": [
                       "active",
-                      "suspended"
+                      "suspended",
+                      "trial"
                     ],
                     "default": "suspended"
+                  },
+                  "trialDeadline": {
+                    "type": "string",
+                    "title": "quota.trialDeadline",
+                    "description": "Date-time in RFC 3339 format indicating when the trial expires, e.g. 2021-07-01T15:00:00Z. Required only when the status is set to “trial”. Ignored otherwise. Must not be a date-time in the past. The trial must not last longer than 90 days after the trial starts.\n\nWhen trialDeadline expires, the status will be set to “suspended” and all existing ECP resources for the customer will be deleted.",
+                    "format": "date-time"
+                  },
+                  "billUsingStripe": {
+                    "type": "boolean",
+                    "title": "quota.billUsingStripe",
+                    "description": "A flag indicating whether this customer will be invoiced using Stripe.",
+                    "default": false
                   },
                   "contractID": {
                     "title": "quota.contractID",
                     "type": "string",
-                    "description": "ID representing the ECP service contract, used for billing."
+                    "description": "ID representing the ECP service contract, used for billing. Required when “billUsingStripe” set to true."
+                  },
+                  "contractStartDate": {
+                    "type": "string",
+                    "title": "quota.contractStartDate",
+                    "description": "The start date of an ECP service contract. Must be a UTC date in “yyyy-MM-dd” format. Required when “contractID” is provided.",
+                    "format": "date"
+                  },
+                  "accountManagerEmail": {
+                    "type": "string",
+                    "title": "quota.accountManagerEmail",
+                    "description": "Email address of the account manager who manages the customer. The email address specified can be used by the account manager to receive system notifications related to the customer, e.g. in the event of trial expiration, excessive usage and service suspension.",
+                    "format": "email"
                   },
                   "allowDeploymentInChina": {
                     "type": "boolean",
@@ -14869,10 +15120,22 @@
                   }
                 },
                 "examples": {
-                  "example-1": {
+                  "HasResource": {
                     "value": {
                       "error": "HasResource",
                       "message": "This customer still has some {ECP resources}. These resources must be removed before the service quota can be deleted."
+                    }
+                  },
+                  "InvalidServiceQuotaStatus": {
+                    "value": {
+                      "error": "InvalidServiceQuotaStatus",
+                      "message": "A serviceQuota not in “suspended” status cannot be deleted."
+                    }
+                  },
+                  "SuspensionDateTooClose": {
+                    "value": {
+                      "error": "SuspensionDateTooClose",
+                      "message": "A serviceQuota that was suspended in the last 90 days cannot be deleted."
                     }
                   }
                 }
@@ -15035,23 +15298,48 @@
                     "status": {
                       "type": "string",
                       "title": "quota.status",
-                      "description": "Status of a serviceQuota, which represents the status of ECP service subscription by a customer. If the status is set to \"suspended\", any requests from the customer will be rejected by ECP API server. Note that this status is related to ECP service only. It doesn’t affect other products subscribed by the customer.",
+                      "description": "Status of a serviceQuota, which represents the status of ECP service subscription by a customer. The “trial” status means the customer is using ECP service as a free trial. When the status is set to \"suspended\", any requests from the customer will be rejected by ECP API server. \n\nThis status is related to ECP service only. It doesn’t affect other products subscribed by the customer.",
                       "enum": [
                         "active",
-                        "suspended"
+                        "suspended",
+                        "trial"
                       ],
                       "default": "suspended"
+                    },
+                    "trialDeadline": {
+                      "type": "string",
+                      "title": "quota.trialDeadline",
+                      "description": "Date-time in RFC 3339 format indicating when the trial expires, e.g. 2021-07-01T15:00:00Z. Required only when the status is set to “trial”. Ignored otherwise. Must not be a date-time in the past. The trial must not last longer than 90 days after the trial starts.\n\nWhen trialDeadline expires, the status will be set to “suspended” and all existing ECP resources for the customer will be deleted.",
+                      "format": "date-time"
+                    },
+                    "billUsingStripe": {
+                      "type": "boolean",
+                      "title": "quota.billUsingStripe",
+                      "description": "A flag indicating whether this customer will be invoiced using Stripe.",
+                      "default": false
                     },
                     "contractID": {
                       "title": "quota.contractID",
                       "type": "string",
-                      "description": "ID representing the ECP service contract, used for billing."
+                      "description": "ID representing the ECP service contract, used for billing. Required when “billUsingStripe” set to true."
+                    },
+                    "contractStartDate": {
+                      "type": "string",
+                      "title": "quota.contractStartDate",
+                      "description": "The start date of an ECP service contract. Must be a UTC date in “yyyy-MM-dd” format. Required when “contractID” is provided.",
+                      "format": "date"
                     },
                     "allowDeploymentInChina": {
                       "type": "boolean",
                       "title": "quota.allowDeploymentInChina",
                       "description": "Whether a customer is allowed to deploy their applications to ECP locations in mainland China. When this is set to false, the customer will not be allowed to pick mainland China locations or the \"CN\" region to deploy their applications.",
                       "default": false
+                    },
+                    "accountManagerEmail": {
+                      "type": "string",
+                      "title": "quota.accountManagerEmail",
+                      "description": "Email address of the account manager who manages the customer. The email address specified can be used by the account manager to receive system notifications related to the customer, e.g. in the event of trial expiration, excessive usage and service suspension.",
+                      "format": "email"
                     },
                     "description": {
                       "title": "quota.description",
@@ -15125,11 +15413,29 @@
                         }
                       }
                     },
+                    "creationTime": {
+                      "title": "",
+                      "format": "date-time",
+                      "type": "string",
+                      "description": "Datetime when the resource is created"
+                    },
                     "lastUpdateTime": {
                       "type": "string",
                       "title": "",
                       "format": "date-time",
                       "description": "Datetime when the resource is last updated"
+                    },
+                    "suspensionDate": {
+                      "type": "string",
+                      "title": "quota.suspensionDate",
+                      "description": "Datetime indicating when the status is changed from “trial” or “active” to “suspended‘. This field is updated by API server when ECP service is suspended for the customer. It cannot be set via API calls.",
+                      "format": "date-time"
+                    },
+                    "upgradeDate": {
+                      "type": "string",
+                      "title": "quota.upgradeDate",
+                      "description": "Datetime indicating when the status is changed from “trial” to “active”. This field is updated by API server when the customer as a free trial upgrades to a paid customer. It cannot be set via API calls.",
+                      "format": "date-time"
                     }
                   }
                 },
@@ -15140,6 +15446,9 @@
                       "customerID": "10003693",
                       "namespace": "demo",
                       "status": "active",
+                      "contractID": "12345",
+                      "contractStartDate": "2020-10-16",
+                      "billUsingStripe": true,
                       "description": "this is a demo",
                       "resourceQuotas": {
                         "cpu": 30,
@@ -15152,8 +15461,10 @@
                         "tagsInRegistry": 50,
                         "storageInRegistry": 10
                       },
+                      "creationTime": "2020-10-16T07:04:43Z",
                       "lastUpdateTime": "2020-10-16T07:04:43Z",
-                      "allowDeploymentInChina": false
+                      "allowDeploymentInChina": false,
+                      "accountManagerEmail": "abc@123.com"
                     }
                   }
                 }
@@ -15246,23 +15557,48 @@
                     "status": {
                       "type": "string",
                       "title": "quota.status",
-                      "description": "Status of a serviceQuota, which represents the status of ECP service subscription by a customer. If the status is set to \"suspended\", any requests from the customer will be rejected by ECP API server. Note that this status is related to ECP service only. It doesn’t affect other products subscribed by the customer.",
+                      "description": "Status of a serviceQuota, which represents the status of ECP service subscription by a customer. The “trial” status means the customer is using ECP service as a free trial. When the status is set to \"suspended\", any requests from the customer will be rejected by ECP API server. \n\nThis status is related to ECP service only. It doesn’t affect other products subscribed by the customer.",
                       "enum": [
                         "active",
-                        "suspended"
+                        "suspended",
+                        "trial"
                       ],
                       "default": "suspended"
+                    },
+                    "trialDeadline": {
+                      "type": "string",
+                      "title": "quota.trialDeadline",
+                      "description": "Date-time in RFC 3339 format indicating when the trial expires, e.g. 2021-07-01T15:00:00Z. Required only when the status is set to “trial”. Ignored otherwise. Must not be a date-time in the past. The trial must not last longer than 90 days after the trial starts.\n\nWhen trialDeadline expires, the status will be set to “suspended” and all existing ECP resources for the customer will be deleted.",
+                      "format": "date-time"
+                    },
+                    "billUsingStripe": {
+                      "type": "boolean",
+                      "title": "quota.billUsingStripe",
+                      "description": "A flag indicating whether this customer will be invoiced using Stripe.",
+                      "default": false
                     },
                     "contractID": {
                       "title": "quota.contractID",
                       "type": "string",
-                      "description": "ID representing the ECP service contract, used for billing."
+                      "description": "ID representing the ECP service contract, used for billing. Required when “billUsingStripe” set to true."
+                    },
+                    "contractStartDate": {
+                      "type": "string",
+                      "title": "quota.contractStartDate",
+                      "description": "The start date of an ECP service contract. Must be a UTC date in “yyyy-MM-dd” format. Required when “contractID” is provided.",
+                      "format": "date"
                     },
                     "allowDeploymentInChina": {
                       "type": "boolean",
                       "title": "quota.allowDeploymentInChina",
                       "description": "Whether a customer is allowed to deploy their applications to ECP locations in mainland China. When this is set to false, the customer will not be allowed to pick mainland China locations or the \"CN\" region to deploy their applications.",
                       "default": false
+                    },
+                    "accountManagerEmail": {
+                      "type": "string",
+                      "title": "quota.accountManagerEmail",
+                      "description": "Email address of the account manager who manages the customer. The email address specified can be used by the account manager to receive system notifications related to the customer, e.g. in the event of trial expiration, excessive usage and service suspension.",
+                      "format": "email"
                     },
                     "description": {
                       "title": "quota.description",
@@ -15336,11 +15672,29 @@
                         }
                       }
                     },
+                    "creationTime": {
+                      "title": "",
+                      "format": "date-time",
+                      "type": "string",
+                      "description": "Datetime when the resource is created"
+                    },
                     "lastUpdateTime": {
                       "type": "string",
                       "title": "",
                       "format": "date-time",
                       "description": "Datetime when the resource is last updated"
+                    },
+                    "suspensionDate": {
+                      "type": "string",
+                      "title": "quota.suspensionDate",
+                      "description": "Datetime indicating when the status is changed from “trial” or “active” to “suspended‘. This field is updated by API server when ECP service is suspended for the customer. It cannot be set via API calls.",
+                      "format": "date-time"
+                    },
+                    "upgradeDate": {
+                      "type": "string",
+                      "title": "quota.upgradeDate",
+                      "description": "Datetime indicating when the status is changed from “trial” to “active”. This field is updated by API server when the customer as a free trial upgrades to a paid customer. It cannot be set via API calls.",
+                      "format": "date-time"
                     }
                   }
                 },
@@ -15351,6 +15705,9 @@
                       "customerID": "10003693",
                       "namespace": "demo",
                       "status": "active",
+                      "contractID": "12345",
+                      "contractStartDate": "2020-10-16",
+                      "billUsingStripe": true,
                       "description": "this is a demo",
                       "resourceQuotas": {
                         "cpu": 30,
@@ -15363,8 +15720,10 @@
                         "tagsInRegistry": 50,
                         "storageInRegistry": 10
                       },
+                      "creationTime": "2020-10-16T07:04:43Z",
                       "lastUpdateTime": "2020-10-16T07:04:43Z",
-                      "allowDeploymentInChina": false
+                      "allowDeploymentInChina": false,
+                      "accountManagerEmail": "abc@123.com"
                     }
                   }
                 }
@@ -15406,7 +15765,7 @@
                   "InvalidStatus": {
                     "value": {
                       "error": "InvalidStatus",
-                      "message": "The status specified is invalid. Must be one of 'suspended' and 'active'"
+                      "message": "The status specified is invalid. Must be one of \"trial\", 'suspended' and 'active'"
                     }
                   },
                   "InvalidAllowDeploymentInChina": {
@@ -15443,6 +15802,60 @@
                     "value": {
                       "error": "UpdateNamespaceNotAllowed",
                       "message": "The namespace cannot be updated."
+                    }
+                  },
+                  "InvalidTrialDeadline": {
+                    "value": {
+                      "error": "InvalidTrialDeadline",
+                      "message": "Invalid parameter trialDeadline. {trialDeadline} is not a valid RFC3339 timestamp. The timestamp should be in \"yyyy-MM-dd'T'HH:mm:ss'Z'\" format."
+                    }
+                  },
+                  "InvalidTrialDeadline1": {
+                    "value": {
+                      "error": "InvalidTrialDeadline",
+                      "message": "The trialDeadline specified cannot be a time in the past."
+                    }
+                  },
+                  "InvalidTrialDeadline2": {
+                    "value": {
+                      "error": "InvalidTrialDeadline",
+                      "message": "The trial period cannot be longer than 90 days."
+                    }
+                  },
+                  "TrialDeadlineNotSpecified": {
+                    "value": {
+                      "error": "TrialDeadlineNotSpecified",
+                      "message": "The field trialDeadline is required when customer status is set to “trial”."
+                    }
+                  },
+                  "InvalidBillUsingStripe": {
+                    "value": {
+                      "error": "InvalidBillUsingStripe",
+                      "message": "The billUsingStripe specified is invalid, must be true or false."
+                    }
+                  },
+                  "ContractIDNotSpecified": {
+                    "value": {
+                      "error": "ContractIDNotSpecified",
+                      "message": "The field contractID is required when billUsingStripe is set to true."
+                    }
+                  },
+                  "ContractStartDateNotSpecified": {
+                    "value": {
+                      "error": "ContractStartDateNotSpecified",
+                      "message": "The field contractStartDate is required when contractID is specified."
+                    }
+                  },
+                  "InvalidContractStartDate": {
+                    "value": {
+                      "error": "InvalidContractStartDate",
+                      "message": "The date must be in “yyyy-MM-dd” format."
+                    }
+                  },
+                  "InvalidAccountManagerEmail": {
+                    "value": {
+                      "error": "InvalidAccountManagerEmail",
+                      "message": "The accountManagerEmail specified is not a valid email address."
                     }
                   }
                 }
@@ -15547,17 +15960,42 @@
                   "status": {
                     "type": "string",
                     "title": "quota.status",
-                    "description": "Status of a serviceQuota, which represents the status of ECP service subscription by a customer. If the status is set to \"suspended\", any requests from the customer will be rejected by ECP API server. Note that this status is related to ECP service only. It doesn’t affect other products subscribed by the customer.",
+                    "description": "Status of a serviceQuota, which represents the status of ECP service subscription by a customer. The “trial” status means the customer is using ECP service as a free trial. When the status is set to \"suspended\", any requests from the customer will be rejected by ECP API server. \n\nThis status is related to ECP service only. It doesn’t affect other products subscribed by the customer.",
                     "enum": [
                       "active",
-                      "suspended"
+                      "suspended",
+                      "trial"
                     ],
                     "default": "suspended"
+                  },
+                  "trialDeadline": {
+                    "type": "string",
+                    "title": "quota.trialDeadline",
+                    "description": "Date-time in RFC 3339 format indicating when the trial expires, e.g. 2021-07-01T15:00:00Z. Required only when the status is set to “trial”. Ignored otherwise. Must not be a date-time in the past. The trial must not last longer than 90 days after the trial starts.\n\nWhen trialDeadline expires, the status will be set to “suspended” and all existing ECP resources for the customer will be deleted.",
+                    "format": "date-time"
+                  },
+                  "billUsingStripe": {
+                    "type": "boolean",
+                    "title": "quota.billUsingStripe",
+                    "description": "A flag indicating whether this customer will be invoiced using Stripe.",
+                    "default": false
                   },
                   "contractID": {
                     "title": "quota.contractID",
                     "type": "string",
-                    "description": "ID representing the ECP service contract, used for billing."
+                    "description": "ID representing the ECP service contract, used for billing. Required when “billUsingStripe” set to true."
+                  },
+                  "contractStartDate": {
+                    "type": "string",
+                    "title": "quota.contractStartDate",
+                    "description": "The start date of an ECP service contract. Must be a UTC date in “yyyy-MM-dd” format. Required when “contractID” is provided.",
+                    "format": "date"
+                  },
+                  "accountManagerEmail": {
+                    "type": "string",
+                    "title": "quota.accountManagerEmail",
+                    "description": "Email address of the account manager who manages the customer. The email address specified can be used by the account manager to receive system notifications related to the customer, e.g. in the event of trial expiration, excessive usage and service suspension.",
+                    "format": "email"
                   },
                   "allowDeploymentInChina": {
                     "type": "boolean",
@@ -15689,10 +16127,22 @@
                   }
                 },
                 "examples": {
-                  "example-1": {
+                  "HasResource": {
                     "value": {
                       "error": "HasResource",
                       "message": "This customer still has some {ECP resources}. These resources must be removed before the service quota can be deleted."
+                    }
+                  },
+                  "InvalidServiceQuotaStatus": {
+                    "value": {
+                      "error": "InvalidServiceQuotaStatus",
+                      "message": "A serviceQuota not in “suspended” status cannot be deleted."
+                    }
+                  },
+                  "SuspensionDateTooClose": {
+                    "value": {
+                      "error": "SuspensionDateTooClose",
+                      "message": "A serviceQuota that was suspended in the last 90 days cannot be deleted."
                     }
                   }
                 }
@@ -16592,17 +17042,10 @@
           },
           "metadata": {
             "type": "object",
-            "required": [
-              "namespace"
-            ],
             "properties": {
               "name": {
                 "type": "string",
                 "description": "Name of a \"RegionPreference\" resource. Must be the same as the query param \"appName\"."
-              },
-              "namespace": {
-                "type": "string",
-                "description": "The Kubernetes namespace created for your ECP account"
               }
             }
           },
@@ -16686,17 +17129,10 @@
           },
           "metadata": {
             "type": "object",
-            "required": [
-              "namespace"
-            ],
             "properties": {
               "name": {
                 "type": "string",
                 "description": "Name of a \"Location\" resource. Must be the same as the query param \"appName\"."
-              },
-              "namespace": {
-                "type": "string",
-                "description": "The Kubernetes namespace created for your ECP account"
               }
             }
           },
@@ -16758,17 +17194,10 @@
           },
           "metadata": {
             "type": "object",
-            "required": [
-              "namespace"
-            ],
             "properties": {
               "name": {
                 "type": "string",
                 "description": "Name of a \"LoadBalancer4\" object. Must be the same as the query param \"appName\"."
-              },
-              "namespace": {
-                "type": "string",
-                "description": "The Kubernetes namespace created for your ECP account"
               }
             }
           },
@@ -16898,17 +17327,10 @@
           },
           "metadata": {
             "type": "object",
-            "required": [
-              "namespace"
-            ],
             "properties": {
               "name": {
                 "type": "string",
                 "description": "Name of a \"StatefulSet\" resource. Must be the same as the query param \"appName\"."
-              },
-              "namespace": {
-                "type": "string",
-                "description": "The Kubernetes namespace created for your ECP account"
               }
             }
           },
@@ -17149,17 +17571,10 @@
                     },
                     "metadata": {
                       "type": "object",
-                      "required": [
-                        "namespace"
-                      ],
                       "properties": {
                         "name": {
                           "type": "string",
                           "description": "Name of a \"Deployment\" resource. Must be the same as the query param \"appName\"."
-                        },
-                        "namespace": {
-                          "type": "string",
-                          "description": "The Kubernetes namespace created for your ECP account"
                         }
                       }
                     },
@@ -17313,17 +17728,10 @@
                     },
                     "metadata": {
                       "type": "object",
-                      "required": [
-                        "namespace"
-                      ],
                       "properties": {
                         "name": {
                           "type": "string",
                           "description": "Name of a \"ReplicaSet\" resource. Must be the same as the query param \"appName\"."
-                        },
-                        "namespace": {
-                          "type": "string",
-                          "description": "The Kubernetes namespace created for your ECP account"
                         }
                       }
                     },
@@ -17477,17 +17885,10 @@
                     },
                     "metadata": {
                       "type": "object",
-                      "required": [
-                        "namespace"
-                      ],
                       "properties": {
                         "name": {
                           "type": "string",
                           "description": "Name of a \"StatefulSet\" resource. Must be the same as the query param \"appName\"."
-                        },
-                        "namespace": {
-                          "type": "string",
-                          "description": "The Kubernetes namespace created for your ECP account"
                         }
                       }
                     },
@@ -17718,17 +18119,10 @@
                 },
                 "metadata": {
                   "type": "object",
-                  "required": [
-                    "namespace"
-                  ],
                   "properties": {
                     "name": {
                       "type": "string",
                       "description": "Name of a \"LoadBalancer4\" object. Must be the same as the query param \"appName\"."
-                    },
-                    "namespace": {
-                      "type": "string",
-                      "description": "The Kubernetes namespace created for your ECP account"
                     }
                   }
                 },
@@ -17880,17 +18274,10 @@
                     },
                     "metadata": {
                       "type": "object",
-                      "required": [
-                        "namespace"
-                      ],
                       "properties": {
                         "name": {
                           "type": "string",
                           "description": "Name of a \"RegionPreference\" resource. Must be the same as the query param \"appName\"."
-                        },
-                        "namespace": {
-                          "type": "string",
-                          "description": "The Kubernetes namespace created for your ECP account"
                         }
                       }
                     },
@@ -17974,17 +18361,10 @@
                     },
                     "metadata": {
                       "type": "object",
-                      "required": [
-                        "namespace"
-                      ],
                       "properties": {
                         "name": {
                           "type": "string",
                           "description": "Name of a \"Location\" resource. Must be the same as the query param \"appName\"."
-                        },
-                        "namespace": {
-                          "type": "string",
-                          "description": "The Kubernetes namespace created for your ECP account"
                         }
                       }
                     },
@@ -18054,17 +18434,10 @@
           },
           "metadata": {
             "type": "object",
-            "required": [
-              "namespace"
-            ],
             "properties": {
               "name": {
                 "type": "string",
                 "description": "Name of a \"ReplicaSet\" resource. Must be the same as the query param \"appName\"."
-              },
-              "namespace": {
-                "type": "string",
-                "description": "The Kubernetes namespace created for your ECP account"
               }
             }
           },
@@ -18218,17 +18591,10 @@
           },
           "metadata": {
             "type": "object",
-            "required": [
-              "namespace"
-            ],
             "properties": {
               "name": {
                 "type": "string",
                 "description": "Name of a \"Deployment\" resource. Must be the same as the query param \"appName\"."
-              },
-              "namespace": {
-                "type": "string",
-                "description": "The Kubernetes namespace created for your ECP account"
               }
             }
           },
@@ -18404,17 +18770,10 @@
               },
               "metadata": {
                 "type": "object",
-                "required": [
-                  "namespace"
-                ],
                 "properties": {
                   "name": {
                     "type": "string",
                     "description": "Name of a \"RegionPreference\" resource. Must be the same as the query param \"appName\"."
-                  },
-                  "namespace": {
-                    "type": "string",
-                    "description": "The Kubernetes namespace created for your ECP account"
                   }
                 }
               },
@@ -18498,17 +18857,10 @@
               },
               "metadata": {
                 "type": "object",
-                "required": [
-                  "namespace"
-                ],
                 "properties": {
                   "name": {
                     "type": "string",
                     "description": "Name of a \"Location\" resource. Must be the same as the query param \"appName\"."
-                  },
-                  "namespace": {
-                    "type": "string",
-                    "description": "The Kubernetes namespace created for your ECP account"
                   }
                 }
               },
@@ -18578,17 +18930,10 @@
               },
               "metadata": {
                 "type": "object",
-                "required": [
-                  "namespace"
-                ],
                 "properties": {
                   "name": {
                     "type": "string",
                     "description": "Name of a \"Deployment\" resource. Must be the same as the query param \"appName\"."
-                  },
-                  "namespace": {
-                    "type": "string",
-                    "description": "The Kubernetes namespace created for your ECP account"
                   }
                 }
               },
@@ -18742,17 +19087,10 @@
               },
               "metadata": {
                 "type": "object",
-                "required": [
-                  "namespace"
-                ],
                 "properties": {
                   "name": {
                     "type": "string",
                     "description": "Name of a \"ReplicaSet\" resource. Must be the same as the query param \"appName\"."
-                  },
-                  "namespace": {
-                    "type": "string",
-                    "description": "The Kubernetes namespace created for your ECP account"
                   }
                 }
               },
@@ -18906,17 +19244,10 @@
               },
               "metadata": {
                 "type": "object",
-                "required": [
-                  "namespace"
-                ],
                 "properties": {
                   "name": {
                     "type": "string",
                     "description": "Name of a \"StatefulSet\" resource. Must be the same as the query param \"appName\"."
-                  },
-                  "namespace": {
-                    "type": "string",
-                    "description": "The Kubernetes namespace created for your ECP account"
                   }
                 }
               },
@@ -19544,17 +19875,18 @@
       "quota.status": {
         "type": "string",
         "title": "quota.status",
-        "description": "Status of a serviceQuota, which represents the status of ECP service subscription by a customer. If the status is set to \"suspended\", any requests from the customer will be rejected by ECP API server. Note that this status is related to ECP service only. It doesn’t affect other products subscribed by the customer.",
+        "description": "Status of a serviceQuota, which represents the status of ECP service subscription by a customer. The “trial” status means the customer is using ECP service as a free trial. When the status is set to \"suspended\", any requests from the customer will be rejected by ECP API server. \n\nThis status is related to ECP service only. It doesn’t affect other products subscribed by the customer.",
         "enum": [
           "active",
-          "suspended"
+          "suspended",
+          "trial"
         ],
         "default": "suspended"
       },
       "quota.contractID": {
         "title": "quota.contractID",
         "type": "string",
-        "description": "ID representing the ECP service contract, used for billing."
+        "description": "ID representing the ECP service contract, used for billing. Required when “billUsingStripe” set to true."
       },
       "quota.allowDeploymentInChina": {
         "type": "boolean",
@@ -19779,6 +20111,42 @@
             }
           }
         }
+      },
+      "quota.contractStartDate": {
+        "type": "string",
+        "title": "quota.contractStartDate",
+        "description": "The start date of an ECP service contract. Must be a UTC date in “yyyy-MM-dd” format. Required when “contractID” is provided.",
+        "format": "date"
+      },
+      "quota.accountManagerEmail": {
+        "type": "string",
+        "title": "quota.accountManagerEmail",
+        "description": "Email address of the account manager who manages the customer. The email address specified can be used by the account manager to receive system notifications related to the customer, e.g. in the event of trial expiration, excessive usage and service suspension.",
+        "format": "email"
+      },
+      "quota.trialDeadline": {
+        "type": "string",
+        "title": "quota.trialDeadline",
+        "description": "Date-time in RFC 3339 format indicating when the trial expires, e.g. 2021-07-01T15:00:00Z. Required only when the status is set to “trial”. Ignored otherwise. Must not be a date-time in the past. The trial must not last longer than 90 days after the trial starts.\n\nWhen trialDeadline expires, the status will be set to “suspended” and all existing ECP resources for the customer will be deleted.",
+        "format": "date-time"
+      },
+      "quota.billUsingStripe": {
+        "type": "boolean",
+        "title": "quota.billUsingStripe",
+        "description": "A flag indicating whether this customer will be invoiced using Stripe.",
+        "default": false
+      },
+      "quota.suspensionDate": {
+        "type": "string",
+        "title": "quota.suspensionDate",
+        "description": "Datetime indicating when the status is changed from “trial” or “active” to “suspended‘. This field is updated by API server when ECP service is suspended for the customer. It cannot be set via API calls.",
+        "format": "date-time"
+      },
+      "quota.upgradeDate": {
+        "type": "string",
+        "title": "quota.upgradeDate",
+        "description": "Datetime indicating when the status is changed from “trial” to “active”. This field is updated by API server when the customer as a free trial upgrades to a paid customer. It cannot be set via API calls.",
+        "format": "date-time"
       }
     },
     "parameters": {
@@ -20169,7 +20537,7 @@
       "app.InvalidResourceRequirement": {
         "value": {
           "error": "InvalidResourceRequirement",
-          "message": "The resource requirement is invalid. Can be: The requests.cpu of a container should not be lower than 0.05 core. The sum of limits.cpu of a pod should not be higher than 24 cores. The requests.cpu should be less than or equal to limits.cpu. The CPU requirement (measured in cores) should be expressed in plain numbers or with m suffix. The requests.mem of a container should not be lower than 50MB. The sum of limits.mem of a pod should not be higher than 128GB. The requests.mem should be less than or equal to limits.mem. The memory requirement (measured in bytes) should be expressed in plain numbers or with these suffixes: E, P, T, G, M, K, Ei, Pi, Ti, Gi, Mi, Ki. The requests.storage of a PVC should be not lower than 500MB and not higher than 100GB. The storage requirement (measured in bytes) should be expressed in plain numbers or with these suffixes: E, P, T, G, M, K, Ei, Pi, Ti, Gi, Mi, Ki."
+          "message": "The resource requirement is invalid. Can be: The limits.cpu of a container should not be lower than 0.05 core. The sum of limits.cpu of a pod should not be higher than 24 cores. The requests.cpu should be equal to limits.cpu. The limits.mem of a container should not be lower than 50MB. The sum of limits.mem of a pod should not be higher than 128GB. The requests.mem should be equal to limits.mem. The requests.storage of a PVC should be not lower than 500MB and not higher than 100GB."
         }
       },
       "app.PoPDoesNotExist": {
@@ -20435,7 +20803,7 @@
       "quota.InvalidStatus": {
         "value": {
           "error": "InvalidStatus",
-          "message": "The status specified is invalid. Must be one of 'suspended' and 'active'"
+          "message": "The status specified is invalid. Must be one of \"trial\", 'suspended' and 'active'"
         }
       },
       "quota.InvalidAllowDeploymentInChina": {
@@ -20484,6 +20852,72 @@
         "value": {
           "error": "InvalidCustomerID",
           "message": "The customerID given does not exist or the caller does not have permission to access it."
+        }
+      },
+      "quota.InvalidTrialDeadline": {
+        "value": {
+          "error": "InvalidTrialDeadline",
+          "message": "Invalid parameter trialDeadline. {trialDeadline} is not a valid RFC3339 timestamp. The timestamp should be in \"yyyy-MM-dd'T'HH:mm:ss'Z'\" format."
+        }
+      },
+      "quota.InvalidTrialDeadline1": {
+        "value": {
+          "error": "InvalidTrialDeadline",
+          "message": "The trialDeadline specified cannot be a time in the past."
+        }
+      },
+      "quota.InvalidTrialDeadline2": {
+        "value": {
+          "error": "InvalidTrialDeadline",
+          "message": "The trial period cannot be longer than 90 days."
+        }
+      },
+      "quota.TrialDeadlineNotSpecified": {
+        "value": {
+          "error": "TrialDeadlineNotSpecified",
+          "message": "The field trialDeadline is required when customer status is set to “trial”."
+        }
+      },
+      "quota.InvalidBillUsingStripe": {
+        "value": {
+          "error": "InvalidBillUsingStripe",
+          "message": "The billUsingStripe specified is invalid, must be true or false."
+        }
+      },
+      "quota.ContractIDNotSpecified": {
+        "value": {
+          "error": "ContractIDNotSpecified",
+          "message": "The field contractID is required when billUsingStripe is set to true."
+        }
+      },
+      "quota.ContractStartDateNotSpecified": {
+        "value": {
+          "error": "ContractStartDateNotSpecified",
+          "message": "The field contractStartDate is required when contractID is specified."
+        }
+      },
+      "quota.InvalidContractStartDate": {
+        "value": {
+          "error": "InvalidContractStartDate",
+          "message": "The date must be in “yyyy-MM-dd” format."
+        }
+      },
+      "quota.InvalidAccountManagerEmail": {
+        "value": {
+          "error": "InvalidAccountManagerEmail",
+          "message": "The accountManagerEmail specified is not a valid email address."
+        }
+      },
+      "quota.InvalidServiceQuotaStatus": {
+        "value": {
+          "error": "InvalidServiceQuotaStatus",
+          "message": "A serviceQuota not in “suspended” status cannot be deleted."
+        }
+      },
+      "quota.SuspensionDateTooClose": {
+        "value": {
+          "error": "SuspensionDateTooClose",
+          "message": "A serviceQuota that was suspended in the last 90 days cannot be deleted."
         }
       }
     }
