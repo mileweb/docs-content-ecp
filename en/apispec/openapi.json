@@ -9283,7 +9283,7 @@
                   "InvalidListLimit": {
                     "value": {
                       "error": "InvalidListLimit",
-                      "message": "The value of limit must be a valid integer between 1 and 200, both inclusive."
+                      "message": "The value of limit must be a valid integer between 1 and 100, both inclusive."
                     }
                   }
                 }
@@ -9334,14 +9334,13 @@
           {
             "name": "limit",
             "in": "query",
-            "description": "Maximum number of resources to return",
-            "required": false,
             "schema": {
               "type": "integer",
-              "default": 100,
-              "maximum": 200,
-              "minimum": 1
-            }
+              "default": 10,
+              "minimum": 1,
+              "maximum": 100
+            },
+            "description": "Indicates the maximum nuber of resources to return."
           }
         ]
       },
@@ -9415,8 +9414,14 @@
                   },
                   "InvalidVulnerabilitySeverity": {
                     "value": {
-                      "error": "InvalidVulnerabilitySeverity",
-                      "message": "The vulnerability severity {severity} specified is invalid. Must be one of “negligible”, “low”, “medium”, and “high”."
+                      "error": "InvalidVulnerabilitySeverity,",
+                      "message": "The vulnerability severity {severity} specified is invalid. Must be one of “none”, “low”, “medium”, “high”, and \"critical\"."
+                    }
+                  },
+                  "StorageLimitTooHigh": {
+                    "value": {
+                      "error": "StorageQuotaTooHigh",
+                      "message": "xxx storage quota is requested for the new project, but the customer only has an available global quota of xxx."
                     }
                   }
                 }
@@ -9525,16 +9530,23 @@
                     "description": "If \"preventVulnerable\" is enabled and the vulnerability of an image is equal to or higher than severity defined here, the image can't be pulled.",
                     "default": "low",
                     "enum": [
-                      "negligible",
+                      "none",
                       "low",
                       "medium",
-                      "high"
+                      "high",
+                      "critical"
                     ]
                   },
                   "autoScan": {
                     "title": "",
                     "type": "boolean",
                     "description": "Whether to scan images automatically when images are pushed to registry. Default to false."
+                  },
+                  "storageLimit": {
+                    "type": "integer",
+                    "title": "project.storageLimit",
+                    "description": "Storage quota limiting the size of all images stored under the project. Measured in GB. \nThe sum of storageLimits of all projects for a same customer must not exceed the limit specified in the “serviceQuotas.resourcequotas.storageInRegistry”.",
+                    "default": 5
                   }
                 },
                 "required": [
@@ -9547,7 +9559,8 @@
                     "name": "demoproject",
                     "preventVulnerable": true,
                     "severity": "medium",
-                    "autoScan": true
+                    "autoScan": true,
+                    "storageLimit": 3
                   }
                 }
               }
@@ -9645,16 +9658,32 @@
                           "description": "If \"preventVulnerable\" is enabled and the vulnerability of an image is equal to or higher than severity defined here, the image can't be pulled.",
                           "default": "low",
                           "enum": [
-                            "negligible",
+                            "none",
                             "low",
                             "medium",
-                            "high"
+                            "high",
+                            "critical"
                           ]
                         },
                         "autoScan": {
                           "title": "",
                           "type": "boolean",
                           "description": "Whether to scan images automatically when images are pushed to registry. Default to false."
+                        }
+                      }
+                    },
+                    "storageLimit": {
+                      "title": "project.storageLimit(Status)",
+                      "type": "object",
+                      "description": "Storage quota limiting the size of all images stored under the project.",
+                      "properties": {
+                        "hard": {
+                          "type": "integer",
+                          "description": "Hard limit of storage quota. Measured in bytes."
+                        },
+                        "used": {
+                          "type": "integer",
+                          "description": "Storage quota already consumed. Measured in bytes."
                         }
                       }
                     }
@@ -9674,6 +9703,10 @@
                         "preventVulnerable": true,
                         "severity": "medium",
                         "autoScan": true
+                      },
+                      "storageLimit": {
+                        "hard": 5000000000,
+                        "used": 3000000000
                       }
                     }
                   }
@@ -9683,6 +9716,17 @@
           },
           "404": {
             "description": "Not Found",
+            "headers": {
+              "Qtl-Request-Id": {
+                "name": "Qtl-Request-Id",
+                "in": "header",
+                "description": "A string automatically generated by the api server to identify each request.",
+                "required": false,
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
             "content": {
               "application/json": {
                 "schema": {
@@ -9699,21 +9743,13 @@
                   }
                 },
                 "examples": {
-                  "example-1": {
+                  "ProjectNotFound": {
                     "value": {
                       "error": "ProjectNotFound",
                       "message": "The project ID given does not exist."
                     }
                   }
                 }
-              }
-            },
-            "headers": {
-              "Qtl-Request-Id": {
-                "schema": {
-                  "type": "string"
-                },
-                "description": "A string automatically generated by the api server to identify each request."
               }
             }
           }
@@ -9805,16 +9841,32 @@
                           "description": "If \"preventVulnerable\" is enabled and the vulnerability of an image is equal to or higher than severity defined here, the image can't be pulled.",
                           "default": "low",
                           "enum": [
-                            "negligible",
+                            "none",
                             "low",
                             "medium",
-                            "high"
+                            "high",
+                            "critical"
                           ]
                         },
                         "autoScan": {
                           "title": "",
                           "type": "boolean",
                           "description": "Whether to scan images automatically when images are pushed to registry. Default to false."
+                        }
+                      }
+                    },
+                    "storageLimit": {
+                      "title": "project.storageLimit(Status)",
+                      "type": "object",
+                      "description": "Storage quota limiting the size of all images stored under the project.",
+                      "properties": {
+                        "hard": {
+                          "type": "integer",
+                          "description": "Hard limit of storage quota. Measured in bytes."
+                        },
+                        "used": {
+                          "type": "integer",
+                          "description": "Storage quota already consumed. Measured in bytes."
                         }
                       }
                     }
@@ -9834,6 +9886,10 @@
                         "preventVulnerable": true,
                         "severity": "medium",
                         "autoScan": true
+                      },
+                      "storageLimit": {
+                        "hard": 5000000000,
+                        "used": 3000000000
                       }
                     }
                   }
@@ -9872,14 +9928,26 @@
                 "examples": {
                   "InvalidVulnerabilitySeverity": {
                     "value": {
-                      "error": "InvalidVulnerabilitySeverity",
-                      "message": "The vulnerability severity {severity} specified is invalid. Must be one of “negligible”, “low”, “medium”, and “high”."
+                      "error": "InvalidVulnerabilitySeverity,",
+                      "message": "The vulnerability severity {severity} specified is invalid. Must be one of “none”, “low”, “medium”, “high”, and \"critical\"."
                     }
                   },
                   "UpdateProjectNameNotAllowed": {
                     "value": {
                       "error": "UpdateProjectNameNotAllowed",
                       "message": "The project name cannot be updated."
+                    }
+                  },
+                  "StorageQuotaTooHigh": {
+                    "value": {
+                      "error": "StorageQuotaTooHigh",
+                      "message": "xxx storage quota is requested for the new project, but the customer only has an available global quota of xxx."
+                    }
+                  },
+                  "StorageQuotaTooLow": {
+                    "value": {
+                      "error": "StorageQuotaTooLow",
+                      "message": "The storage quota requested cannot be lower than the storage space already consumed."
                     }
                   }
                 }
@@ -9924,6 +9992,17 @@
           },
           "404": {
             "description": "Not Found",
+            "headers": {
+              "Qtl-Request-Id": {
+                "name": "Qtl-Request-Id",
+                "in": "header",
+                "description": "A string automatically generated by the api server to identify each request.",
+                "required": false,
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
             "content": {
               "application/json": {
                 "schema": {
@@ -9940,21 +10019,13 @@
                   }
                 },
                 "examples": {
-                  "example-1": {
+                  "ProjectNotFound": {
                     "value": {
                       "error": "ProjectNotFound",
                       "message": "The project ID given does not exist."
                     }
                   }
                 }
-              }
-            },
-            "headers": {
-              "Qtl-Request-Id": {
-                "schema": {
-                  "type": "string"
-                },
-                "description": "A string automatically generated by the api server to identify each request."
               }
             }
           }
@@ -9980,16 +10051,23 @@
                     "description": "If \"preventVulnerable\" is enabled and the vulnerability of an image is equal to or higher than severity defined here, the image can't be pulled.",
                     "default": "low",
                     "enum": [
-                      "negligible",
+                      "none",
                       "low",
                       "medium",
-                      "high"
+                      "high",
+                      "critical"
                     ]
                   },
                   "autoScan": {
                     "title": "",
                     "type": "boolean",
                     "description": "Whether to scan images automatically when images are pushed to registry. Default to false."
+                  },
+                  "storageLimit": {
+                    "type": "integer",
+                    "title": "project.storageLimit",
+                    "description": "Storage quota limiting the size of all images stored under the project. Measured in GB. \nThe sum of storageLimits of all projects for a same customer must not exceed the limit specified in the “serviceQuotas.resourcequotas.storageInRegistry”.",
+                    "default": 5
                   }
                 }
               },
@@ -10023,6 +10101,48 @@
               }
             }
           },
+          "400": {
+            "description": "The request is invalid. Refer to response body for details.",
+            "headers": {
+              "Qtl-Request-Id": {
+                "name": "Qtl-Request-Id",
+                "in": "header",
+                "description": "A string automatically generated by the api server to identify each request.",
+                "required": false,
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "",
+                  "type": "object",
+                  "description": "A standard error object.",
+                  "x-tags": [
+                    "Common"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "examples": {
+                  "example-1": {
+                    "value": {
+                      "error": "ProjectHasRepositories",
+                      "message": "The project contains repositories. Please delete the repositories first."
+                    }
+                  }
+                }
+              }
+            }
+          },
           "403": {
             "description": "This error is returned if the API call is not permitted. Refer to response body for details.",
             "content": {
@@ -10061,6 +10181,17 @@
           },
           "404": {
             "description": "Not Found",
+            "headers": {
+              "Qtl-Request-Id": {
+                "name": "Qtl-Request-Id",
+                "in": "header",
+                "description": "A string automatically generated by the api server to identify each request.",
+                "required": false,
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
             "content": {
               "application/json": {
                 "schema": {
@@ -10077,21 +10208,13 @@
                   }
                 },
                 "examples": {
-                  "example-1": {
+                  "ProjectNotFound": {
                     "value": {
                       "error": "ProjectNotFound",
                       "message": "The project ID given does not exist."
                     }
                   }
                 }
-              }
-            },
-            "headers": {
-              "Qtl-Request-Id": {
-                "schema": {
-                  "type": "string"
-                },
-                "description": "A string automatically generated by the api server to identify each request."
               }
             }
           }
@@ -10152,13 +10275,19 @@
                             "type": "string",
                             "description": "Name of user who performs the operation. \n\nNote that an operation against the registry might be executed via API, customer portal, or docker CLI. If the username returned here is “admin”, it means the operation is performed by either an admin API account or a portal contact (“admin” doesn’t represent any registry user). Otherwise, it means the operation is performed by a registry user via docker CLI."
                           },
-                          "repo": {
+                          "resource": {
                             "type": "string",
-                            "description": "Name of repository affected by the operation"
+                            "description": "Resource affected by the operation"
                           },
-                          "tag": {
+                          "resourceType": {
                             "type": "string",
-                            "description": "Tag affected by the operation"
+                            "description": "Type of resource affected by the operation",
+                            "enum": [
+                              "project",
+                              "repository",
+                              "artifact",
+                              "tag"
+                            ]
                           },
                           "operation": {
                             "type": "string",
@@ -10191,16 +10320,16 @@
                         {
                           "logID": "2",
                           "username": "repouser1",
-                          "repo": "testproj1/nginx",
-                          "tag": "v1",
+                          "resource": "testproj1/myapp:sha256:0a4cbab707e727ce0b9d392645aa278ec530535239905f45010c3c91dfebff14",
+                          "resourceType": "artifact",
                           "operation": "push",
                           "timestamp": "2020-10-14T07:52:56Z"
                         },
                         {
                           "logID": "1",
                           "username": "admin",
-                          "repo": "testproj1/",
-                          "tag": "N/A",
+                          "resource": "testproj1/",
+                          "resourceType": "project",
                           "operation": "create",
                           "timestamp": "2020-10-14T07:38:31Z"
                         }
@@ -10267,6 +10396,18 @@
                       "error": "InvalidRange",
                       "message": "The max time span must be no more than 366 days."
                     }
+                  },
+                  "InvalidOperation": {
+                    "value": {
+                      "error": "InvalidOperation",
+                      "message": "The value of the “operation” parameter is invalid. Must be “pull”, “push”, “create”, or “delete”."
+                    }
+                  },
+                  "InvalidResourceType": {
+                    "value": {
+                      "error": "InvalidResourceType",
+                      "message": "The value of the “resourceType” parameter is invalid. Must be “project”, “repository”, “artifact”, or “tag”."
+                    }
                   }
                 }
               }
@@ -10274,6 +10415,17 @@
           },
           "404": {
             "description": "Not Found",
+            "headers": {
+              "Qtl-Request-Id": {
+                "name": "Qtl-Request-Id",
+                "in": "header",
+                "description": "A string automatically generated by the api server to identify each request.",
+                "required": false,
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
             "content": {
               "application/json": {
                 "schema": {
@@ -10290,21 +10442,13 @@
                   }
                 },
                 "examples": {
-                  "example-1": {
+                  "ProjectNotFound": {
                     "value": {
                       "error": "ProjectNotFound",
                       "message": "The project ID given does not exist."
                     }
                   }
                 }
-              }
-            },
-            "headers": {
-              "Qtl-Request-Id": {
-                "schema": {
-                  "type": "string"
-                },
-                "description": "A string automatically generated by the api server to identify each request."
               }
             }
           }
@@ -10334,16 +10478,22 @@
               "type": "string"
             },
             "in": "query",
-            "name": "repository",
-            "description": "Name of a repository. Use this parameter to filter access logs related to a specific repository."
+            "name": "resource",
+            "description": "Give a resource name to filter access logs for that resource."
           },
           {
             "schema": {
-              "type": "string"
+              "type": "string",
+              "enum": [
+                "project",
+                "repository",
+                "artifact",
+                "tag"
+              ]
             },
             "in": "query",
-            "name": "tag",
-            "description": "Name of an image tag under a repository. Use this parameter to filter access logs related to a specific tag."
+            "name": "resourceType",
+            "description": "Type of resource."
           },
           {
             "schema": {
@@ -10388,11 +10538,10 @@
           {
             "name": "limit",
             "in": "query",
-            "required": false,
             "schema": {
               "type": "integer",
-              "default": 100,
-              "minimum": 0,
+              "default": 10,
+              "minimum": 1,
               "maximum": 100
             },
             "description": "Indicates the maximum nuber of resources to return."
@@ -10466,10 +10615,10 @@
                             "type": "integer",
                             "description": "The number of image pulls from an image repository"
                           },
-                          "tagsCount": {
-                            "title": "",
+                          "artifactsCount": {
+                            "title": "repo.artifactsCount",
                             "type": "integer",
-                            "description": "The number of tags in an image repository"
+                            "description": "Number of artifacts pushed to a repository"
                           },
                           "creationTime": {
                             "title": "",
@@ -10503,7 +10652,7 @@
                           "projectID": 3,
                           "description": "this is a demo",
                           "pullCount": 0,
-                          "tagsCount": 1,
+                          "artifactsCount": 1,
                           "creationTime": "2020-12-16T03:18:05Z",
                           "lastUpdateTime": "2020-12-16T03:18:05Z"
                         },
@@ -10513,7 +10662,7 @@
                           "projectID": 3,
                           "description": "this is a demo",
                           "pullCount": 1,
-                          "tagsCount": 2,
+                          "artifactsCount": 2,
                           "creationTime": "2020-10-14T07:52:56Z",
                           "lastUpdateTime": "2020-12-23T08:36:03Z"
                         }
@@ -10572,6 +10721,17 @@
           },
           "404": {
             "description": "Not Found",
+            "headers": {
+              "Qtl-Request-Id": {
+                "name": "Qtl-Request-Id",
+                "in": "header",
+                "description": "A string automatically generated by the api server to identify each request.",
+                "required": false,
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
             "content": {
               "application/json": {
                 "schema": {
@@ -10588,7 +10748,7 @@
                   }
                 },
                 "examples": {
-                  "example-1": {
+                  "ProjectNotFound": {
                     "value": {
                       "error": "ProjectNotFound",
                       "message": "The project ID given does not exist."
@@ -10596,19 +10756,11 @@
                   }
                 }
               }
-            },
-            "headers": {
-              "Qtl-Request-Id": {
-                "schema": {
-                  "type": "string"
-                },
-                "description": "A string automatically generated by the api server to identify each request."
-              }
             }
           }
         },
         "operationId": "get-registry-project-repositories",
-        "description": "A repository is a collection of related container images that usually represent different versions of the same application. Repositories are stored and managed under registry projects. \n\nTo create a new repository on ECP, tag your image and hit the command \"docker push registry-qcc.quantil.com/{project-name}/{repo-name}:{tag}\" in your docker environment. A new repository will be created automatically using the {repo-name} parameter. The image will be pushed to the ECP registry and stored under the repository.\n\nThis interface allows you to list repositories under a specific registry project.",
+        "description": "A repository is a collection of related container images that usually represent different versions of the same application. Repositories are stored and managed under registry projects. \n\nTo create a new repository on ECP, tag your image using the format \"registry-qcc.quantil.com/<project-name>/<repo-name>:<tag>\" and push the image to ECP registry. A new repository will be created automatically using the {repo-name} parameter. The image will be pushed to the ECP registry and stored under the repository.\n\nThis interface allows you to list repositories under a specific registry project.",
         "parameters": [
           {
             "name": "On-Behalf-Of",
@@ -10641,11 +10793,10 @@
           {
             "name": "limit",
             "in": "query",
-            "required": false,
             "schema": {
               "type": "integer",
-              "default": 100,
-              "minimum": 0,
+              "default": 10,
+              "minimum": 1,
               "maximum": 100
             },
             "description": "Indicates the maximum nuber of resources to return."
@@ -10722,10 +10873,10 @@
                       "type": "integer",
                       "description": "The number of image pulls from an image repository"
                     },
-                    "tagsCount": {
-                      "title": "",
+                    "artifactsCount": {
+                      "title": "repo.artifactsCount",
                       "type": "integer",
-                      "description": "The number of tags in an image repository"
+                      "description": "Number of artifacts pushed to a repository"
                     },
                     "creationTime": {
                       "title": "",
@@ -10749,7 +10900,7 @@
                       "projectID": 3,
                       "description": "this is a demo",
                       "pullCount": 1,
-                      "tagsCount": 1,
+                      "artifactsCount": 1,
                       "creationTime": "2020-12-16T03:18:05Z",
                       "lastUpdateTime": "2020-12-16T03:18:05Z"
                     }
@@ -10796,7 +10947,7 @@
                   "RepositoryNotFound": {
                     "value": {
                       "error": "RepositoryNotFound",
-                      "message": "The repository {repository} given does not exist."
+                      "message": "The repository {repository} given does not exist"
                     }
                   }
                 }
@@ -10864,10 +11015,10 @@
                       "type": "integer",
                       "description": "The number of image pulls from an image repository"
                     },
-                    "tagsCount": {
-                      "title": "",
+                    "artifactsCount": {
+                      "title": "repo.artifactsCount",
                       "type": "integer",
-                      "description": "The number of tags in an image repository"
+                      "description": "Number of artifacts pushed to a repository"
                     },
                     "creationTime": {
                       "title": "",
@@ -10891,7 +11042,7 @@
                       "projectID": 3,
                       "description": "this is a demo",
                       "pullCount": 1,
-                      "tagsCount": 1,
+                      "artifactsCount": 1,
                       "creationTime": "2020-12-16T03:18:05Z",
                       "lastUpdateTime": "2020-12-16T03:18:05Z"
                     }
@@ -10974,7 +11125,7 @@
                   "RepositoryNotFound": {
                     "value": {
                       "error": "RepositoryNotFound",
-                      "message": "The repository {repository} given does not exist."
+                      "message": "The repository {repository} given does not exist"
                     }
                   }
                 }
@@ -10982,7 +11133,7 @@
             }
           }
         },
-        "description": "Update the description of an image repository. Note that only your \"admin\" apiAccount is allowed to make this call.",
+        "description": "Update the description of an image repository. Only your \"admin\" apiAccount is allowed to make this call.",
         "requestBody": {
           "content": {
             "application/json": {
@@ -11102,7 +11253,7 @@
                   "RepositoryNotFound": {
                     "value": {
                       "error": "RepositoryNotFound",
-                      "message": "The repository {repository} given does not exist."
+                      "message": "The repository {repository} given does not exist"
                     }
                   }
                 }
@@ -11113,10 +11264,10 @@
         "tags": [
           "Registry Projects"
         ],
-        "description": "Delete an existing image repository. Note that deleting an image repository will cause all tags under the repository to be deleted. Also note that only your “admin” apiAccount is allowed to make this call."
+        "description": "Delete an existing image repository. Only your “admin” apiAccount is allowed to make this call.\n\nDeleting an image repository will cause all artifacts and tags under the repository to be deleted."
       }
     },
-    "/ecp/v1/registry/projects/{projectID}/repositories/{repository}/tags": {
+    "/ecp/v1/registry/projects/{projectID}/repositories/{repository}/artifacts": {
       "parameters": [
         {
           "schema": {
@@ -11138,13 +11289,13 @@
         }
       ],
       "get": {
-        "summary": "Query list of tags under a repository",
+        "summary": "Query list of artifacts under a repository",
         "tags": [
           "Registry Projects"
         ],
         "responses": {
           "200": {
-            "description": "This response contains a list of tags.",
+            "description": "This response contains a list of artifacts.",
             "headers": {
               "Qtl-Request-Id": {
                 "name": "Qtl-Request-Id",
@@ -11161,69 +11312,82 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "tags": {
+                    "artifacts": {
                       "type": "array",
                       "items": {
                         "title": "",
                         "type": "object",
                         "description": "",
                         "properties": {
-                          "name": {
+                          "artifactID": {
                             "type": "string",
-                            "description": "Name of a tag"
+                            "description": "ID of an artifact"
                           },
                           "digest": {
                             "type": "string",
-                            "description": "Digest of a tag"
+                            "description": "Digest of an artifact"
                           },
                           "size": {
                             "type": "integer",
-                            "description": "Size of the image, measured in bytes"
+                            "description": "Size of the artifact, measured in bytes"
                           },
                           "architecture": {
                             "type": "string",
-                            "description": "Architecture of the image"
+                            "description": "The architecture that the artifact applies to"
                           },
                           "os": {
                             "type": "string",
-                            "description": "OS of the image"
-                          },
-                          "dockerVersion": {
-                            "type": "string",
-                            "description": "The version of docker which builds the image"
+                            "description": "The os that the artifact applies to"
                           },
                           "author": {
                             "type": "string",
-                            "description": "Author of the image"
+                            "description": "Author of the artifact"
+                          },
+                          "pushTime": {
+                            "type": "string",
+                            "description": "Datetime when the artifact is pushed"
+                          },
+                          "pullTime": {
+                            "type": "string",
+                            "description": "Datetime when the artifact is last pulled"
                           },
                           "creationTime": {
                             "type": "string",
-                            "description": "Datetime when the image is built"
+                            "description": "Datetime when the artifact is built"
                           },
                           "scanOverview": {
                             "type": "object",
-                            "description": "Overview of previous scan result",
+                            "description": "Overview of the previous scan result. If the artifact is not scanned, this object will not be returned.",
                             "properties": {
                               "status": {
                                 "type": "string",
                                 "description": "Status of the scan",
                                 "enum": [
-                                  "pending",
-                                  "running",
-                                  "finished",
-                                  "error"
+                                  "Pending",
+                                  "Scheduled",
+                                  "Running",
+                                  "Stopped",
+                                  "Error",
+                                  "Success"
                                 ]
+                              },
+                              "completePercent": {
+                                "type": "integer",
+                                "description": "Completion percentage of the scan",
+                                "minimum": 0,
+                                "maximum": 100
                               },
                               "severity": {
                                 "type": "string",
                                 "description": "High-level severity rating",
                                 "enum": [
-                                  "Not scanned",
-                                  "Negligible",
+                                  "None",
                                   "Unknown",
+                                  "Negligible",
                                   "Low",
                                   "Medium",
-                                  "High"
+                                  "High",
+                                  "Critical"
                                 ]
                               },
                               "started": {
@@ -11234,38 +11398,73 @@
                                 "type": "string",
                                 "description": "Datetime when the scan is completed"
                               },
-                              "components": {
+                              "summary": {
                                 "type": "object",
-                                "description": "The components overview of the image",
+                                "description": "Summary of found vulnerabilities",
                                 "properties": {
                                   "total": {
-                                    "description": "Total number of the components in this image",
-                                    "type": "integer"
+                                    "type": "integer",
+                                    "description": "Number of found vulnerabilities"
+                                  },
+                                  "fixable": {
+                                    "type": "integer",
+                                    "description": "Number of fixable vulnerabilities"
                                   },
                                   "summary": {
-                                    "type": "array",
-                                    "description": "Number of components in different severities",
-                                    "items": {
-                                      "type": "object",
-                                      "properties": {
-                                        "severity": {
-                                          "type": "string",
-                                          "description": "Severity of a component",
-                                          "enum": [
-                                            "None",
-                                            "Unknown",
-                                            "Low",
-                                            "Medium",
-                                            "High"
-                                          ]
-                                        },
-                                        "count": {
-                                          "type": "integer",
-                                          "description": "Number of components with certain severity"
-                                        }
+                                    "type": "object",
+                                    "description": "Number of found vulnerabilities per severity. If there are no vulnerabilities at a certain severity, that severity is not returned.",
+                                    "properties": {
+                                      "critical": {
+                                        "type": "integer",
+                                        "description": "Number of critical vulnerabilities"
+                                      },
+                                      "high": {
+                                        "type": "integer",
+                                        "description": "Number of high vulnerabilities"
+                                      },
+                                      "medium": {
+                                        "type": "integer",
+                                        "description": "Number of medium vulnerabilities"
+                                      },
+                                      "low": {
+                                        "type": "integer",
+                                        "description": "Number of low vulnerabilities"
+                                      },
+                                      "negligible": {
+                                        "type": "integer",
+                                        "description": "Number of negligible vulnerabilities"
+                                      },
+                                      "unknown": {
+                                        "type": "integer",
+                                        "description": "Number of unknown vulnerabilities"
                                       }
                                     }
                                   }
+                                }
+                              }
+                            }
+                          },
+                          "tags": {
+                            "type": "array",
+                            "description": "Arragy of tags for the artifact",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "tagID": {
+                                  "type": "string",
+                                  "description": "ID of the tag"
+                                },
+                                "name": {
+                                  "type": "string",
+                                  "description": "Name of the tag"
+                                },
+                                "pushTime": {
+                                  "type": "string",
+                                  "description": "Datetime when the tag is pushed"
+                                },
+                                "pullTime": {
+                                  "type": "string",
+                                  "description": "Datetime when the tag is last pulled"
                                 }
                               }
                             }
@@ -11283,39 +11482,42 @@
                 "examples": {
                   "example-1": {
                     "value": {
-                      "tags": [
+                      "artifacts": [
                         {
-                          "digest": "sha256:eaf7dac7253ddbd482e307e3a73c50e16af4681a31fc195907e209fe4486d0e4",
-                          "name": "v1",
-                          "size": 49184653,
+                          "artifactID": 3281,
+                          "pushTime": "2021-09-14T07:10:20Z",
+                          "pullTime": "2021-10-07T00:06:13Z",
+                          "digest": "sha256:575cecbb238d8d143591c26870a8af6ad78241041780f5110baf5a534434425b",
+                          "size": 742043571,
                           "architecture": "amd64",
                           "os": "linux",
-                          "dockerVersion": "1.12.6",
-                          "author": "NGINX Docker Maintainers <docker-maint@nginx.com>",
-                          "creationTime": "2021-01-20T12:19:02.469616845Z",
+                          "author": "demo@foo.bar.com",
+                          "creationTime": "2021-05-23T06:32:35Z",
                           "scanOverview": {
-                            "status": "finished",
-                            "severity": "Low",
-                            "components": {
-                              "total": 89,
-                              "summary": [
-                                {
-                                  "severity": "None",
-                                  "count": 66
-                                },
-                                {
-                                  "severity": "Unknown",
-                                  "count": 12
-                                },
-                                {
-                                  "severity": "Low",
-                                  "count": 11
-                                }
-                              ]
+                            "status": "Success",
+                            "severity": "Critical",
+                            "completePercent": 100,
+                            "summary": {
+                              "total": 1403,
+                              "fixable": 638,
+                              "summary": {
+                                "critical": 14,
+                                "high": 92,
+                                "low": 547,
+                                "medium": 750
+                              }
                             },
-                            "started": "2021-01-20T12:19:25Z",
-                            "completed": "2021-02-09T00:02:13Z"
-                          }
+                            "started": "2021-09-15T00:02:26Z",
+                            "completed": "2021-09-15T00:06:16Z"
+                          },
+                          "tags": [
+                            {
+                              "tagId": 3243,
+                              "name": "latest",
+                              "pullTime": "2021-10-07T00:06:13Z",
+                              "pushTime": "2021-09-14T07:10:20Z"
+                            }
+                          ]
                         }
                       ],
                       "totalCount": 1
@@ -11360,7 +11562,7 @@
                   "InvalidListLimit": {
                     "value": {
                       "error": "InvalidListLimit",
-                      "message": "The value of limit must be a valid integer between 1 and 200, both inclusive."
+                      "message": "The value of limit must be a valid integer between 1 and 100, both inclusive."
                     }
                   },
                   "InvalidListOffset": {
@@ -11414,7 +11616,7 @@
                   "RepositoryNotFound": {
                     "value": {
                       "error": "RepositoryNotFound",
-                      "message": "The repository {repository} given does not exist."
+                      "message": "The repository {repository} given does not exist"
                     }
                   }
                 }
@@ -11422,8 +11624,8 @@
             }
           }
         },
-        "operationId": "get-registry-project-repository-tags",
-        "description": "A tag is a convenient alias used to refer to a specific container image version.\n\nThis interface allows you to list tags under a specific repository.",
+        "operationId": "get-registry-project-repository-artifacts",
+        "description": "An artifact represents a unique build of container image. An artifact can have multiple tags as convenient aliases. An artifact is created when you run “docker build” in your docker environment to push a new image to ECP registry.\n\nThis interface allows you to list artifacts under a specific repository.",
         "parameters": [
           {
             "name": "On-Behalf-Of",
@@ -11448,19 +11650,18 @@
           {
             "name": "limit",
             "in": "query",
-            "description": "Maximum number of resources to return",
-            "required": false,
             "schema": {
               "type": "integer",
-              "default": 100,
-              "maximum": 200,
-              "minimum": 1
-            }
+              "default": 10,
+              "minimum": 1,
+              "maximum": 100
+            },
+            "description": "Indicates the maximum nuber of resources to return."
           }
         ]
       }
     },
-    "/ecp/v1/registry/projects/{projectID}/repositories/{repository}/tags/{tag}": {
+    "/ecp/v1/registry/projects/{projectID}/repositories/{repository}/artifacts/{reference}": {
       "parameters": [
         {
           "schema": {
@@ -11484,14 +11685,14 @@
           "schema": {
             "type": "string"
           },
-          "name": "tag",
+          "name": "reference",
           "in": "path",
           "required": true,
-          "description": "Name of an image tag"
+          "description": "Reference of an artifact. Can be the digest of an artifact or a tag name pointing to the artifact."
         }
       ],
       "get": {
-        "summary": "Query an image tag",
+        "summary": "Query an artifact",
         "tags": [
           "Registry Projects"
         ],
@@ -11516,62 +11717,75 @@
                   "type": "object",
                   "description": "",
                   "properties": {
-                    "name": {
+                    "artifactID": {
                       "type": "string",
-                      "description": "Name of a tag"
+                      "description": "ID of an artifact"
                     },
                     "digest": {
                       "type": "string",
-                      "description": "Digest of a tag"
+                      "description": "Digest of an artifact"
                     },
                     "size": {
                       "type": "integer",
-                      "description": "Size of the image, measured in bytes"
+                      "description": "Size of the artifact, measured in bytes"
                     },
                     "architecture": {
                       "type": "string",
-                      "description": "Architecture of the image"
+                      "description": "The architecture that the artifact applies to"
                     },
                     "os": {
                       "type": "string",
-                      "description": "OS of the image"
-                    },
-                    "dockerVersion": {
-                      "type": "string",
-                      "description": "The version of docker which builds the image"
+                      "description": "The os that the artifact applies to"
                     },
                     "author": {
                       "type": "string",
-                      "description": "Author of the image"
+                      "description": "Author of the artifact"
+                    },
+                    "pushTime": {
+                      "type": "string",
+                      "description": "Datetime when the artifact is pushed"
+                    },
+                    "pullTime": {
+                      "type": "string",
+                      "description": "Datetime when the artifact is last pulled"
                     },
                     "creationTime": {
                       "type": "string",
-                      "description": "Datetime when the image is built"
+                      "description": "Datetime when the artifact is built"
                     },
                     "scanOverview": {
                       "type": "object",
-                      "description": "Overview of previous scan result",
+                      "description": "Overview of the previous scan result. If the artifact is not scanned, this object will not be returned.",
                       "properties": {
                         "status": {
                           "type": "string",
                           "description": "Status of the scan",
                           "enum": [
-                            "pending",
-                            "running",
-                            "finished",
-                            "error"
+                            "Pending",
+                            "Scheduled",
+                            "Running",
+                            "Stopped",
+                            "Error",
+                            "Success"
                           ]
+                        },
+                        "completePercent": {
+                          "type": "integer",
+                          "description": "Completion percentage of the scan",
+                          "minimum": 0,
+                          "maximum": 100
                         },
                         "severity": {
                           "type": "string",
                           "description": "High-level severity rating",
                           "enum": [
-                            "Not scanned",
-                            "Negligible",
+                            "None",
                             "Unknown",
+                            "Negligible",
                             "Low",
                             "Medium",
-                            "High"
+                            "High",
+                            "Critical"
                           ]
                         },
                         "started": {
@@ -11582,38 +11796,73 @@
                           "type": "string",
                           "description": "Datetime when the scan is completed"
                         },
-                        "components": {
+                        "summary": {
                           "type": "object",
-                          "description": "The components overview of the image",
+                          "description": "Summary of found vulnerabilities",
                           "properties": {
                             "total": {
-                              "description": "Total number of the components in this image",
-                              "type": "integer"
+                              "type": "integer",
+                              "description": "Number of found vulnerabilities"
+                            },
+                            "fixable": {
+                              "type": "integer",
+                              "description": "Number of fixable vulnerabilities"
                             },
                             "summary": {
-                              "type": "array",
-                              "description": "Number of components in different severities",
-                              "items": {
-                                "type": "object",
-                                "properties": {
-                                  "severity": {
-                                    "type": "string",
-                                    "description": "Severity of a component",
-                                    "enum": [
-                                      "None",
-                                      "Unknown",
-                                      "Low",
-                                      "Medium",
-                                      "High"
-                                    ]
-                                  },
-                                  "count": {
-                                    "type": "integer",
-                                    "description": "Number of components with certain severity"
-                                  }
+                              "type": "object",
+                              "description": "Number of found vulnerabilities per severity. If there are no vulnerabilities at a certain severity, that severity is not returned.",
+                              "properties": {
+                                "critical": {
+                                  "type": "integer",
+                                  "description": "Number of critical vulnerabilities"
+                                },
+                                "high": {
+                                  "type": "integer",
+                                  "description": "Number of high vulnerabilities"
+                                },
+                                "medium": {
+                                  "type": "integer",
+                                  "description": "Number of medium vulnerabilities"
+                                },
+                                "low": {
+                                  "type": "integer",
+                                  "description": "Number of low vulnerabilities"
+                                },
+                                "negligible": {
+                                  "type": "integer",
+                                  "description": "Number of negligible vulnerabilities"
+                                },
+                                "unknown": {
+                                  "type": "integer",
+                                  "description": "Number of unknown vulnerabilities"
                                 }
                               }
                             }
+                          }
+                        }
+                      }
+                    },
+                    "tags": {
+                      "type": "array",
+                      "description": "Arragy of tags for the artifact",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "tagID": {
+                            "type": "string",
+                            "description": "ID of the tag"
+                          },
+                          "name": {
+                            "type": "string",
+                            "description": "Name of the tag"
+                          },
+                          "pushTime": {
+                            "type": "string",
+                            "description": "Datetime when the tag is pushed"
+                          },
+                          "pullTime": {
+                            "type": "string",
+                            "description": "Datetime when the tag is last pulled"
                           }
                         }
                       }
@@ -11623,37 +11872,40 @@
                 "examples": {
                   "example-1": {
                     "value": {
-                      "digest": "sha256:eaf7dac7253ddbd482e307e3a73c50e16af4681a31fc195907e209fe4486d0e4",
-                      "name": "v1",
-                      "size": 49184653,
+                      "artifactID": 3281,
+                      "pushTime": "2021-09-14T07:10:20Z",
+                      "pullTime": "2021-10-07T00:06:13Z",
+                      "digest": "sha256:575cecbb238d8d143591c26870a8af6ad78241041780f5110baf5a534434425b",
+                      "size": 742043571,
                       "architecture": "amd64",
                       "os": "linux",
-                      "dockerVersion": "1.12.6",
-                      "author": "NGINX Docker Maintainers <docker-maint@nginx.com>",
-                      "creationTime": "2021-01-20T12:19:02.469616845Z",
+                      "author": "demo@foo.bar.com",
+                      "creationTime": "2021-05-23T06:32:35Z",
                       "scanOverview": {
-                        "status": "finished",
-                        "severity": "Low",
-                        "components": {
-                          "total": 89,
-                          "summary": [
-                            {
-                              "severity": "None",
-                              "count": 66
-                            },
-                            {
-                              "severity": "Unknown",
-                              "count": 12
-                            },
-                            {
-                              "severity": "Low",
-                              "count": 11
-                            }
-                          ]
+                        "status": "Success",
+                        "severity": "Critical",
+                        "completePercent": 100,
+                        "summary": {
+                          "total": 1403,
+                          "fixable": 638,
+                          "summary": {
+                            "critical": 14,
+                            "high": 92,
+                            "low": 547,
+                            "medium": 750
+                          }
                         },
-                        "started": "2021-01-20T12:19:25Z",
-                        "completed": "2021-02-09T00:02:13Z"
-                      }
+                        "started": "2021-09-15T00:02:26Z",
+                        "completed": "2021-09-15T00:06:16Z"
+                      },
+                      "tags": [
+                        {
+                          "tagId": 3243,
+                          "name": "latest",
+                          "pullTime": "2021-10-07T00:06:13Z",
+                          "pushTime": "2021-09-14T07:10:20Z"
+                        }
+                      ]
                     }
                   }
                 }
@@ -11701,13 +11953,13 @@
                   "RepositoryNotFound": {
                     "value": {
                       "error": "RepositoryNotFound",
-                      "message": "The repository {repository} given does not exist."
+                      "message": "The repository {repository} given does not exist"
                     }
                   },
-                  "TagNotFound": {
+                  "ReferenceNotFound": {
                     "value": {
-                      "error": "TagNotFound",
-                      "message": "The tag {tag} given does not exist."
+                      "error": "ReferenceNotFound",
+                      "message": "The reference {digest | tag} given does not exist."
                     }
                   }
                 }
@@ -11715,8 +11967,8 @@
             }
           }
         },
-        "operationId": "get-registry-project-repository-tag",
-        "description": "Get the details of an image tag.",
+        "operationId": "get-registry-project-repository-artifact",
+        "description": "Get the details of an artifact.",
         "parameters": [
           {
             "name": "On-Behalf-Of",
@@ -11730,8 +11982,705 @@
         ]
       },
       "delete": {
-        "summary": "Delete an image tag",
-        "operationId": "delete-registry-project-repository-tag",
+        "summary": "Delete an artifact",
+        "operationId": "delete-registry-project-repository-artifact",
+        "responses": {
+          "204": {
+            "description": "This response is returned if the artifact is successfully deleted.",
+            "headers": {
+              "Qtl-Request-Id": {
+                "name": "Qtl-Request-Id",
+                "in": "header",
+                "description": "A string automatically generated by the api server to identify each request.",
+                "required": false,
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "This error is returned if the API call is not permitted. Refer to response body for details.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "",
+                  "type": "object",
+                  "description": "A standard error object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "examples": {
+                  "example-1": {
+                    "value": {
+                      "error": "NotAuthorized",
+                      "message": "Only the admin API account is allowed to perform this operation."
+                    }
+                  }
+                }
+              }
+            },
+            "headers": {
+              "Qtl-Request-Id": {
+                "description": "A string automatically generated by the api server to identify each request.",
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "headers": {
+              "Qtl-Request-Id": {
+                "name": "Qtl-Request-Id",
+                "in": "header",
+                "description": "A string automatically generated by the api server to identify each request.",
+                "required": false,
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "",
+                  "type": "object",
+                  "description": "A standard error object.",
+                  "x-tags": [
+                    "Common"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "examples": {
+                  "ProjectNotFound": {
+                    "value": {
+                      "error": "ProjectNotFound",
+                      "message": "The project ID given does not exist."
+                    }
+                  },
+                  "RepositoryNotFound": {
+                    "value": {
+                      "error": "RepositoryNotFound",
+                      "message": "The repository {repository} given does not exist"
+                    }
+                  },
+                  "ReferenceNotFound": {
+                    "value": {
+                      "error": "ReferenceNotFound",
+                      "message": "The reference {digest | tag} given does not exist."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Registry Projects"
+        ],
+        "description": "Delete an existing artifact. Only your \"admin\" apiAccount is allowed to make this call.\n\nThis operation will delete the artifact itself and all its tags as well, even if the artifact is referenced by a specific tag name."
+      }
+    },
+    "/ecp/v1/registry/projects/{projectID}/repositories/{repository}/references/{reference}/vulnerabilities": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "integer"
+          },
+          "name": "projectID",
+          "in": "path",
+          "required": true,
+          "description": "ID of a registry project"
+        },
+        {
+          "schema": {
+            "type": "string"
+          },
+          "name": "repository",
+          "in": "path",
+          "required": true,
+          "description": "Name of a repository"
+        },
+        {
+          "schema": {
+            "type": "string"
+          },
+          "name": "reference",
+          "in": "path",
+          "required": true,
+          "description": "Reference of an artifact. Can be the digest of an artifact or a tag name pointing to the artifact."
+        }
+      ],
+      "get": {
+        "summary": "Query the vulnerabilities of an artifact",
+        "tags": [
+          "Registry Projects"
+        ],
+        "responses": {
+          "200": {
+            "description": "This response contains the vulnerability details of an artifact.",
+            "headers": {
+              "Qtl-Request-Id": {
+                "name": "Qtl-Request-Id",
+                "in": "header",
+                "description": "A string automatically generated by the api server to identify each request.",
+                "required": false,
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "reportTime": {
+                      "type": "string",
+                      "description": "Datetime when the vulnerabilities report is generated"
+                    },
+                    "severity": {
+                      "type": "string",
+                      "description": "Overall severity rating of the artifact. When no vulnerabilities are found, the severity will be “Unknown”.",
+                      "enum": [
+                        "Unknown",
+                        "Negligible",
+                        "Low",
+                        "Medium",
+                        "High",
+                        "Critical"
+                      ]
+                    },
+                    "vulnerabilities": {
+                      "type": "array",
+                      "description": "Array of vulnerabilities",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "ID": {
+                            "type": "string",
+                            "description": "ID of the vulnerability. Usually it is the CVE ID."
+                          },
+                          "severity": {
+                            "type": "string",
+                            "description": "Level of severity",
+                            "enum": [
+                              "Unknown",
+                              "Negligible",
+                              "Low",
+                              "Medium",
+                              "High",
+                              "Critical"
+                            ]
+                          },
+                          "package": {
+                            "type": "string",
+                            "description": "The package that introduces the vulnerability"
+                          },
+                          "version": {
+                            "type": "string",
+                            "description": "Version of the package"
+                          },
+                          "description": {
+                            "type": "string",
+                            "description": "The description of the vulnerability"
+                          },
+                          "fixedVersion": {
+                            "type": "string",
+                            "description": "The version where the vulnerability is fixed"
+                          },
+                          "links": {
+                            "type": "array",
+                            "description": "Links to the reference web pages about this CVE",
+                            "items": {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "totalCount": {
+                      "title": "",
+                      "type": "integer",
+                      "description": "Total number of resources"
+                    }
+                  }
+                },
+                "examples": {
+                  "example-1": {
+                    "value": {
+                      "reportTime": "2021-10-07T00:06:13.292815665Z",
+                      "severity": "Unknown",
+                      "vulnerabilities": [
+                        {
+                          "severity": "Unknown",
+                          "version": "1.30+dfsg-6",
+                          "description": "Tar 1.15.1 does not properly warn the user when extracting setuid or setgid files, which may allow local users or remote attackers to gain privileges.",
+                          "links": [
+                            "https://security-tracker.debian.org/tracker/CVE-2005-2541"
+                          ],
+                          "ID": "CVE-2005-2541",
+                          "package": "tar"
+                        },
+                        {
+                          "severity": "Unknown",
+                          "version": "1:4.5-1.1",
+                          "description": "initscripts in rPath Linux 1 sets insecure permissions for the /var/log/btmp file, which allows local users to obtain sensitive information regarding authentication attempts.  NOTE: because sshd detects the insecure permissions and does not log certain events, this also prevents sshd from logging failed authentication attempts by remote attackers.",
+                          "links": [
+                            "https://security-tracker.debian.org/tracker/CVE-2007-5686"
+                          ],
+                          "ID": "CVE-2007-5686",
+                          "package": "shadow"
+                        }
+                      ],
+                      "totalCount": 2
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The request is invalid. Refer to response body for details.",
+            "headers": {
+              "Qtl-Request-Id": {
+                "name": "Qtl-Request-Id",
+                "in": "header",
+                "description": "A string automatically generated by the api server to identify each request.",
+                "required": false,
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "",
+                  "type": "object",
+                  "description": "A standard error object.",
+                  "x-tags": [
+                    "Common"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "examples": {
+                  "InvalidListOffset": {
+                    "value": {
+                      "error": "InvalidListOffset",
+                      "message": "The value of offset must be a valid non-negative integer."
+                    }
+                  },
+                  "InvalidListLimit": {
+                    "value": {
+                      "error": "InvalidListLimit",
+                      "message": "The value of limit must be a valid integer between 1 and 100, both inclusive."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "headers": {
+              "Qtl-Request-Id": {
+                "name": "Qtl-Request-Id",
+                "in": "header",
+                "description": "A string automatically generated by the api server to identify each request.",
+                "required": false,
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "",
+                  "type": "object",
+                  "description": "A standard error object.",
+                  "x-tags": [
+                    "Common"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "examples": {
+                  "ProjectNotFound": {
+                    "value": {
+                      "error": "ProjectNotFound",
+                      "message": "The project ID given does not exist."
+                    }
+                  },
+                  "RepositoryNotFound": {
+                    "value": {
+                      "error": "RepositoryNotFound",
+                      "message": "The repository {repository} given does not exist"
+                    }
+                  },
+                  "ReferenceNotFound": {
+                    "value": {
+                      "error": "ReferenceNotFound",
+                      "message": "The reference {digest | tag} given does not exist."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-registry-project-repository-artifact-vulnerabilities",
+        "description": "Get the vulnerability details of an artifact based on the previous successful scan.",
+        "parameters": [
+          {
+            "name": "On-Behalf-Of",
+            "in": "header",
+            "description": "If you are a reseller, you can use this header to specify the ID of a child customer and make API call on their behalf.",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "description": "Indicates the first resource to return. The first has an offset of 0.",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 0,
+              "default": 0
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "default": 10,
+              "minimum": 1,
+              "maximum": 100
+            },
+            "description": "Indicates the maximum nuber of resources to return."
+          }
+        ]
+      }
+    },
+    "/ecp/v1/registry/projects/{projectID}/repositories/{repository}/artifacts/{reference}/tags": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "integer"
+          },
+          "name": "projectID",
+          "in": "path",
+          "required": true,
+          "description": "ID of a registry project"
+        },
+        {
+          "schema": {
+            "type": "string"
+          },
+          "name": "repository",
+          "in": "path",
+          "required": true,
+          "description": "Name of a repository"
+        },
+        {
+          "schema": {
+            "type": "string"
+          },
+          "name": "reference",
+          "in": "path",
+          "required": true,
+          "description": "Reference of an artifact. Can be the digest of an artifact or a tag name pointing to the artifact."
+        }
+      ],
+      "get": {
+        "summary": "Query list of tags pointing to a same artifact",
+        "tags": [
+          "Registry Projects"
+        ],
+        "responses": {
+          "200": {
+            "description": "This response contains a list of tags.",
+            "headers": {
+              "Qtl-Request-Id": {
+                "name": "Qtl-Request-Id",
+                "in": "header",
+                "description": "A string automatically generated by the api server to identify each request.",
+                "required": false,
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "tags": {
+                      "type": "array",
+                      "description": "Array of tags",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "tagID": {
+                            "type": "string",
+                            "description": "ID of a tag"
+                          },
+                          "name": {
+                            "type": "string",
+                            "description": "Name of a tag"
+                          },
+                          "pushTime": {
+                            "type": "string",
+                            "description": "Datetime when a tag is pushed"
+                          },
+                          "pullTime": {
+                            "type": "string",
+                            "description": "Datetime when a tag is last pulled"
+                          }
+                        }
+                      }
+                    },
+                    "totalCount": {
+                      "title": "",
+                      "type": "integer",
+                      "description": "Total number of resources"
+                    }
+                  }
+                },
+                "examples": {
+                  "example-1": {
+                    "value": {
+                      "tags": [
+                        {
+                          "tagID": 3281,
+                          "name": "v1.0",
+                          "pushTime": "2021-09-14T07:10:20Z",
+                          "pullTime": "2021-10-07T00:06:13Z"
+                        }
+                      ],
+                      "totalCount": 1
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The request is invalid. Refer to response body for details.",
+            "headers": {
+              "Qtl-Request-Id": {
+                "name": "Qtl-Request-Id",
+                "in": "header",
+                "description": "A string automatically generated by the api server to identify each request.",
+                "required": false,
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "",
+                  "type": "object",
+                  "description": "A standard error object.",
+                  "x-tags": [
+                    "Common"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "examples": {
+                  "InvalidListLimit": {
+                    "value": {
+                      "error": "InvalidListLimit",
+                      "message": "The value of limit must be a valid integer between 1 and 100, both inclusive."
+                    }
+                  },
+                  "InvalidListOffset": {
+                    "value": {
+                      "error": "InvalidListOffset",
+                      "message": "The value of offset must be a valid non-negative integer."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "headers": {
+              "Qtl-Request-Id": {
+                "name": "Qtl-Request-Id",
+                "in": "header",
+                "description": "A string automatically generated by the api server to identify each request.",
+                "required": false,
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "",
+                  "type": "object",
+                  "description": "A standard error object.",
+                  "x-tags": [
+                    "Common"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "examples": {
+                  "ProjectNotFound": {
+                    "value": {
+                      "error": "ProjectNotFound",
+                      "message": "The project ID given does not exist."
+                    }
+                  },
+                  "RepositoryNotFound": {
+                    "value": {
+                      "error": "RepositoryNotFound",
+                      "message": "The repository {repository} given does not exist"
+                    }
+                  },
+                  "ReferenceNotFound": {
+                    "value": {
+                      "error": "ReferenceNotFound",
+                      "message": "The reference {digest | tag} given does not exist."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-registry-project-repository-artifact-tags",
+        "description": "A tag is a convenient alias used to refer to a specific artifact (i.e. a container image). Adding tags to a specific artifact does not change the artifact itself. Deleting tags does not cause the artifact to be deleted. \n\nWhen you run “docker push registry-qcc.quantil.com/{project}/{repository}:{tag}” in your docker environment to push an image, the following happens:\n\n1. If this is the first time an image is pushed using {repository}, a new repository, a new artifact and a tag to the artifact will be created. \n2. If the repository exists and the image pushed is a new artifact (i.e. its digest is different from those of all other artifacts in the same repository), a new artifact and a tag to the artifact will be created. \n3. If the repository exists and the image pushed is not a new artifact (i.e. its digest is the same with that of any other artifact in the same repository), a new tag to the existing artifact is created.",
+        "parameters": [
+          {
+            "name": "On-Behalf-Of",
+            "in": "header",
+            "description": "If you are a reseller, you can use this header to specify the ID of a child customer and make API call on their behalf.",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "description": "Indicates the first resource to return. The first has an offset of 0.",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 0,
+              "default": 0
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "default": 10,
+              "minimum": 1,
+              "maximum": 100
+            },
+            "description": "Indicates the maximum nuber of resources to return."
+          }
+        ]
+      }
+    },
+    "/ecp/v1/registry/projects/{projectID}/repositories/{repository}/artifacts/{reference}/tags/{tag}": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "integer"
+          },
+          "name": "projectID",
+          "in": "path",
+          "required": true,
+          "description": "ID of a registry project"
+        },
+        {
+          "schema": {
+            "type": "string"
+          },
+          "name": "repository",
+          "in": "path",
+          "required": true,
+          "description": "Name of a repository"
+        },
+        {
+          "schema": {
+            "type": "string"
+          },
+          "name": "reference",
+          "in": "path",
+          "required": true,
+          "description": "Reference of an artifact. Can be the digest of an artifact or a tag name pointing to the artifact."
+        },
+        {
+          "schema": {
+            "type": "string"
+          },
+          "name": "tag",
+          "in": "path",
+          "required": true,
+          "description": "Name of a tag"
+        }
+      ],
+      "delete": {
+        "summary": "Delete a tag",
+        "operationId": "delete-registry-project-repository-artifact-tag",
         "responses": {
           "204": {
             "description": "This response is returned if the tag is successfully deleted.",
@@ -11824,7 +12773,13 @@
                   "RepositoryNotFound": {
                     "value": {
                       "error": "RepositoryNotFound",
-                      "message": "The repository {repository} given does not exist."
+                      "message": "The repository {repository} given does not exist"
+                    }
+                  },
+                  "ReferenceNotFound": {
+                    "value": {
+                      "error": "ReferenceNotFound",
+                      "message": "The reference {digest | tag} given does not exist."
                     }
                   },
                   "TagNotFound": {
@@ -11841,281 +12796,7 @@
         "tags": [
           "Registry Projects"
         ],
-        "description": "Delete an existing image tag. Note that only your \"admin\" apiAccount is allowed to make this call."
-      }
-    },
-    "/ecp/v1/registry/projects/{projectID}/repositories/{repository}/tags/{tag}/vulnerabilities": {
-      "parameters": [
-        {
-          "schema": {
-            "type": "integer"
-          },
-          "name": "projectID",
-          "in": "path",
-          "required": true,
-          "description": "ID of a registry project"
-        },
-        {
-          "schema": {
-            "type": "string"
-          },
-          "name": "repository",
-          "in": "path",
-          "required": true,
-          "description": "Name of a repository"
-        },
-        {
-          "schema": {
-            "type": "string"
-          },
-          "name": "tag",
-          "in": "path",
-          "required": true,
-          "description": "Name of an image tag"
-        }
-      ],
-      "get": {
-        "summary": "Query the vulnerabilities of an image",
-        "tags": [
-          "Registry Projects"
-        ],
-        "responses": {
-          "200": {
-            "description": "This response contains the vulnerability details of an image.",
-            "headers": {
-              "Qtl-Request-Id": {
-                "name": "Qtl-Request-Id",
-                "in": "header",
-                "description": "A string automatically generated by the api server to identify each request.",
-                "required": false,
-                "schema": {
-                  "type": "string"
-                }
-              }
-            },
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "vulnerabilities": {
-                      "type": "array",
-                      "description": "Array of vulnerabilities",
-                      "items": {
-                        "type": "object",
-                        "properties": {
-                          "ID": {
-                            "type": "string",
-                            "description": "ID of the vulnerability, usually it is the CVE ID."
-                          },
-                          "severity": {
-                            "type": "string",
-                            "description": "Level of severity.",
-                            "enum": [
-                              "None",
-                              "Unknown",
-                              "Low",
-                              "Medium",
-                              "High"
-                            ]
-                          },
-                          "package": {
-                            "type": "string",
-                            "description": "The package that introduces the vulnerability"
-                          },
-                          "version": {
-                            "type": "string",
-                            "description": "The version of the package"
-                          },
-                          "description": {
-                            "type": "string",
-                            "description": "The description of the vulnerability"
-                          },
-                          "fixedVersion": {
-                            "type": "string",
-                            "description": "The version where the vulnerability is fixed"
-                          },
-                          "link": {
-                            "type": "string",
-                            "description": "Link to the reference web page about this CVE"
-                          }
-                        }
-                      }
-                    },
-                    "totalCount": {
-                      "title": "",
-                      "type": "integer",
-                      "description": "Total number of resources"
-                    }
-                  }
-                },
-                "examples": {
-                  "example-1": {
-                    "value": {
-                      "vulnerabilities": [
-                        {
-                          "severity": "None",
-                          "version": "1.30+dfsg-6",
-                          "description": "Tar 1.15.1 does not properly warn the user when extracting setuid or setgid files, which may allow local users or remote attackers to gain privileges.",
-                          "link": "https://security-tracker.debian.org/tracker/CVE-2005-2541",
-                          "ID": "CVE-2005-2541",
-                          "package": "tar"
-                        },
-                        {
-                          "severity": "None",
-                          "version": "1:4.5-1.1",
-                          "description": "initscripts in rPath Linux 1 sets insecure permissions for the /var/log/btmp file, which allows local users to obtain sensitive information regarding authentication attempts.  NOTE: because sshd detects the insecure permissions and does not log certain events, this also prevents sshd from logging failed authentication attempts by remote attackers.",
-                          "link": "https://security-tracker.debian.org/tracker/CVE-2007-5686",
-                          "ID": "CVE-2007-5686",
-                          "package": "shadow"
-                        }
-                      ],
-                      "totalCount": 2
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "The request is invalid. Refer to response body for details.",
-            "headers": {
-              "Qtl-Request-Id": {
-                "name": "Qtl-Request-Id",
-                "in": "header",
-                "description": "A string automatically generated by the api server to identify each request.",
-                "required": false,
-                "schema": {
-                  "type": "string"
-                }
-              }
-            },
-            "content": {
-              "application/json": {
-                "schema": {
-                  "title": "",
-                  "type": "object",
-                  "description": "A standard error object.",
-                  "x-tags": [
-                    "Common"
-                  ],
-                  "properties": {
-                    "error": {
-                      "type": "string"
-                    },
-                    "message": {
-                      "type": "string"
-                    }
-                  }
-                },
-                "examples": {
-                  "InvalidListOffset": {
-                    "value": {
-                      "error": "InvalidListOffset",
-                      "message": "The value of offset must be a valid non-negative integer."
-                    }
-                  },
-                  "InvalidListLimit": {
-                    "value": {
-                      "error": "InvalidListLimit",
-                      "message": "The value of limit must be a valid integer between 1 and 200, both inclusive."
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not Found",
-            "headers": {
-              "Qtl-Request-Id": {
-                "name": "Qtl-Request-Id",
-                "in": "header",
-                "description": "A string automatically generated by the api server to identify each request.",
-                "required": false,
-                "schema": {
-                  "type": "string"
-                }
-              }
-            },
-            "content": {
-              "application/json": {
-                "schema": {
-                  "title": "",
-                  "type": "object",
-                  "description": "A standard error object.",
-                  "x-tags": [
-                    "Common"
-                  ],
-                  "properties": {
-                    "error": {
-                      "type": "string"
-                    },
-                    "message": {
-                      "type": "string"
-                    }
-                  }
-                },
-                "examples": {
-                  "ProjectNotFound": {
-                    "value": {
-                      "error": "ProjectNotFound",
-                      "message": "The project ID given does not exist."
-                    }
-                  },
-                  "RepositoryNotFound": {
-                    "value": {
-                      "error": "RepositoryNotFound",
-                      "message": "The repository {repository} given does not exist."
-                    }
-                  },
-                  "TagNotFound": {
-                    "value": {
-                      "error": "TagNotFound",
-                      "message": "The tag {tag} given does not exist."
-                    }
-                  }
-                }
-              }
-            }
-          }
-        },
-        "operationId": "get-registry-project-repository-tag-vulnerabilities",
-        "description": "Get the vulnerability details of an image based on the previous successful scan.",
-        "parameters": [
-          {
-            "name": "On-Behalf-Of",
-            "in": "header",
-            "description": "If you are a reseller, you can use this header to specify the ID of a child customer and make API call on their behalf.",
-            "required": false,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "offset",
-            "in": "query",
-            "description": "Indicates the first resource to return. The first has an offset of 0.",
-            "required": false,
-            "schema": {
-              "type": "integer",
-              "minimum": 0,
-              "default": 0
-            }
-          },
-          {
-            "name": "limit",
-            "in": "query",
-            "description": "Maximum number of resources to return",
-            "required": false,
-            "schema": {
-              "type": "integer",
-              "default": 100,
-              "maximum": 200,
-              "minimum": 1
-            }
-          }
-        ]
+        "description": "Delete a tag from an artifact. Only your “admin” apiAccount is allowed to make this call.\n\nWhen a tag name is specified as {reference} param to reference an artifact, it doesn’t mean that tag will be deleted. What will be deleted is the one specified as the {tag} param."
       }
     },
     "/ecp/v1/registry/users": {
@@ -12280,7 +12961,7 @@
                   "InvalidListLimit": {
                     "value": {
                       "error": "InvalidListLimit",
-                      "message": "The value of limit must be a valid integer between 1 and 200, both inclusive."
+                      "message": "The value of limit must be a valid integer between 1 and 100, both inclusive."
                     }
                   },
                   "InvalidListOffset": {
@@ -12329,14 +13010,13 @@
           {
             "name": "limit",
             "in": "query",
-            "description": "Maximum number of resources to return",
-            "required": false,
             "schema": {
               "type": "integer",
-              "default": 100,
-              "maximum": 200,
-              "minimum": 1
-            }
+              "default": 10,
+              "minimum": 1,
+              "maximum": 100
+            },
+            "description": "Indicates the maximum nuber of resources to return."
           }
         ]
       },
@@ -12548,7 +13228,7 @@
                 "properties": {
                   "usernamePrefix": {
                     "type": "string",
-                    "description": "Username prefix to be used in the username of a new registry user. Must be unique across registry users under a customer. Must be not more than 15 characters and must not contain such special characters as “, ~, #, $, %. \n\nWhen receiving the request, the API server will append a fixed length random string and then create a registry user using the complete username. This is to avoid possible naming collisions across different customers.",
+                    "description": "Username prefix to be used in the username of a new registry user. Must be unique across registry users under a customer. Allows lower case alphanumeric characters, ‘-’ and ‘.’ only, must start and end with an alphanumeric character, and must be no more than 15 characters. \n\nWhen receiving the request, the API server will append a fixed length random string and then create a registry user using the complete username. This is to avoid possible naming collisions across different customers.",
                     "maxLength": 15
                   },
                   "password": {
@@ -19660,10 +20340,11 @@
         "description": "If \"preventVulnerable\" is enabled and the vulnerability of an image is equal to or higher than severity defined here, the image can't be pulled.",
         "default": "low",
         "enum": [
-          "negligible",
+          "none",
           "low",
           "medium",
-          "high"
+          "high",
+          "critical"
         ]
       },
       "project.autoScan": {
@@ -19817,6 +20498,163 @@
                       }
                     }
                   }
+                }
+              }
+            }
+          }
+        }
+      },
+      "artifact": {
+        "title": "",
+        "type": "object",
+        "description": "",
+        "properties": {
+          "artifactID": {
+            "type": "string",
+            "description": "ID of an artifact"
+          },
+          "digest": {
+            "type": "string",
+            "description": "Digest of an artifact"
+          },
+          "size": {
+            "type": "integer",
+            "description": "Size of the artifact, measured in bytes"
+          },
+          "architecture": {
+            "type": "string",
+            "description": "The architecture that the artifact applies to"
+          },
+          "os": {
+            "type": "string",
+            "description": "The os that the artifact applies to"
+          },
+          "author": {
+            "type": "string",
+            "description": "Author of the artifact"
+          },
+          "pushTime": {
+            "type": "string",
+            "description": "Datetime when the artifact is pushed"
+          },
+          "pullTime": {
+            "type": "string",
+            "description": "Datetime when the artifact is last pulled"
+          },
+          "creationTime": {
+            "type": "string",
+            "description": "Datetime when the artifact is built"
+          },
+          "scanOverview": {
+            "type": "object",
+            "description": "Overview of the previous scan result. If the artifact is not scanned, this object will not be returned.",
+            "properties": {
+              "status": {
+                "type": "string",
+                "description": "Status of the scan",
+                "enum": [
+                  "Pending",
+                  "Scheduled",
+                  "Running",
+                  "Stopped",
+                  "Error",
+                  "Success"
+                ]
+              },
+              "completePercent": {
+                "type": "integer",
+                "description": "Completion percentage of the scan",
+                "minimum": 0,
+                "maximum": 100
+              },
+              "severity": {
+                "type": "string",
+                "description": "High-level severity rating",
+                "enum": [
+                  "None",
+                  "Unknown",
+                  "Negligible",
+                  "Low",
+                  "Medium",
+                  "High",
+                  "Critical"
+                ]
+              },
+              "started": {
+                "type": "string",
+                "description": "Datetime when the scan is started"
+              },
+              "completed": {
+                "type": "string",
+                "description": "Datetime when the scan is completed"
+              },
+              "summary": {
+                "type": "object",
+                "description": "Summary of found vulnerabilities",
+                "properties": {
+                  "total": {
+                    "type": "integer",
+                    "description": "Number of found vulnerabilities"
+                  },
+                  "fixable": {
+                    "type": "integer",
+                    "description": "Number of fixable vulnerabilities"
+                  },
+                  "summary": {
+                    "type": "object",
+                    "description": "Number of found vulnerabilities per severity. If there are no vulnerabilities at a certain severity, that severity is not returned.",
+                    "properties": {
+                      "critical": {
+                        "type": "integer",
+                        "description": "Number of critical vulnerabilities"
+                      },
+                      "high": {
+                        "type": "integer",
+                        "description": "Number of high vulnerabilities"
+                      },
+                      "medium": {
+                        "type": "integer",
+                        "description": "Number of medium vulnerabilities"
+                      },
+                      "low": {
+                        "type": "integer",
+                        "description": "Number of low vulnerabilities"
+                      },
+                      "negligible": {
+                        "type": "integer",
+                        "description": "Number of negligible vulnerabilities"
+                      },
+                      "unknown": {
+                        "type": "integer",
+                        "description": "Number of unknown vulnerabilities"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "tags": {
+            "type": "array",
+            "description": "Arragy of tags for the artifact",
+            "items": {
+              "type": "object",
+              "properties": {
+                "tagID": {
+                  "type": "string",
+                  "description": "ID of the tag"
+                },
+                "name": {
+                  "type": "string",
+                  "description": "Name of the tag"
+                },
+                "pushTime": {
+                  "type": "string",
+                  "description": "Datetime when the tag is pushed"
+                },
+                "pullTime": {
+                  "type": "string",
+                  "description": "Datetime when the tag is last pulled"
                 }
               }
             }
@@ -20147,6 +20985,32 @@
         "title": "quota.upgradeDate",
         "description": "Datetime indicating when the status is changed from “trial” to “active”. This field is updated by API server when the customer as a free trial upgrades to a paid customer. It cannot be set via API calls.",
         "format": "date-time"
+      },
+      "project.storageLimit": {
+        "type": "integer",
+        "title": "project.storageLimit",
+        "description": "Storage quota limiting the size of all images stored under the project. Measured in GB. \nThe sum of storageLimits of all projects for a same customer must not exceed the limit specified in the “serviceQuotas.resourcequotas.storageInRegistry”.",
+        "default": 5
+      },
+      "project.storageLimit(Status)": {
+        "title": "project.storageLimit(Status)",
+        "type": "object",
+        "description": "Storage quota limiting the size of all images stored under the project.",
+        "properties": {
+          "hard": {
+            "type": "integer",
+            "description": "Hard limit of storage quota. Measured in bytes."
+          },
+          "used": {
+            "type": "integer",
+            "description": "Storage quota already consumed. Measured in bytes."
+          }
+        }
+      },
+      "repo.artifactsCount": {
+        "title": "repo.artifactsCount",
+        "type": "integer",
+        "description": "Number of artifacts pushed to a repository"
       }
     },
     "parameters": {
@@ -20375,11 +21239,10 @@
       "limit(registry)": {
         "name": "limit",
         "in": "query",
-        "required": false,
         "schema": {
           "type": "integer",
-          "default": 100,
-          "minimum": 0,
+          "default": 10,
+          "minimum": 1,
           "maximum": 100
         },
         "description": "Indicates the maximum nuber of resources to return."
@@ -20445,42 +21308,6 @@
             "schema": {
               "type": "string"
             }
-          }
-        }
-      },
-      "project.ProjectNotFound": {
-        "description": "Not Found",
-        "content": {
-          "application/json": {
-            "schema": {
-              "title": "",
-              "type": "object",
-              "description": "A standard error object",
-              "properties": {
-                "error": {
-                  "type": "string"
-                },
-                "message": {
-                  "type": "string"
-                }
-              }
-            },
-            "examples": {
-              "example-1": {
-                "value": {
-                  "error": "ProjectNotFound",
-                  "message": "The project ID given does not exist."
-                }
-              }
-            }
-          }
-        },
-        "headers": {
-          "Qtl-Request-Id": {
-            "schema": {
-              "type": "string"
-            },
-            "description": "A string automatically generated by the api server to identify each request."
           }
         }
       }
@@ -20918,6 +21745,48 @@
         "value": {
           "error": "SuspensionDateTooClose",
           "message": "A serviceQuota that was suspended in the last 90 days cannot be deleted."
+        }
+      },
+      "project.InvalidVulnerabilitySeverity": {
+        "value": {
+          "error": "InvalidVulnerabilitySeverity,",
+          "message": "The vulnerability severity {severity} specified is invalid. Must be one of “none”, “low”, “medium”, “high”, and \"critical\"."
+        }
+      },
+      "project.StorageQuotaTooHigh": {
+        "value": {
+          "error": "StorageQuotaTooHigh",
+          "message": "xxx storage quota is requested for the new project, but the customer only has an available global quota of xxx."
+        }
+      },
+      "registry.InvalidListLimit": {
+        "value": {
+          "error": "InvalidListLimit",
+          "message": "The value of limit must be a valid integer between 1 and 100, both inclusive."
+        }
+      },
+      "registry.InvalidListOffset": {
+        "value": {
+          "error": "InvalidListOffset",
+          "message": "The value of offset must be a valid non-negative integral multiple of the limit parameter."
+        }
+      },
+      "registry.ReferenceNotFound": {
+        "value": {
+          "error": "ReferenceNotFound",
+          "message": "The reference {digest | tag} given does not exist."
+        }
+      },
+      "registry.ProjectNotFound": {
+        "value": {
+          "error": "ProjectNotFound",
+          "message": "The project ID given does not exist."
+        }
+      },
+      "registry.RepositoryNotFound": {
+        "value": {
+          "error": "RepositoryNotFound",
+          "message": "The repository {repository} given does not exist"
         }
       }
     }
