@@ -14419,7 +14419,8 @@
               "type": "string",
               "enum": [
                 "active",
-                "suspended"
+                "suspended",
+                "trial"
               ]
             },
             "in": "query",
@@ -15921,7 +15922,7 @@
         "tags": [
           "ECP Product Management"
         ],
-        "description": "This API allows a reseller to delete a child customer's serviceQuota by referencing its serviceQuota ID. The deletion will only work if the customer does not have any existing ECP resources."
+        "description": "This API allows a reseller to delete a child customer's serviceQuota by referencing its serviceQuota ID. The deletion will only work if the customer does not have any existing ECP resources.\n\nA serviceQuota not in \"suspended\" status cannot be deleted. A serviceQuota that was suspended recently (in the last 90 days) cannot be deleted."
       }
     },
     "/ecp/v1/servicequotas/customer/{customerID}": {
@@ -16928,7 +16929,7 @@
         "tags": [
           "ECP Product Management"
         ],
-        "description": "This API allows a reseller to remove a serviceQuota object for a child customer by passing ID of the customer. The deletion will only work if the customer does not have any existing ECP resources."
+        "description": "This API allows a reseller to remove a serviceQuota object for a child customer by passing ID of the customer. The deletion will only work if the customer does not have any existing ECP resources.\n\nA serviceQuota not in \"suspended\" status cannot be deleted. A serviceQuota that was suspended recently (in the last 90 days) cannot be deleted."
       }
     },
     "/ecp/v1/servicequotas/{servicequotaID}/resourcequotas": {
