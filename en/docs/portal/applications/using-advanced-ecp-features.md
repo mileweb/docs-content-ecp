@@ -89,12 +89,12 @@ spec:
     listenerPort: 80 # port exposed by the layer 4 load balancer. Must be the same as “backendPort”.
     name: listener-80
     protocol: tcp # can be “tcp” or “udp”
-    scheduler: lc # scheduling policy. Can be “lc”, or “rr”. Set to “lc” by default
+    scheduler: lc # scheduling policy. Can be “lc”, “rr”, or "sh". Set to “lc” by default
 ```
 
 ## Load Balancer Health Checks
 
-You can configure TCP, UDP, and HTTP health checks for your Layer 4 load balancer.
+You can configure TCP or HTTP health checks for your Layer 4 load balancer.
 
 **TCP Health Check**
 
@@ -112,37 +112,10 @@ spec:
     healthCheck: true
     healthCheckType: tcp # can be “tcp” or “http”. “tcp” by default.
     healthCheckConnectPort: 80 # same as backendPort by default
-    healthCheckTimeout: 10 # 10 by default. Scope: 1-50 in seconds
-    unhealthyThreshold: 3 # 3 by default. Must be a positive integer
     healthCheckInterval: 1 # 1 by default. Scope: 1-5  in seconds
     listenerPort: 80
     name: listener-80
     protocol: tcp
-    scheduler: lc
-```
-
-**UDP Health Check**
-
-```yaml
-apiVersion: v1
-kind: LoadBalancer4
-metadata:
-  name: demo-lb4 
-  namespace: demo
-spec: 
-  listeners:
-  - backendPort: 80
-    backendSelector:
-      app: demoapp
-    healthCheck: true
-    healthCheckType: udp  # “tcp” by default, please set it to “udp”.
-    healthCheckConnectPort: 80 # same as backendPort by default
-    healthCheckTimeout: 10 # 10 by default. Scope: 1-50 in seconds
-    unhealthyThreshold: 3 # 3 by default. Must be a positive integer
-    healthCheckInterval: 1 # 1 by default. Scope: 1-5  in seconds
-    listenerPort: 80
-    name: listener-80
-    protocol: udp # “healthCheckType” must be “udp” if the “protocol” here is “udp”
     scheduler: lc
 ```
 
@@ -165,8 +138,6 @@ spec:
     healthCheckDomain: "foo.bar.com"
     healthCheckURI: "/index.html"
     healthCheckConnectPort: 80 # same as backendPort by default
-    healthCheckTimeout: 10 # 10 by default. Scope: 1-50 in seconds
-    unhealthyThreshold: 3 # 3 by default. Must be a positive integer
     healthCheckInterval: 1 # 1 by default. Scope: 1-5  in seconds
     listenerPort: 80
     name: listener-80
