@@ -10,10 +10,10 @@ The Edge Computing Platform (ECP) Customer Portal is a web-based user interface
 - Rich API and intuitive management console
 - Easy access to compute, network and storage resources at the edge enabled by automatic application delivery around the globe
 - Full application lifecycle management, covering build, deployment, update, scaling and troubleshooting, etc
-- DNS-based intelligent global traffic management
+- DNS-based global traffic management that helps intelligently routes traffic
 - Images registry service that stores and secures container images and accelerates images upload and download
 - A network of over 55 edge PoPs which keeps growing
-- Real-time reports covering metrics related to traffic, CPU, RAM and disks, etc.
+- Real-time reports with rich metrics supported
 
 ## Where to Go from Here
 

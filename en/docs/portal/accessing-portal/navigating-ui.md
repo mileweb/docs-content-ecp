@@ -10,15 +10,15 @@ The default menu lists the ECP activities you can perform.
 
 ## Dashboard
 
-The [Dashboard](</docs/portal/dashboard.md>) is the landing page after you log in to the ECP. It provides an overview of resource quota consumption and resource usage metrics.
+The [Dashboard](</docs/portal/dashboard.md>) is the landing page after you log in to the ECP. It provides an overview of resource quotas consumption and resource usage metrics.
 
 ## Reports
 
-The [Reports page](</docs/portal/reports.md>) allows you to generate reports about bandwidth, traffic, CPU, memory, and storage resources as well as pods and public IP addresses.
+The [Reports page](</docs/portal/reports.md>) allows you to retrieve reports about your resource requests and real-time traffic data.
 
 ## Applications
 
-The [Applications page](</docs/portal/applications/managing-applications.md>) allows you to configure your containerized application once, and then deploy your application to CDNetworks' ECP locations across the globe with a single click.
+The [Applications page](</docs/portal/applications/managing-applications.md>) allows you to configure your containerized application once, and then deploy your application to ECP locations across the globe with a single click.
 
 ## ImagePullSecrets
 
@@ -26,7 +26,7 @@ The [ImagePullSecrets page](</docs/portal/image-pull-secrets/managing-image-pull
 
 ## CNAMEs
 
-The [CNAMEs page](</docs/portal/cnames/managing-cnames.md>) allows you to create and manage the Canonical Name Record (CNAME) that allows the ECP to manage traffic routing for the application.
+The [CNAMEs page](</docs/portal/cnames/managing-cnames.md>) allows you to create and manage the Canonical Name Record (CNAME) that allows the ECP to manage traffic routing for your application.
 
 ## Image Registry
 
@@ -34,10 +34,4 @@ The Image Registry menu allows you to manage [registry projects](</docs/portal/i
 
 ## Global Presence Page
 
-The [Global Presence page](</docs/portal/global-presence.md>) shows the worldwide locations of CDNetworks' PoPs. Controls allow you to filter PoPs by region, service zone, and status.
-
-## User Info
-
-Clicking the blue circle at the top of the page displays the user information. It also provides a **Logout** link for exiting the ECP portal.
-
-<p align=center><img src="/docs/resources/images/accessing-portal/user-info.png" alt="user information" width="400"></p>
+The [Global Presence page](</docs/portal/global-presence.md>) shows the worldwide locations of ECP PoPs. Controls allow you to filter PoPs by region, server group, and status.
