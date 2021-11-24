@@ -13,3 +13,5 @@ The following procedure describes how to view information about ImagePullSecrets
 | 2            | Click this button to return to the ImagePullSecrets page.                                                 |
 | 3            | Click this button to update the ImagePullSecret.                                                          |
 | 4            | Click this button to delete the ImagePullSecret.                                                          |
+
+**Note:** You cannot update or delete an ImagePullSecret that is automatically created and managed by the ECP.
