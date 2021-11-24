@@ -10,7 +10,7 @@ The default menu lists the ECP activities you can perform.
 
 ## Dashboard
 
-The [Dashboard](</docs/portal/dashboard.md>) is the landing page after you log in to the ECP. It provides an overview of resource quotas consumption and resource usage metrics.
+The [Dashboard](</docs/portal/dashboard.md>) is the landing page after you log in to the ECP. It provides an overview of resource quotas status and resource usage metrics.
 
 ## Reports
 

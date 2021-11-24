@@ -8,7 +8,7 @@ The Edge Computing Platform (ECP) Customer Portal is a web-based user interface
 
 - Good compatibility with native Kubernetes API
 - Rich API and intuitive management console
-- Easy access to compute, network and storage resources at the edge enabled by automatic application delivery around the globe
+- Easy access to compute, network and storage resources at the edge, enabled by automatic application delivery around the globe
 - Full application lifecycle management, covering build, deployment, update, scaling and troubleshooting, etc
 - DNS-based global traffic management that helps intelligently route traffic
 - Images registry service that stores and secures container images and accelerates images upload and download

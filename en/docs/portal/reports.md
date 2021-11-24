@@ -2,9 +2,9 @@
 
 The ECP reporting feature enables you to retrieve reports on both your resource requests (CPU, RAM, disks, and IP) and real-time traffic data.
 
-You can query reports for up to one year (366 days, which includes Leap Day). The report granularity can be as high as 1-minute or from medium to low, such as 5-minute, hourly, daily, and monthly. You can query reports as per ECP server groups.
+You can query reports for up to one year (366 days, which includes Leap Day). The report granularity can be as high as 1-minute or from medium to low, such as 5-minute, hourly, daily, and monthly.
 
-If you are a reseller with child accounts, you can select the accounts that a report will cover (the parent account only, the child account only, or both the parent and child accounts).
+If you are a reseller with child accounts, you can select the accounts that a report will cover (the parent account only, the child accounts only, or both the parent and child accounts).
 
 ## Reports Page
 
@@ -28,7 +28,7 @@ The ECP supports the following type of reports. You select a report type from th
 | **Report**               | **Description**                               |
 | -------------------------|-----------------------------------------------| 
 | Bandwidth                | Shows 95th percentile bandwidth of incoming/outgoing/total traffic, average bandwidth, and how the bandwidth changes over time.                                               |
-| Traffic                  | Shows volumes of incoming/outgoing/total traffic, and how the values change over time.                                                                      |
+| Traffic                  | Shows volumes of incoming/outgoing/total traffic, and how the volumes change over time.                                                                      |
 | CPU                      | Shows peak CPU requests and how the requests change over time.         |
 | Memory                   | Shows peak RAM requests and how the requests change over time.                                                         |
 | Storage                  | Shows peak local-SSD and persist-SSD storage requests, and how the requests change over time.     |
@@ -44,8 +44,8 @@ The ECP supports the following type of reports. You select a report type from th
 | **Fields**               | **Description**                               |
 | -------------------------|-----------------------------------------------| 
 | Report Type              | Select the [type of report](<#understanding-report-types>) you want to generate.                      |
-| Date Range               | Select the month, or a start date, end date, and time span for the report. If you select a start date, end date, and time span, use the **UTC** drop-down list to select a time zone.                |
-| Report Interval          | Select the granularity of the returned data. Choices are:<ul><li><strong>1 Minute</strong> = this interval is supported when the time span does not exceed 7 days.</li><li><strong>5 Minutes</strong> = this interval is supported when the time span does not exceed 31 days.</li><li><strong>1 Hour</strong>.</li><li><strong>1 Day</strong>.<li><strong>1 Month</strong>.</li></ul>Raw report data is generated every minute and is then aggregated to provide reports of different granularities. The aggregation method is “sum” for the metrics "inboundTraffic," "outboundTraffic," and "totalTraffic." For all other metrics, the aggregation method is "average."                              |
+| Date Range               | Select a start date and an end date, or a preset time span for the report. Use the **UTC** drop-down list to select a time zone.                |
+| Report Interval          | Select the granularity of the returned data. Choices are:<ul><li><strong>1 Minute</strong> = this interval is supported when the time span does not exceed 7 days.</li><li><strong>5 Minutes</strong> = this interval is supported when the time span does not exceed 31 days.</li><li><strong>1 Hour</strong>.</li><li><strong>1 Day</strong>.<li><strong>1 Month</strong>.</li></ul>Raw report data is generated every minute. The data is then aggregated to provide reports of different granularities. The aggregation method is “SUM” for the metrics "inboundTraffic," "outboundTraffic," and "totalTraffic." For all other metrics, the aggregation method is "AVERAGE."                              |
 | Server Group             | Select one or more server group options. <ul><li><strong>All</strong> = all server groups. (*default*).</li><li><strong>Standard</strong> = standard server group.</li><li><strong>Premium</strong> = premium server group.</li><li><strong>Premium+</strong> = premium+ server group.</li><li><strong>Ultra</strong> = ultra server group.</li></ul>                                                                       |
 | Report Range             | If you are a reseller with child accounts, select the accounts that this report will cover. Choices are:<ul><li><strong>This Account Only</strong>.</li><li><strong>Children Accounts Only</strong>.</li><li><strong>This Account + Children</strong>. (*default*)</li></ul>                                                                              |
 
