@@ -1,11 +1,14 @@
 # Configuring Applications
 
-You can create an ECP application either by [following a wizard](</docs/portal/applications/adding-and-deploying-applications-using-a-wizard.md>) or by [providing a file](</docs/portal/applications/adding-and-deploying-applications-using-an-existing-configuration-file.md>) that contains specifications. <br>If you choose to create the application from a file, the first step is to prepare the file if it does not exist. Your file should contain specifications of the following elements that make up an ECP application:<ul><li>A target</ul></li><ul><li>A Kubernetes workload controller</ul></li><ul><li>A Layer 4 load balancer</ul></li>
+You can create an ECP application either by [following a step-by-step wizard](</docs/portal/applications/adding-and-deploying-applications-using-a-wizard.md>) or by [providing a file](</docs/portal/applications/adding-and-deploying-applications-using-an-existing-configuration-file.md>) that contains application configuration.
+
+If you choose to create the application from a file, the first step is to prepare the file if it does not exist yet. The file should contain specifications of the following objects that make up an ECP application:<ul><li>A target</ul></li><ul><li>A Kubernetes workload controller</ul></li><ul><li>A layer 4 load balancer</ul></li>
 
 ### Target
 
-The target specifies where you want to run your application and the number of instances expected. Two target options are supported. The first option allows you to pick ECP locations that best fit your requirements by using the type `Location`. Alternatively, if you want to distribute your application within a region and want the ECP to pick locations automatically for you, use the type `RegionPreference`.
-The following examples show how to configure different types of targets.
+A Target object specifies where you want to run your application and how many instances are desired. Two target options are supported. The first option allows you to pick ECP locations that best fit your requirements by using the type `Location`. Alternatively, if you want to distribute your application within an ECP Region and want the ECP to pick locations automatically for you, use the type `RegionPreference`. Refer to this [Global Presence page](</docs/portal/global-presence.md>) to see a list of ECP locations and how the locations are grouped into ECP Regions.
+
+The following examples show how to configure different target types.
 
 ## Target of type “Location”
 
@@ -13,11 +16,11 @@ The following examples show how to configure different types of targets.
 apiVersion: v1
 kind: Location # use ECP defined Location object to specify target locations and desired number of instances
 metadata:
-  namespace: demo # the kubernetes namespace created for your account
+  name: demo
 spec:
   locations:
   - name: mia # use ECP PoP code to specify an ECP location
-    replicas: 1 # specify the count of instances to be deployed to an ECP location
+    replicas: 1 # specify the number of instances to be deployed to an ECP location
   - name: icn
     replicas: 2
 ```
@@ -28,44 +31,44 @@ spec:
 apiVersion: v1
 kind: RegionPreference # use ECP defined RegionPreference object to specify target regions and desired number of instances
 metadata:
-  namespace: demo # the kubernetes namespace created for your account
+  name: demo
 spec:
   regions:
-  - name: NA-WEST # use ECP region code to specify an ECP region
-    replicas: 8 # specify number of instances to be distributed across locations in an ECP region
+  - name: NA-WEST # use ECP Region code to specify an ECP Region
+    replicas: 8 # specify number of instances to be distributed across locations in an ECP Region
   - name: APAC
     replicas: 5
 ```
 
 ## Kubernetes Workload Controller
 
-The Kubernetes workload controller controls the state of an application instance. It includes specifications for the container image, compute/storage resources request, container startup commands and args, etc. The workload controller is configured the same as the [native Kubernetes Controller](<https://kubernetes.io/docs/concepts/workloads/controllers/replicaset/>).
+A Kubernetes workload controller controls the desired state of an application instance. It includes such specifications as container image, compute/storage resources request, container startup commands and args, etc. The workload controller is configured the same way as the [native Kubernetes Controller](<https://kubernetes.io/docs/concepts/workloads/controllers/deployment/>), except that the desired pod replicas are specified via a Target object.
 
 ## Layer 4 Load Balancer
 
-To expose your application, we recommend you use a Layer 4 load balancer as a frontend for your pods, unless there are special requirements to expose the pods directly. Unlike native Kubernetes, which defines a Service object for service discovery and load balancing of an application, the ECP offers a self-defined `LoadBalancer4` object to help you expose your application and load balance traffic. For more information, click [here](</docs/portal/applications/using-advanced-ecp-features.md#using-layer-4-load-balancing>).
+To expose your application, we recommend you use ECP defined layer 4 load balancers as frontend for your application instances (i.e. Kubernetes pods), unless there are special requirements to expose the pods directly. Each ECP layer 4 load balancer is assigned a public IP address. It captures incoming traffic hitting its IP address, makes load balancing decision based on specified algorithm, and then forwards the traffic to backend pods that sit behind the load balancer. For more about how to configure the ECP load balancer, click [here](</docs/portal/applications/using-advanced-ecp-features.md#using-layer-4-load-balancing>).
 
 ## Sample Demo Configuration
 
-The following example shows a demo configuration of an ECP application. In this example, the application will be deployed to two ECP locations, with some instances using the `Location` object. This example uses a `StatefulSet`
-controller to declare that a container running NGINX web server will be spun up, with some compute/storage resources provisioned. It also exposes the NGINX containers and defines traffic-forwarding rules using the `LoadBalancer4` object.
+The following example shows a demo configuration of an ECP application. In this example, the `Location` object specifies 2 target ECP locations. The `StatefulSet`
+controller declares that a container running NGINX web server shall be started, with some compute/storage resources provisioned. The `LoadBalancer4` object is specified to expose the NGINX containers and to define traffic-forwarding rules.
 
 ```yaml
 apiVersion: v1
 kind: Location # specify target locations and desired number of instances
 metadata:
-  namespace: demo # the kubernetes namespace created for your account
+  name: demo
 spec:
   locations:
   - name: mia # use ECP PoP code to specify an ECP location
-    replicas: 1 # instances to be deployed to an ECP location
+    replicas: 1 # number of instances to be deployed to an ECP location
   - name: icn
     replicas: 2
 ---
 apiVersion: apps/v1
-kind: StatefulSet # specify a kubernetes workload controller. Can be StatefulSet or Deployment. Please use StatefulSet if persistent storage is required.
+kind: StatefulSet # specify a Kubernetes workload controller. Can be StatefulSet or Deployment. Use StatefulSet if persistent storage is required.
 metadata:
-  namespace: demo # the kubernetes namespace created for your account
+  name: demo
 spec:
   selector:
     matchLabels:
@@ -84,11 +87,8 @@ spec:
           limits:
             cpu: "200m"
             memory: 256Mi
-          requests:
-            cpu: "200m"
-            memory: 256Mi
         volumeMounts: # mount a persistent volume to a container. Optional.
-        - mountPath: /tmp
+        - mountPath: /data
           name: data
   volumeClaimTemplates: # request for a persistent volume if persistent storage is required. Optional.
   - metadata:
@@ -100,16 +100,16 @@ spec:
       - ReadWriteOnce
       resources:
         requests:
-          storage: 1G
+          storage: 10G
 ---
 apiVersion: v1
-kind: LoadBalancer4 # ECP defined layer 4 load balancer. Use this to expose your app.
+kind: LoadBalancer4 # ECP defined layer 4 load balancer. Use this to expose your application.
 metadata: 
-  namespace: demo # the kubernetes namespace created for your account
+  name: demo
 spec: 
   listeners: # specify traffic forward rules
-  - backendPort: 80 # port of backend pod replicas that receive forwarded traffic
-    backendSelector: # select pod replicas that sit behind this layer 4 load balancer
+  - backendPort: 80 # port of backend pods that receive forwarded traffic
+    backendSelector: # select pods that sit behind this layer 4 load balancer
       app: demoapp
     healthCheck: false 
     listenerPort: 80 # port that this layer 4 load balancer listens on
@@ -122,10 +122,10 @@ spec:
 Observe the following guidelines:
 
 - The ECP accepts application configurations in JSON or YAML format. Like Kubernetes, YAML is the preferred format.
-- Wrap the elements of an ECP application into a single JSON or YAML file before submitting to the ECP. PATCHing an existing application allows partial configuration updates for a specific element of the application.
-- An “application name” parameter is required when an application configuration is to be deployed. The value of this parameter is used to fill the `metadata.name` fields of the target, workload controller, and `LoadBalancer4` objects. If you specify these `metadata.name` fields in the application configuration, make sure the values are consistent with the “application name” parameter.
-- The target type must be either `Location` or `RegionPreference`. Mixed usage of the two types is not allowed. Because some ECP locations/regions might not be enabled for you, contact CDNetworks' sales engineers if you want to enable certain locations or regions, or if you have trouble deploying your application to ECP locations/regions.
+- Wrap the composing objects of an ECP application into a single JSON or YAML file before submitting to the ECP. PATCHing an existing application allows submission of incomplete application configuration.
+- An “Application Name” parameter is required when an application configuration is to be deployed. The value of this parameter is used to fill the `metadata.name` fields of the target, workload controller, and `LoadBalancer4` objects. If you specify these `metadata.name` fields in the application configuration, make sure the values are consistent with the “Application Name” parameter.
+- The Target type must be either `Location` or `RegionPreference`. Mixed usage of the two types is not allowed. Some ECP locations or Regions might not have been enabled for your account. Contact our sales engineers if you want to use certain locations or Regions, or if you have trouble deploying your application to ECP locations or Regions.
 - Not all Kubernetes workload Controllers are supported. We recommend you use a [StatefulSet](<https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/>) Controller to run applications that require persistent storage. Otherwise, use a [Deployment](<https://kubernetes.io/docs/concepts/workloads/controllers/deployment/>).
-- When configuring a workload Controller, leave the `spec.replicas` field empty because the equivalent is configured in the target object.
+- When configuring a workload Controller, leave the `spec.replicas` field empty because the equivalent is configured in the Target object.
 - If you need persistent volumes for your application, you can use the storage class `local-ssd`. For more information, see [Using Storage Resources](</docs/portal/applications/using-advanced-ecp-features.md#using-storage-resources>).
-- Running containers in privileged mode is not allowed.
+- Running containers in privileged mode is NOT allowed.
