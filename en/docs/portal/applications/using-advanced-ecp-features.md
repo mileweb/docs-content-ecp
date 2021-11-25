@@ -72,7 +72,7 @@ spec:
 
 ## Using Layer 4 Load Balancing
 
-To expose your application, a Layer 4 load balancer is recommended for use as a frontend for your pods, unless there are special requirements to expose the pods directly. Refer to the following example.
+To expose your application, the ECP defined layer 4 load balancer is recommended for use as a frontend for your pods, unless there are special requirements to expose the pods directly. Refer to the following example.
 
 ```yaml
 apiVersion: v1

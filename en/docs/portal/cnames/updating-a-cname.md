@@ -8,7 +8,6 @@ The following procedure describes how to update CNAME descriptions from the CNAM
 <p align=center><img src="/docs/resources/images/cnames/cnames-update-cname.png" width="600"></p>
 
 3. In the **Description** field, enter or edit a description for this CNAME.
-
-**Note:** The **CNAME** and **Application** fields are read-only and cannot be updated. However, clicking the value next to **Application** allows you to view the [application information](</docs/portal/applications/viewing-application-information.md>) associated with the CNAME.
-
 4. Click **Update**.
+
+**Note:** The **CNAME** and **Application** fields are read-only and cannot be updated. If a new domain name is intended for the same application, delete the existing CNAME and create a new one.
