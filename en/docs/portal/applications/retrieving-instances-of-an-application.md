@@ -45,12 +45,6 @@ The following procedure describes how to view information about application inst
 
 <p align=center><img src="/docs/resources/images/applications/applications-instance-details-basic-info-w-numbers.png" width="700"></p>
 
-<p align=center><img src="/docs/resources/images/applications/applications-instance-details-conditions.png" width="700"></p>
-
-<p align=center><img src="/docs/resources/images/applications/applications-instance-details-events.png" width="700"></p>
-
-<p align=center><img src="/docs/resources/images/applications/applications-instance-details-containers.png" width="700"></p>
-
 | **Fields**   | **Description**                                                                           |
 | :----------: | ----------------------------------------------------------------------------------------- |
 | 1            | Click this button to return to the Instances page.                                        |
