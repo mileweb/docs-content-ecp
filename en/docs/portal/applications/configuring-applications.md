@@ -2,7 +2,7 @@
 
 You can create an ECP application either by [following a step-by-step wizard](</docs/portal/applications/adding-and-deploying-applications-using-a-wizard.md>) or by [providing a file](</docs/portal/applications/adding-and-deploying-applications-using-an-existing-configuration-file.md>) that contains application configuration.
 
-If you choose to create the application from a file, the first step is to prepare the file if it does not exist yet. The file should contain specifications of the following objects that make up an ECP application:<ul><li>A target</ul></li><ul><li>A Kubernetes workload controller</ul></li><ul><li>A layer 4 load balancer</ul></li>
+If you choose to create the application from a file, the first step is to prepare the file if it does not exist yet. The file should contain specifications of the following objects that typically make up an ECP application:<ul><li>A target</ul></li><ul><li>A Kubernetes workload controller</ul></li><ul><li>A layer 4 load balancer</ul></li>
 
 ### Target
 
@@ -46,7 +46,7 @@ A Kubernetes workload controller controls the desired state of an application in
 
 ## Layer 4 Load Balancer
 
-To expose your application, we recommend you use ECP defined layer 4 load balancers as frontend for your application instances (i.e. Kubernetes pods), unless there are special requirements to expose the pods directly. Each ECP layer 4 load balancer is assigned a public IP address. It captures incoming traffic hitting its IP address, makes load balancing decision based on specified algorithm, and then forwards the traffic to backend pods that sit behind the load balancer. For more about how to configure the ECP load balancer, click [here](</docs/portal/applications/using-advanced-ecp-features.md#using-layer-4-load-balancing>).
+To expose your application, we recommend you use ECP defined layer 4 load balancers (also referred to as LB4) as frontend for your application instances (i.e. Kubernetes pods), unless it is required to expose the pods directly. Each ECP layer 4 load balancer is assigned a public IP address. It captures incoming traffic hitting its IP address, makes load balancing decision based on specified algorithm, and then forwards the traffic to backend pods that sit behind the load balancer. For more about how to configure the ECP load balancer, click [here](</docs/portal/applications/using-advanced-ecp-features.md#using-layer-4-load-balancing>).
 
 ## Sample Demo Configuration
 

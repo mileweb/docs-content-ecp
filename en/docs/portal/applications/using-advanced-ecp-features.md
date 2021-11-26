@@ -2,9 +2,9 @@
 
 ## Request Public IP Address for a Pod
 
-When a pod gets created with the native Kubernetes, the pod is assigned a private IP address that is accessible only from within the Kubernetes cluster. CDNetworks’ ECP extensions to Kubernetes allow you to request a public IP address for a pod and support IPv4 and IPv6 protocols.
+When a pod gets created with the native Kubernetes, the pod is assigned a private IP address that is accessible only from within the Kubernetes cluster. ECP's extensions to Kubernetes allow you to request a public IP address for a pod, and both IPv4 and IPv6 protocols are supported.
 
-## Request Public IPv4 Address
+### Request Public IPv4 Address
 
 To obtain a public IPv4 address for your pod, add an annotation to the pod spec. For example:
 
@@ -13,7 +13,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: myapp
-  namespace: demo
 spec:
   selector:
     matchLabels:
@@ -32,12 +31,9 @@ spec:
           limits:
             cpu: "200m"
             memory: 256Mi
-          requests:
-            cpu: "200m"
-            memory: 256Mi
 ```
 
-## Request Public IPv6 Address
+### Request Public IPv6 Address
 
 To obtain a public IPv6 address for your pod, add an annotation to the pod spec. For example:
 
@@ -46,7 +42,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: myapp
-  namespace: demo
 spec:
   selector:
     matchLabels:
@@ -65,21 +60,17 @@ spec:
           limits:
             cpu: "200m"
             memory: 256Mi
-          requests:
-            cpu: "200m"
-            memory: 256Mi
 ```
 
-## Using Layer 4 Load Balancing
+## Using ECP defined Layer 4 Load Balancing
 
-To expose your application, the ECP defined layer 4 load balancer is recommended for use as a frontend for your pods, unless there are special requirements to expose the pods directly. Refer to the following example.
+To expose your application, i.e. your pods running in an ECP Kubernetes cluster, the ECP defined layer 4 load balancer (also referred to as LB4) is recommended, unless it is required to expose the pods directly. Each ECP layer 4 load balancer is assigned a public IP address. It captures incoming traffic hitting its IP address, makes load balancing decision based on specified algorithm, and then forwards the traffic to backend pods that sit behind the load balancer. Refer to the following example.
 
 ```yaml
 apiVersion: v1
 kind: LoadBalancer4 # ECP defined layer 4 load balancer.
 metadata:
   name: demo-lb4 
-  namespace: demo # the kubernetes namespace created for your account
 spec: 
   listeners:
   - backendPort: 80 # port of backend pods to receive forwarded traffic
@@ -92,9 +83,9 @@ spec:
     scheduler: lc # scheduling policy. Can be “lc”, “rr”, or "sh". Set to “lc” by default
 ```
 
-## Load Balancer Health Checks
+### Layer 4 Load Balancer Health Checks
 
-You can configure TCP or HTTP health checks for your Layer 4 load balancer.
+You can configure your layer 4 load balancer to run periodic health checks against the backend pods that sit behind it. Backend pods that fail such health checks will be skipped by the load balancer when forwarding traffic. TCP and HTTP health checks are supported.
 
 **TCP Health Check**
 
@@ -103,7 +94,6 @@ apiVersion: v1
 kind: LoadBalancer4
 metadata:
   name: demo-lb4 
-  namespace: demo
 spec: 
   listeners:
   - backendPort: 80
@@ -126,8 +116,7 @@ spec:
 apiVersion: v1
 kind: LoadBalancer4
 metadata:
-  name: demo-lb4 
-  namespace: demo
+  name: demo-lb4
 spec: 
   listeners:
   - backendPort: 80
@@ -147,18 +136,19 @@ spec:
 
 ## Using Storage Resources
 
-The ECP platform defines the following storage class for different use cases of persistent storage:
+The ECP platform defines the following storage class to provision persistent storage:
 
-- `local-ssd` is for local SSD storage. Data persists through container restarts and in-node recreations, but is lost when the pod is rescheduled to other nodes.
+- `local-ssd` stands for local SSD storage. Data stored in it persists through container restarts and in-node recreations, but is lost when the pod is rescheduled to other nodes.
 
 Observe the following guidelines:
 
-- If persistent volumes are required, use `StatefulSet` Controller for your application.
-- The requested capacity of a single `persistentVolumeClaim` (PVC) must be between 500MB and 100GB.
-- The life cycle of an ECP persistent volume is not independent of the owner application life cycle. Deleting an application or an application instance deletes the corresponding persistent volume(s) as well. This behavior is different from the native Kubernetes `StatefulSet` Controller, where persistent volumes are not deleted when a `StatefulSet` is deleted.
+- Use `StatefulSet` Controller for your application, if persistent volumes are required.
+- The requested capacity of a single persistent volume must be between 500MB and 100GB.
+- The lifecycle of an ECP persistent volume is NOT independent of the owner application. **Deleting an application or an application instance deletes the corresponding persistent volume(s) as well.** This behavior is different from the native Kubernetes `StatefulSet` Controller, where persistent volumes are not deleted when a `StatefulSet` is deleted.
 
+**Note:** The disks backing a `local-ssd` volume are physically attached to the same machine that runs your containers. As such a volume is available locally on same machine as containers, the readwrite performance is optimal. However, there is no guarante of availability. In events of disk damage, machine crash or PoP outage, the storage will be lost or become inaccessible. Therefore, ECP `local-ssd` storage resource shall NOT be used for use cases that require high availability and reliability, e.g. database store.
 
-## Using `local-ssd`
+### Using `local-ssd`
 
 Specify a `persistentVolumeClaim` (PVC) in `volumeClaimTemplates` of a `StatefulSet`, set the `storageClass` to `local-ssd`, and mount the PVC to your container.
 
@@ -167,7 +157,6 @@ apiVersion: apps/v1
 kind: StatefulSet
 metadata:
   name: demoapp
-  namespace: demo
 spec:
   selector:
     matchLabels:
@@ -178,13 +167,10 @@ spec:
         app: demoapp
     spec:
       containers:
-      - image: nginx
+      - image: myapp
         name: demoapp
         resources:
           limits:
-            cpu: "200m"
-            memory: 256Mi
-          requests:
             cpu: "200m"
             memory: 256Mi
         volumeMounts:
@@ -200,7 +186,7 @@ spec:
       - ReadWriteOnce
       resources:
         requests:
-          storage: 1G
+          storage: 10G
 ```
 
 
