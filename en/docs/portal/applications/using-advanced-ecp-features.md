@@ -1,4 +1,4 @@
-# Using Advanced ECP Features
+# Using ECP Advanced Features
 
 ## Request Public IP Address for a Pod
 
@@ -62,7 +62,7 @@ spec:
             memory: 256Mi
 ```
 
-## Using ECP defined Layer 4 Load Balancing
+## Use ECP defined Layer 4 Load Balancing
 
 To expose your application, i.e. your pods running in an ECP Kubernetes cluster, the ECP defined layer 4 load balancer (also referred to as LB4) is recommended, unless it is required to expose the pods directly. Each ECP layer 4 load balancer is assigned a public IP address. It captures incoming traffic hitting its IP address, makes load balancing decision based on specified algorithm, and then forwards the traffic to backend pods that sit behind the load balancer. Refer to the following example.
 
@@ -134,7 +134,7 @@ spec:
     scheduler: lc
 ```
 
-## Using Storage Resources
+## Use Storage Resources
 
 The ECP platform defines the following storage class to provision persistent storage:
 
@@ -148,7 +148,7 @@ Observe the following guidelines:
 
 **Note:** The disks backing a `local-ssd` volume are physically attached to the same machine that runs your containers. As such a volume is available locally on same machine as containers, the readwrite performance is optimal. However, there is no guarante of availability. In events of disk damage, machine crash or PoP outage, the storage will be lost or become inaccessible. Therefore, ECP `local-ssd` storage resource shall NOT be used for use cases that require high availability and reliability, e.g. database store.
 
-### Using `local-ssd`
+### Use `local-ssd` storage
 
 Specify a `persistentVolumeClaim` (PVC) in `volumeClaimTemplates` of a `StatefulSet`, set the `storageClass` to `local-ssd`, and mount the PVC to your container.
 

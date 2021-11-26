@@ -24,7 +24,7 @@
 **Note:** You can add and configure multiple containers and couple them together in a pod.
 
 5. At the top right of the wizard, click **\> Next**. 
-6. Select whether to expose your application using ECP defined [layer 4 load balancer](<#exposing-via-a-load-balancer>) or the [public network interfaces of a pod](<#exposing-via-the-public-network-interfaces-of-a-pod-replica>), and then complete the remaining fields based on your selection.
+6. Select whether to expose your application using ECP defined [layer 4 load balancer](<#exposing-via-layer-4-load-balancer>) or the [public network interfaces of a pod](<#exposing-via-the-public-network-interfaces-of-a-pod>), and then complete the remaining fields based on your selection.
 
 <p align=center><img src="/docs/resources/images/applications/applications-add-wizard-expose.png" width="600"></p>
 
