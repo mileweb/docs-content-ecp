@@ -46,7 +46,7 @@ A Kubernetes workload controller controls the desired state of an application in
 
 ## Layer 4 Load Balancer
 
-To expose your application, we recommend you use ECP defined layer 4 load balancers (also referred to as LB4) as frontend for your application instances (i.e. Kubernetes pods), unless it is required to expose the pods directly. Each ECP layer 4 load balancer is assigned a public IP address. It captures incoming traffic hitting its IP address, makes load balancing decision based on specified algorithm, and then forwards the traffic to backend pods that sit behind the load balancer. For more about how to configure the ECP load balancer, click [here](</docs/portal/applications/using-ecp-advanced-features.md#use-ecp-defined-layer-4-load-balancing>).
+To expose your application, we recommend you use ECP defined layer 4 load balancers (also referred to as LB4) as frontend for your application instances (i.e. Kubernetes pods), unless it is required to expose the pods directly. Each ECP layer 4 load balancer is assigned a public IP address. It captures incoming traffic hitting its IP address, makes load balancing decision based on specified algorithm, and then forwards the traffic to backend pods that sit behind the load balancer. For more about how to configure the ECP load balancer, click [here](</docs/portal/applications/using-advanced-ecp-features.md#use-ecp-defined-layer-4-load-balancing>).
 
 ## Sample Demo Configuration
 
@@ -127,5 +127,5 @@ Observe the following guidelines:
 - The Target type must be either `Location` or `RegionPreference`. Mixed usage of the two types is not allowed. Some ECP locations or Regions might not have been enabled for your account. Contact our sales engineers if you want to use certain locations or Regions, or if you have trouble deploying your application to ECP locations or Regions.
 - Not all Kubernetes workload Controllers are supported. We recommend you use a [StatefulSet](<https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/>) Controller to run applications that require persistent storage. Otherwise, use a [Deployment](<https://kubernetes.io/docs/concepts/workloads/controllers/deployment/>).
 - When configuring a workload Controller, leave the `spec.replicas` field empty because the equivalent is configured in the Target object.
-- If you need persistent volumes for your application, you can use the storage class `local-ssd`. For more information, see [Using Storage Resources](</docs/portal/applications/using-ecp-advanced-features.md#use-storage-resources>).
+- If you need persistent volumes for your application, you can use the storage class `local-ssd`. For more information, see [Using Storage Resources](</docs/portal/applications/using-advanced-ecp-features.md#use-storage-resources>).
 - Running containers in privileged mode is NOT allowed.
