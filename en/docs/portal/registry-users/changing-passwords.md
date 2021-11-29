@@ -8,4 +8,6 @@ The following procedure describes how to change the password for registry users.
       <p align=center><img src="/docs/resources/images/registry/change-password.png" width="500"></p>
 4. Click the **Submit** button.
 
-**Note:** Non-admin portal users are not permitted to change the password of a registry user. The imagePullSecret created and managed by the ECP for a registry user will be updated automatically.
+**Note:** Non-admin portal users are not permitted to change the password of a registry user. 
+
+The imagePullSecret created and managed by the ECP for a registry user will be updated automatically.

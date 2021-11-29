@@ -1,6 +1,6 @@
 # Managing Registry Users
 
-A registry user is an entity that is created and given certain permissions to access and manage repositories and images in the registry. A registry user usually uses the docker CLI client to access an image registry.
+A registry user is an entity that is created and given certain permissions to access and manage repositories and images in the ECP registry. A registry user usually uses the docker CLI client to access an image registry.
 
 ## Registry Users Page
 Registry users are managed from the Registry Users page. To display this page, click **Image Registry > Registry Users** in the left pane.

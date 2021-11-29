@@ -6,4 +6,6 @@ The following procedure describes how to delete registry users from the Registry
 2. Click the Actions drop-down list of the registry user you want to delete, and then select **Delete**.
 3. When prompted to confirm the deletion, click **Yes, delete!** to delete the registry user.
 
-**Note:** Non-admin portal users are not permitted to delete registry users. The imagePullSecret created and managed by the ECP for a registry user will be deleted automatically.
+**Note:** Non-admin portal users are not permitted to delete registry users. 
+
+The imagePullSecret created and managed by the ECP for a registry user will be deleted automatically.
