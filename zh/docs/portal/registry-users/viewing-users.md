@@ -9,8 +9,10 @@ The following procedure describes how to view information about registry users. 
 
 | **Fields**   | **Description**                                                                                           |
 | :----------: | --------------------------------------------------------------------------------------------------------- |
-| 1            | The Basic Information area shows basic information about the registry user. To [view a project](</docs/portal/image-registry/viewing-projects.md>) associated with the registry user, click a project in the table within the **Access to Projects** field.                   |
+| 1            | The Basic Information area shows basic information about the registry user. To [view a project](</docs/portal/image-registry/viewing-projects.md>) accessible to the registry user, click a project in the table within the **Access to Projects** field.                   |
 | 2            | Click this button to return to the Registry Users page.                                                   |
 | 3            | Click this button to change the registry user's [password](</docs/portal/registry-users/changing-passwords.md>).  |
 | 4            | Click this button to [delete](</docs/portal/registry-users/deleting-users.md>) the registry user.         |
 | 5            | Click this button to [update](</docs/portal/registry-users/updating-users.md>) the registry user.         |
+
+**Note:** Non-admin portal users are not permitted to update/delete a registry user, or change the password.
