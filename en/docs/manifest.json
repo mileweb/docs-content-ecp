@@ -170,8 +170,8 @@
               "path": "/docs/portal/image-registry/managing-repositories-under-a-project.md"
             },
             {
-              "title": "Managing Tags under a Repository",
-              "path": "/docs/portal/image-registry/managing-tags-under-a-repository.md"
+              "title": "Managing Artifacts under a Repository",
+              "path": "/docs/portal/image-registry/managing-artifacts-under-a-repository.md"
             },
             {
               "title": "Updating Projects",
