@@ -16,4 +16,4 @@ The following procedure describes how to view information about projects. Button
 | 5            | Click this button to [update](</docs/portal/image-registry/updating-projects.md>) the project.            |
 | 6            | The Repositories area shows repositories created under the project. Click a number in the **Artifacts** column to display [detailed artifacts information](</docs/portal/image-registry/managing-artifacts-under-a-repository.md>).                                                               |
 
-**Note:** Non-admin portal users are not permitted to update or delete a registry user.
+**Note:** Non-admin portal users are not permitted to update or delete a registry project.
