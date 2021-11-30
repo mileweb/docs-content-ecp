@@ -12,7 +12,6 @@ The following procedure describes how to update an ImagePullSecret from the Imag
 | **Fields**                                                                                                         | **Description**                                                                                                    |
 | ------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------ |
 | Name                                                                                                               | Read-only field that shows the name of this ImagePullSecret.                                                       |
-| Namespace                                                                                                          | Read-only field that shows the Kubernetes namespace for your account.                                              |
 | Registry                                                                                                           | Read-only field that shows the address of the registry where your container images are stored.                     |
 | Username                                                                                                           | Enter the username of your registry account.                                                                       |
 | Password                                                                                                           | Enter the password of your registry account. For security, each typed password character is masked with a dot (●). |
@@ -20,4 +19,4 @@ The following procedure describes how to update an ImagePullSecret from the Imag
 
 4. Click **Update**.
 
-**Note:** Updating an ImagePullSecret that is being used might cause the image pull to fail temporarily.
+**Note:** Updating an ImagePullSecret that is being used might cause image pulls to fail temporarily. You cannot update an ImagePullSecret that is automatically created and managed by the ECP.

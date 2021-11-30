@@ -12,6 +12,6 @@ The following figure shows the key elements on the page, and the table following
 | **Fields**   | **Description**                                                                                           |
 | :----------: | --------------------------------------------------------------------------------------------------------- |
 | 1            | To filter projects, type characters in this field and then press the Enter key. All projects that do not contain the typed characters are hidden. Filtering is not case-sensitive. To remove the filter, click the **Reset** button.                                         |
-| 2            | Each project appears on its own row. Clicking a project allows you to view basic information about the project and its repositories.   |
+| 2            | Each project appears on its own row. Clicking a project allows you to view more information about the project and its repositories.   |
 | 3            | The **Actions** drop-down list on each row has options to [view project logs](</docs/portal/image-registry/viewing-logs.md>), [delete the project](</docs/portal/image-registry/deleting-projects.md>), and [update the project](</docs/portal/image-registry/updating-projects.md>).|
 | 4            | The **+ Add New Project** button allows you to [add projects](</docs/portal/image-registry/adding-projects.md>).  |
