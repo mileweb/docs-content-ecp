@@ -24,10 +24,11 @@ Log in to the [ECP management console](https://console.cdnetworks.com/ecp).
 <p align=center><img src="/docs/resources/images/recipes/recipe1/create-registry-project.png" alt="create registry project" width="720"></p>
 
 1.  Open the **Registry Projects** page and click the top-right **Add New Project** button to open a dialog box.    
-2.  Enter “myproject1” as the **Project Name**.    
-3.  Disable the **Deployment Security** setting. We are disabling this setting to make sure our demo image can be deployed. When running your images in production, it is recommended to enable this setting.    
-4.  Turn on **Vulnerability Scan**.  
-5. Click the **Submit** button to create the registry project.
+2.  Enter “myproject1” as the **Project Name**.
+3.  Set **Storage Limit** to 5 GB.    
+4.  Disable the **Deployment Security** setting. We are disabling this setting to make sure our demo image can be deployed. When running your images in production, it is recommended to enable this setting.    
+5.  Turn on **Vulnerability Scan**.  
+6.  Click the **Submit** button to create the registry project.
 
 **Create an ECP registry user**
 <p align=center><img src="/docs/resources/images/recipes/recipe1/create-registry-user.png" alt="create registry user" width="720"></p>

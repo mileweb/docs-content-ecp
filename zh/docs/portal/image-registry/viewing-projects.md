@@ -14,4 +14,6 @@ The following procedure describes how to view information about projects. Button
 | 3            | Click this button to view the [logs](</docs/portal/image-registry/viewing-logs.md>) associated with the project.  |
 | 4            | Click this button to [delete](</docs/portal/image-registry/deleting-projects.md>) the project.            |
 | 5            | Click this button to [update](</docs/portal/image-registry/updating-projects.md>) the project.            |
-| 6            | The Repositories area shows repositories associated with the project. Click a number in the **Tags** column to display [detailed tag information](</docs/portal/image-registry/managing-tags-under-a-repository.md>).                                                               |
+| 6            | The Repositories area shows repositories created under the project. Click a number in the **Artifacts** column to display [detailed artifacts information](</docs/portal/image-registry/managing-artifacts-under-a-repository.md>).                                                               |
+
+**Note:** Non-admin portal users are not permitted to update or delete a registry project.
